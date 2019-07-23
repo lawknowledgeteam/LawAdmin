@@ -12,13 +12,7 @@ import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.render.ViewType;
 import com.jfinal.server.undertow.UndertowServer;
 import com.jfinal.template.Engine;
-import com.liyang.controller.AdminController;
-import com.liyang.controller.AnalyseController;
-import com.liyang.controller.LawController;
-import com.liyang.controller.IndexController;
-import com.liyang.controller.LogController;
-import com.liyang.controller.RoleController;
-import com.liyang.controller.WebAdminController;
+import com.liyang.controller.*;
 import com.liyang.model.Admin;
 import com.liyang.model.AdminLog;
 import com.liyang.model.CaseInfo;
@@ -33,7 +27,7 @@ public class ProjectConfig extends JFinalConfig {
         UndertowServer.start(ProjectConfig.class, 8082, true);
         
     }
- 
+    @Override
     public void configConstant(Constants me) {
        me.setDevMode(true);
        
@@ -50,8 +44,10 @@ public class ProjectConfig extends JFinalConfig {
        me.setMaxPostSize(100*1024*1024);
        me.setViewType(ViewType.FREE_MARKER);
     }
-    
+    @Override
     public void configRoute(Routes me) {
+        me.add("/lawmap", LawMapController.class);
+        me.add("/lawcase", LawCaseController.class);
        me.add("/law", LawController.class);
        me.add("/", IndexController.class);
        me.add("/web_admin",WebAdminController.class); 
@@ -60,11 +56,12 @@ public class ProjectConfig extends JFinalConfig {
 		me.add("/analyse",AnalyseController.class); 
 		me.add("/role",RoleController.class);
 		me.add("/m",com.liyang.controller.MobileController.class);		
-    } 
-    
+    }
+    @Override
     public void configEngine(Engine me) {
     	
     }
+    @Override
     public void configPlugin(Plugins me) {
     	DruidPlugin druidPlugin = new DruidPlugin(GlobalVar.DBServerIP, GlobalVar.DBServerUser, GlobalVar.DBServerPassword);
 		
@@ -97,12 +94,13 @@ public class ProjectConfig extends JFinalConfig {
 		//  quartz.setJobs("quarter.properties");
 		//  me.add(quartz);
     }
+    @Override
     public void configInterceptor(Interceptors me) {
     	
     	 //ImportMacPrefixToDB("src/main/resources/MACVendor.txt");
     }
-    
-    
+
+    @Override
     public void configHandler(Handlers me) {
     	RoleAuthSettings.init();		
     }
