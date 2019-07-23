@@ -66,7 +66,7 @@
                 }
             );
         }
-
+/*
         function long2MacAddress(lMac)
         {
             var sTemp=lMac.toString(16);
@@ -96,7 +96,7 @@
             else if(sTemp.length==12)
                 sMac=sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3]+":"+sTemp[4]+sTemp[5]+":"+sTemp[6]+sTemp[7]+":"+sTemp[8]+sTemp[9]+":"+sTemp[10]+sTemp[11];
             return sMac.toUpperCase();
-        }
+        }*/
 
         function  displayRecordList(json){
             var recList='';
@@ -196,7 +196,7 @@
         function search(){
             var keyWord=$("#keyWord").val();
             $.ajax({
-                url:'/device/web_getCount',
+                url:'/lawcase/web_getCount',
                 dataType: "json",
                 type: 'POST',
                 data:{"keyWord":keyWord},
