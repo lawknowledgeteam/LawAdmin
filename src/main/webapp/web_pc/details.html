@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>details of case</title>
+
+    <link rel="stylesheet" type="text/css" href="css/index_layout.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="css/index.css" rel="preload" type="text/css">
+    <link href="js/index.js" rel="preload" >
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/navigator/LeftNav.css">
+    <link rel="stylesheet" href="css/detals.css">
+
+</head>
+<body>
+<noscript>
+    <style>.noscript {
+        display: inline-block;
+        width: 100%;
+        font-size: 16px;
+        text-align: center;
+    }</style>
+</noscript>
+
+<div class="home c-font-normal">
+    <!--logo部分-->
+    <div id="menu" class="login-bar">
+        <img class="logo" src="images/logo.png" height="62" width="298" alt="logo"/>
+        <ul id="nav">
+            <li><a href="#">首页</a></li>
+            <li><a href="ofo_ours.html">关于我们</a></li>
+            <li><a href="app.jsp">下载APP</a></li>
+            <li><a href="joinUs.jsp">加入我们</a></li>
+        </ul>
+    </div>
+    <div class="main-wrap home-search-wrap">
+        <div class="text">
+            <div id="Echarts" style="width: 1200px; height: 600px;"></div>
+    <!--这部分显示查询案例摘要-->
+            <ul>
+                <li>
+                    <!--box1-->
+                    <a href="#" class="news_link" style="z-index: 9999;">
+                        <div id="details_container">
+<!--                                这里放案件标题和摘要-->
+                                <ul class="news_info">
+                                    <li>1994-06-02</li>
+                                    <li class="news_title">张贵智被控故意伤害不负刑事责任案（无刑事责任能力、证据）</li>
+                                    <li>上海市中级人民法院</li>
+                                </ul>
+
+                        </div>
+                    </a>
+                    <div class="div_1"></div>
+                    <!--box2-->
+                    <a href="#" class="news_link" style="z-index: 9999;">
+                        <div id="details_container">
+                            <img class="image_title" src="images/1209-7.jpg" alt="ofo">
+                                <!--                                这里放案件标题和摘要-->
+                                <ul class="news_info">
+                                    <li>1994-06-02</li>
+                                    <li class="news_title">张贵智被控故意伤害不负刑事责任案（无刑事责任能力、证据）</li>
+                                    <li>上海市中级人民法院</li>
+                                </ul>
+                        </div>
+                    </a>
+                    <div class="div_1"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="js/graph/echarts.js" type="text/javascript"></script>
+
+    // 基于准备好的dom，初始化echarts
+    var myChart = echarts.init(document.getElementById('Echarts'));
+    var option={
+        title:{
+            text:'第一个echarts'
+        },
+        tooltip:{},  //指示框
+        legend:{
+            data:['销量']
+        },
+        color:'pink',
+        xAxis:{
+            data:['苹果','李子','栗子','梨','草莓','菠萝']
+        },
+        yAxis:{},
+        series:[{
+            name:'销量',
+            type:'bar',
+            data:[5,10,36,10,18,20]
+        }]
+    };
+    // var nodes = [];
+    // var links = [];
+    // var constMaxDepth = 2;
+    // var constMaxChildren = 7;
+    // var constMinChildren = 4;
+    // var constMaxRadius = 10;
+    // var constMinRadius = 2;
+    //
+    // function rangeRandom(min, max) {
+    //     return Math.random() * (max - min) + min;
+    // }
+    //
+    // function createRandomNode(depth) {
+    //     var node = {
+    //         name : 'NODE_' + nodes.length,
+    //         value : rangeRandom(constMinRadius, constMaxRadius),
+    //         // Custom properties
+    //         id : nodes.length,
+    //         depth : depth,
+    //         category : depth === constMaxDepth ? 0 : 1
+    //     }
+    //     nodes.push(node);
+    //
+    //     return node;
+    // }
+    //
+    // function forceMockThreeData() {
+    //     var depth = 0;
+    //     var rootNode = {
+    //         name : 'ROOT',
+    //         value : rangeRandom(constMinRadius, constMaxRadius),
+    //         // Custom properties
+    //         id : 0,
+    //         depth : 0,
+    //         category : 2
+    //     }
+    //     nodes.push(rootNode);
+    //
+    //     function mock(parentNode, depth) {
+    //         var nChildren = Math.round(rangeRandom(constMinChildren, constMaxChildren));
+    //
+    //         for (var i = 0; i < nChildren; i++) {
+    //             var childNode = createRandomNode(depth);
+    //             links.push({
+    //                 source : parentNode.id,
+    //                 target : childNode.id,
+    //                 weight : 1
+    //             });
+    //             if (depth < constMaxDepth) {
+    //                 mock(childNode, depth + 1);
+    //             }
+    //         }
+    //     }
+    //
+    //     mock(rootNode, 0);
+    // }
+    //
+    // forceMockThreeData();
+
+    // option = {
+    //     title : {
+    //         text: 'Force',
+    //         subtext: 'Force-directed tree',
+    //         x:'right',
+    //         y:'bottom'
+    //     },
+    //     tooltip : {
+    //         trigger: 'item',
+    //         formatter: '{a} : {b}'
+    //     },
+    //     toolbox: {
+    //         show : true,
+    //         feature : {
+    //             restore : {show: true},
+    //             magicType: {show: true, type: ['force', 'chord']},
+    //             saveAsImage : {show: true}
+    //         }
+    //     },
+    //     legend: {
+    //         x: 'left',
+    //         data:['叶子节点','非叶子节点', '根节点']
+    //     },
+    //     series : [
+    //         {
+    //             type:'force',
+    //             name : "Force tree",
+    //             ribbonType: false,
+    //             categories : [
+    //                 {
+    //                     name: '叶子节点'
+    //                 },
+    //                 {
+    //                     name: '非叶子节点'
+    //                 },
+    //                 {
+    //                     name: '根节点'
+    //                 }
+    //             ],
+    //             itemStyle: {
+    //                 normal: {
+    //                     label: {
+    //                         show: false
+    //                     },
+    //                     nodeStyle : {
+    //                         brushType : 'both',
+    //                         borderColor : 'rgba(255,215,0,0.6)',
+    //                         borderWidth : 1
+    //                     }
+    //                 }
+    //             },
+    //             minRadius : constMinRadius,
+    //             maxRadius : constMaxRadius,
+    //             coolDown: 0.995,
+    //             steps: 10,
+    //             nodes : nodes,
+    //             links : links,
+    //             steps: 1
+    //         }
+    //     ]
+    // };
+    myChart.setOption(option);
+</script>
+
+</body>
+</html>
+
+
+

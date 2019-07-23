@@ -1,0 +1,148 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>法律知识库管理平台</title>
+    <link id="easyuiTheme" rel="stylesheet" href="../third-party/easyui/themes/default/easyui.css" type="text/css" />
+    <link id="icon" rel="stylesheet" href="../third-party/easyui/themes/icon.css" type="text/css" />
+    <!-- 自己定义的样式和JS扩展 -->
+    <script type="text/javascript" src="../third-party/jquery/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../third-party/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../third-party/common.js"> </script>
+    <script type="text/javascript" src="../third-party/md5.js" ></script>
+    <script type="text/javascript" src="../third-party/easyui/easyui-lang-zh_CN.js"> </script>
+    <link href="../css/weblogin.css" rel="stylesheet" type="text/css" />
+    <meta name="Keywords" content="知识库，数据平台, 山东力阳" />
+    <meta name="Description" content="知识库, 数据平台, 山东力阳！" />
+    <link rel="icon" href="../images/logo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="../images/logo.ico" type="image/x-icon" />
+    
+    <style>
+    
+    .main{ float:left; width:98%; margin:0 auto; text-align:center; height:750px;}
+   
+	.ProjectTitle{
+	    float:left; 
+	    position:  absolute;;
+	    top: 50px;
+	    margin-left:0%; 
+	    height: 100px;
+	    width:98%;
+	    text-align: center;
+	}
+	
+	
+	 body{ background:url(../images/login/bg1.jpg) no-repeat center top; background-size:100%;}       
+	  .mainbox{ 
+	         background:#86BDD8;        
+	         filter:alpha(Opacity=80);-moz-opacity:0.8;opacity: 0.8;
+	         float:left; margin-left:60%; margin-top:220px; 
+	         position:relative; width:330px; height:320px;
+	         border-radius:20px;
+	        }
+	  .login{ float:left;  margin-left:0px; margin-top:10px; width:100%; height:59px;}
+      .asbutton{ margin-left:10px; background-color:#28549d;   border-radius:10px;font-size:20px; line-height:30px; color:white; width:232px; height:42px; border:0;}
+      
+	  .banquan{ float:float;position:relative; clear:both; margin-left:0px;margin-top:200px; text-align:center; color:white; padding-bottom:5px; font-size:15px;}      
+	  .errorInfo{ margin-left:50px; margin-top:10px; }
+	</style>
+</head>
+
+<body>
+        <div class="main">
+            <div class="ProjectTitle">
+                       <p style="float:center;color:#FFFFFF; margin-top:5px; font-family:SimHei; font-size:40px;"><strong>法律知识库管理平台与分析平台</strong></p>
+            </div>
+            <div class="mainbox">
+                    <div class="login">
+                       <p style="color:white; filter:alpha(Opacity=100);-moz-opacity:1;opacity: 1; margin-top:35px; font-size:20px; font-weight:500;">管理员登录</p>
+                    </div>
+                    <form id="LoginForm" method="post" action="/web_admin/loginCheck">
+                        <ul class="logintext">
+                            <li class="asborder">
+                                <div class="aicon"></div>
+                                <input class="asinput" type="text" placeholder="账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号" data-options="required:true"
+                                       id="idLoginName" name="loginName" value="" />
+                            </li>
+                            <li class="asborder">
+                                <div class="bicon"></div>
+                                <input class="asinput" type="password" placeholder="密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码"
+                                       data-options="required:true" name="pwdMD5" id="pwd" />
+                            </li>
+                            <li class="bsborder">
+                                <div class="cicon"></div>
+                                <input class="bsinput" type="text" placeholder="验&nbsp;证&nbsp;码" data-options="required:true"
+                                       name="validateCode" id="validateCode" />
+                                <div class="vcode">
+                                <img src="/web_admin/img" id="validateBoxImg"  style="height:27px;width:70px;position:relative;top:4px; margin-right:4px;" title="点击刷新" alt="点击刷新" onclick="this.src='/web_admin/img?random='+Math.random()" />
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="divBtnLogin"><input onclick="login()" type="button" class="asbutton" value="登&nbsp;&nbsp;录" /></div>
+                    </form>
+                    <div class="errorInfo">
+				        <h1 style="font-size: 18px; color: red;">${errorMsg!}</h1>
+				    </div>
+            </div>
+            
+        </div>
+        <div class="banquan" style="margin-left:700px;"><p style="margin-block-start: 0em;margin-block-end: 0em; height:25px;">山东大学与山东力阳网络科技有限公司联合开发 鲁ICP备09004075号</p>
+                <p  style="margin-block-start: 0em;margin-block-end: 0em;height:20px;">建议使用<a style="color:#5d5d5f;" href="https://pc.qq.com/detail/1/detail_2661.html" target="_blank">谷歌Chrome浏览器</a>或 <a style="color:#5d5d5f;" href="https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads" target="_blank">微软IE 11浏览器</a>，最佳屏幕分辨率1024x768以上</p>
+             </div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+    function login() {
+    	
+    	var vName = $('#idLoginName').val();
+        if (!vName) {
+            //$.notify.info('请录入账号!');
+            alert('请录入账号!');
+            $('#idLoginName').focus();
+            return;
+        }
+
+        var vPWD = $('#pwd').val();
+        if (!vPWD) {
+            //$.notify.info('请录入密码!');
+            $('#pwd').focus();
+            return;
+        }
+        
+
+        var vCode = $('#validateCode').val();
+        if (!vCode) {
+            //$.notify.info('请录入验证码!');
+            alert('请录入验证码!');
+            $('#validateCode').focus();
+            return;
+        }
+        console.log(vPWD);
+        var pwdMD5=hex_md5(vPWD);
+        $('#pwd').val(pwdMD5);
+        console.log(pwdMD5);
+        document.getElementById("LoginForm").submit();
+        return;
+    }
+
+    
+    $(function () {
+        //绑定回车事件
+        ES.bindEnter(function () { login(); })
+        ES.focusFirst();
+        bindValideCode();
+
+    });
+    function bindValideCode() {
+        $('#validateBoxImg').bind("click", function () {
+            this.src = "/web_admin/img?random="+Math.random();
+            
+        });
+    }
+</script>

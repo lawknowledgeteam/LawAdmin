@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" 	content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<link rel="icon" href="../images/logo.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../images/logo.ico" type="image/x-icon" />
+<title>客流宝数据管理系统</title>
+<link href="../third-party/WeUI/weui.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="../third-party/WeUI/weui.min.js"></script>
+<script src="../third-party/WeUI/zepto.min.js"></script>
+<style>
+  html,body{height: 100%;}
+  .weui-vcode-btn {
+      color:0 !important;
+  }
+</style>
+
+<script type="text/javascript">
+    $(function(){
+    $('.weui-tabbar__item').on('click', function () {
+      $(this).addClass('weui-bar__item_on').siblings().removeClass('weui-bar__item_on');
+      var tabId = $(this).attr('href');
+      $('.weui-tab__panel').find(tabId).show().siblings().hide();
+      if(tabId=="#tabObject")
+      {
+    	  getUserDeviceList();
+    	  getObjectList(1);
+    	  //alert("#tabObject");
+      }
+      else if(tabId=="#tabAnalyse")
+      {
+    	  //alert("#tabAnalyse");
+      }	  
+    });
+    
+    $('.weui-tabbar__item')[0].click();
+    
+  });
+    
+    function getUserDeviceList()
+    {
+    	$.ajax(
+            {
+            	url:'/device/mob_getAllUserDevices',
+                dataType: "json",
+                type: 'POST',
+                data:{"sToken":"${(sToken)!}"},
+                success:function (json) {
+                	var recList='<option value="-1">所有设备</option>';
+                    for(var i=0;i<json.recs.length;i++){      	
+                    	recList+='<option value="'+json.recs[i].DeviceID+'">'+json.recs[i].Location+'</option>';                                
+                    }
+                    $("#idDeviceList").html("");
+                    $("#idDeviceList").append(recList);
+                },
+                error: function () {
+                    alert("web_getListPaging error page="+page);
+                }
+            }
+        );
+    }
+    
+    function changeDevice(DeviceID){
+		if(DeviceID<0)
+			return;
+		$.ajax({
+			url:'/device/getAllObjects',
+			dataType: "json",
+			type: 'POST',
+			data:{"DeviceID":DeviceID,"sToken":"${(sToken)!}"},
+			success:function (json) {
+				var recList='';
+                for(var i=0;i<json.recs.length;i++){      	
+                	recList+=' <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="padding: 5px 15px !important;"> <div class="weui-media-box__bd" >'+
+                	        '<p>时间：'+json.recs[i].LastUpdateTime+' 地点：'+json.recs[i].LastLocation +'</p>'+  
+                            '<p style="height:28px;">MAC地址：'+json.recs[i].MacAddress+'&emsp;<button type="button" onclick="ScanRecord(\''+json.recs[i].ObjectMac+'\')" style="float: right; height:28px;background:#0090D7; font-size: 14px; color:white;border-radius: 10px; padding: 0px 5px;">物体跟踪</button></p>';
+                     if(json.recs[i].VendorName!=null)
+                    	 recList+= '<p>生产商：'+json.recs[i].VendorName.substring(0,25)+'</p>';
+                     else
+                    	 recList+='<p>生产商：'+json.recs[i].VendorName+'</p>';
+                     recList+='<p>备&emsp;注：'+json.recs[i].Description+'&emsp;<button type="button" onclick="editRecord('+json.recs[i].ObjectID+')" style=" font-size: 14px; border-radius:5px; padding: 5px;">修改备注</button></p>'+ 
+                            '</div></a>';
+                }
+                $("#ObjectList").html("");
+                $("#ObjectList").append(recList);
+                alert("物体数量:"+json.recs.length);
+		    },
+		    error: function () {
+		    	alert(json.msg);
+		    }
+		}); 
+	}
+    
+    function getObjectList(page){
+    	var keyWord=$("#idKeyword").val();
+    	var itemsPerPage=10;
+        $.ajax(
+                {
+                	url:'/object/mob_getListPaging',
+                    dataType: "json",
+                    type: 'POST',
+                    data:{"pageIndex":page,"pageSize":itemsPerPage,"keyWord":keyWord,"sToken":"${(sToken)!}"},
+                    success:function (json) {
+                    	var recList='';
+                        for(var i=0;i<json.recs.length;i++){      	
+                        	recList+=' <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="padding: 5px 15px !important;"> <div class="weui-media-box__bd" >'+
+                        	        '<p>时间：'+json.recs[i].LastUpdateTime+' 地点：'+json.recs[i].LastLocation +'</p>'+  
+                                    '<p style="height:28px;">MAC地址：'+json.recs[i].MacAddress+'&emsp;<button type="button" onclick="ScanRecord(\''+json.recs[i].ObjectMac+'\')" style="float: right; height:28px;background:#0090D7; font-size: 14px; color:white;border-radius: 10px; padding: 0px 5px;">物体跟踪</button></p>';
+                             if(json.recs[i].VendorName!=null)
+                            	 recList+= '<p>生产商：'+json.recs[i].VendorName.substring(0,25)+'</p>';
+                             else
+                            	 recList+='<p>生产商：'+json.recs[i].VendorName+'</p>';
+                             recList+= '<p>备&emsp;注：'+json.recs[i].Description+'&emsp;<button type="button" onclick="editRecord('+json.recs[i].ObjectID+')" style=" font-size: 14px; border-radius:5px; padding: 5px;">修改</button></p>'+ 
+                                    '</div></a>';
+                        }
+                        $("#ObjectList").html("");
+                        $("#ObjectList").append(recList);
+                    },
+                    error: function () {
+                        alert("web_getListPaging error page="+page);
+                    }
+                }
+        );
+    }
+    
+    function ScanRecord(ObjectMac){
+    	 window.location.href='/object/mob_showStayTime?sToken='+'${(sToken)!}'+'&ObjectMac='+ObjectMac;
+    }
+   
+  </script>
+</head>
+<body>
+  <div class="weui-tab" id="weui-tab">
+    <div class="weui-tab__panel" >
+        <div id="tabObject" class="weui-panel weui-panel_access">
+           <div class="weui-panel__hd " style="padding:0;">
+              <div class="weui-cells__title" style="margin-top: 0;font-size:16px;margin-bottom: 0; ">客户/物品列表</div>
+		      <div class="weui-cells">
+		            <div class="weui-cell weui-cell_select weui-cell_select-before" style="line-height: 40px;height: 40px;">
+		                <div class="weui-cell__hd">
+		                    <select class="weui-select" name="selectDeviceID" id="idDeviceList" style="margin-top: 0;font-size:14px; width:150px;" onchange="changeDevice(this.value)">
+		                        <option value="-1">所有设备</option>
+		                    </select>
+		                </div>
+		                 <div class="weui-cell__bd">
+		                    <input id="idKeyword" class="weui-input" style="width:90%;font-size:14px; color:black;margin-top:2px;outline: none;padding-left:6px; height: 1.9em; border: 1px solid #E5E5E5;" placeholder="关键词">
+		                </div>
+		                <div class="weui-cell__ft">
+		                    <button onClick="getObjectList(1)" style="width:50px;font-size:15px;color:0 !important; border-radius:5px; padding: 3px;">查询</button>
+		                </div>
+		            </div>
+		        </div>
+            </div>
+           <div id="ObjectList" class="weui-panel__bd" >
+           </div>
+        </div>
+        <div id="tabAnalyse" style="display: none;">
+                   <p>统计分析功能包括：</p>
+                   <p>1.指定时间范围内，设备品牌比例、数量。</p>
+                   <p>2.指定时间范围内，物品总数</p>
+                   <p>3.指定时间范围内，比上一时间范围内新增物品数量</p>
+                   <p>正在开发中，请等待...</p>
+        </div>
+        <div id="tabSetting" style="display: none;">
+                     <p> 设置功能包括： </p>
+                     <p>我的设备信息、添加设备、删除设备等 </p>
+                     <p>正在开发中，请等待... </p>
+        </div>
+   
+    </div>
+    <div class="weui-tabbar">
+       <a href="#tabObject" class="weui-tabbar__item">
+            <img src="../images/friends_group.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">客户/物品</p>
+        </a>
+        <a href="#tabAnalyse" class="weui-tabbar__item">
+            <span style="display: inline-block;position: relative;">
+                <img src="../images/pie-chart_graph.png" alt="" class="weui-tabbar__icon">
+                <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
+            </span>
+            <p class="weui-tabbar__label">统计</p>
+        </a>
+        <a href="#tabSetting" class="weui-tabbar__item">
+            <img src="../images/setting.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">设置</p>
+        </a>
+    </div>
+</div>  
+</body>
+
+</html>

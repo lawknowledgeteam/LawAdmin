@@ -1,0 +1,158 @@
+@charset "utf-8";
+/* CSS Document */
+* {
+	margin: 0;
+	spadding: 0;
+}
+
+.main_body {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-color: #eee;
+}
+
+header { /*标题栏*/
+	width: 100%;
+	height: 7vh;
+	background-color: #738ffe;
+	color: #fff;
+}
+
+header>.p2 { /*标题栏标题文本*/
+	color: #FFFFFF;
+	font-size: 2.5vh;
+	height: 7vh;
+	line-height: 7vh;
+	margin: 0 auto;
+	float: left;
+	margin-left: 30%;
+}
+
+header>.p1 { /*只有文字的标题栏文本*/
+	color: #FFFFFF;
+	font-size: 2.5vh;
+	height: 7vh;
+	line-height: 7vh;
+	text-align: center;
+}
+
+header>.button_right-top { /*标题栏右上角的按钮样式*/
+	float: right;
+	border: none;
+	color: #fff;
+	font-size: 2vh;
+	margin-top: 2.5vh;
+	margin-right: 1vh;
+	background-color: #738ffe;
+}
+
+.userImage>img { /*用户头像*/
+	display: block;
+	margin: 20px auto;
+	height: 150px;
+	width: 150px;
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+}
+
+.div_input { /*信息输入栏*/
+	width: 100%;
+	height: 7vh;
+	line-height: 7vh;
+	background-color: #fff;
+	color: #999999;
+	margin-bottom: 1px;
+}
+
+.div_forgetpw { /*忘记密码div*/
+	width: 100%;
+	height: 4vh;
+	line-height: 7vh;
+	font-size: 1.5vh;
+	color: #738ffe;
+}
+
+.title_forgetpw { /*忘记密码按钮*/
+	float: right;
+	border: none;
+	color: #738ffe;
+	font-size: 2vh;
+	margin-top: 1vh;
+	margin-right: 5vh;
+	background-color: #eee;
+}
+
+.title { /*信息输入栏的左标题*/
+	float: left;
+	height: 7vh;
+	width: 5em;
+	margin-left: 1vh;
+	font-size: 2vh;
+}
+
+.div_input>span { /*红色星号*/
+	color: red;
+	margin-left: -2vh;
+}
+
+.input_info { /*信息输入框*/
+	background-color: #ffffff;
+	height: 5.5vh;
+	line-height: 5.5vh;
+	width: 70%;
+	font-size: 2vh;
+	margin-top: 1vh;
+	float: right;
+	border: none;
+}
+
+.title_out { /*输入栏外的标题，例如自我介绍*/
+	height: 7vh;
+	line-height: 7vh;
+	width: 5em;
+	margin-left: 10px;
+	font-size: 2vh;
+	color: #999999;
+}
+
+.self_introduction>textarea { /*自我介绍文本框*/
+	width: 100%;
+	height: 10vh;
+	border: none;
+	font-size: 2vh;
+	color: #000000;
+	overflow-x: visible;
+	overflow-y: visible;
+}
+
+.arrow_right { /*向右箭头*/
+	float: right;
+	margin-right: 10%;
+	margin-top: 1.5vh;
+}
+
+.button_big { /*大按钮*/
+	background-color: #738ffe;
+	color: #fff;
+	font-size: 2vh;
+	margin-top: 5vh;
+	width: 60%;
+	height: 6vh;
+	line-height: 6vh;
+	border: none;
+	border-radius: 8px;
+}
+
+.button_small { /*小按钮*/
+	background-color: #738ffe;
+	color: #fff;
+	font-size: 2vh;
+	margin: 0 1vh;
+	margin-top: 3vh;
+	width: 40%;
+	height: 6vh;
+	line-height: 6vh;
+	border: none;
+	border-radius: 8px;
+}

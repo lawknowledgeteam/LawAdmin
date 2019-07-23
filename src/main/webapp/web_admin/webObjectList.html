@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="../third-party/bootstrap3.3.7dist/css/bootstrap.min.css">
+    <script src="../third-party/jquery/jquery-2.1.4.min.js"></script>
+    <script src="../third-party/bootstrap3.3.7dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../third-party/pagination.css">
+    <script type="text/javascript" src="../third-party/jquery.pagination.js"></script>
+    <link rel="stylesheet" href="../css/list-common.css">
+    <script type="text/javascript" src="../third-party/layer/layer.js"></script>
+    <title>物体信息列表</title>
+<style type="text/css">
+     
+</style>
+<script>
+    var itemsPerPage=10;
+    var pageIndex=0;
+    
+	$(function (){
+		search();
+	});
+	
+	
+		function getRecordCountCallback(json)
+		{  
+	        if(json.RecordCount==0) alert("设备数量等于0");
+	        $("#pagination").pagination(json.RecordCount,    //分布总数量，必须参数
+	            {
+	　　　　　　　　　                 callback: PageCallback,  //PageCallback() 为翻页调用次函数。
+	                  prev_text: "« 上一页",
+	                  next_text: "下一页 »",
+	                  items_per_page:itemsPerPage,
+	                  num_edge_entries: 2,       //两侧首尾分页条目数
+	                  num_display_entries: 3,    //连续分页主体部分分页条目数
+	                  current_page: 0,   //当前页索引
+	　　　　　　　　　
+	　　　            });
+	
+	 }
+	
+	function PageCallback(page,jq)
+	{
+		pageIndex=page;
+		getRecordList(pageIndex+1);
+	}
+	
+	
+    function getRecordList(page){
+    	var keyWord=$("#keyWord").val();
+        var dataInfo='page='+page;
+        $.ajax(
+                {
+                	url:'/object/web_getListPaging',
+                    dataType: "json",
+                    type: 'POST',
+                    data:{"pageIndex":page,"pageSize":itemsPerPage,"keyWord":keyWord},
+                    success:function (json) {
+                        displayRecordList(json);
+                    },
+                    error: function () {
+                        alert("web_getListPaging error page="+page);
+                    }
+                }
+        );
+    }
+
+    function  displayRecordList(json){
+        var recList='';
+        for(var i=0;i<json.recs.length;i++){      	
+        	recList+=' <tr>'+
+              	    '<td>'+(pageIndex*itemsPerPage+i+1)+'</td>'+
+                    '<td>'+json.recs[i].ObjectID+'</td>'+
+                    '<td>'+json.recs[i].MacAddress+'</td>'+
+                    '<td>'+json.recs[i].VendorName+'</td>'+  
+                    '<td>'+json.recs[i].Description+'</td>'+ 
+                    '<td>'+json.recs[i].CreateTime+'</td>'+
+                    '<td>'+json.recs[i].LastUpdateTime+'</td>'+
+                    '<td>'+json.recs[i].LastLocation+'</td>'+
+                    '<td><button type="button" onclick="editRecord('+json.recs[i].ObjectID+')" data-mini="true" style="background:#228B22; font-size: 14px; color:white;text-shadow: none;border-radius: 2px; margin:0;">修改备注</button>'+
+                    '<button type="button" onclick="ScanRecord(\''+json.recs[i].MacAddress+'\')" data-mini="true" style="background:#0090D7; font-size: 14px; color:white;text-shadow: none;border-radius: 2px; margin:0;">物体跟踪</button>'+'</td>'+
+                    '</tr>';
+        }
+        $("#recordList").html("");
+        $("#recordList").append(recList);
+    }
+    
+    
+    function refreshPage(){
+    	window.location.reload();
+    }
+    
+    function refreshList(){
+    	//window.location.reload();
+    	getRecordList(pageIndex+1);
+    }
+    
+    function addRecord(){
+    	layer.open({
+    		type: 2, 
+    		skin: 'layui-layer-rim',
+    		shadeClose:true , 
+    		area: ['400px', '300px'], 
+    		title: ['添加管理员信息','background:#0090D7;color:#FFFFFF;'], 
+    		shade: 0,  
+    		moveType: 0,  
+    		shift: 0, 
+    		content:'/object/web_add'
+    	});
+    }
+    function editRecord(id){
+    	layer.open({
+    		type: 2, 
+    		skin: 'layui-layer-rim',
+    		shadeClose:true , 
+    		area: ['500px', '300px'], 
+    		title: ['修改设备信息 ','background:#0090D7;color:#FFFFFF;'], 
+    		shade: 0,  
+    		moveType: 0,  
+    		shift: 0, 
+    		content:'/object/web_changeInfo?ID='+id
+    	});
+    }
+    
+    function ScanRecord(ObjectMac){
+    	layer.open({
+    		type: 2, 
+    		skin: 'layui-layer-rim',
+    		shadeClose:true , 
+    		area: ['1000px', '600px'], 
+    		title: ['物体跟踪 ','background:#0090D7;color:#FFFFFF;'], 
+    		shade: 0,  
+    		moveType: 0,  
+    		shift: 0, 
+    		content:'/scan/web_showList?keyWord='+ObjectMac
+    	});
+    }
+   
+    
+   
+    
+    function search(){
+		var keyWord=$("#keyWord").val();
+	    $.ajax({
+             url:'/object/web_getCount',
+             dataType: "json",
+             type: 'POST',
+             data:{"keyWord":keyWord},
+             success:function (json) {
+            	 getRecordCountCallback(json);
+             },
+             error: function () {
+                 alert("web_getObjectCount");
+             }
+         });
+    }
+</script>
+</head>
+<body>
+	<div class="main_info">
+		<div class="list_title">
+			<div class="title_caption">
+				<i class="glyphicon glyphicon-align-justify"></i>物体列表
+			</div>
+		</div>
+		<div class="list_toolbar">
+		    <div class="toolbar_search">
+				<div class="input-group input_info">
+				    <label style=" font-size: 14px; font-weight: 400;float:left; margin-top: 8px;margin-right: 6px;">查询条件</label>
+					<input type="text" class="form-control"
+						style="height: 35px; font-size: 14px; width:200px; font-weight: 500px; margin-left: 0px;"
+						id="keyWord" placeholder="MAC地址、备注等关键词"> <span
+						class="input-group-addon input_button" style="height: 35px; width: 35px;padding:0;" onclick="search()">
+						<img src="../images/find.png" onmouseover="this.src='../images/find3.png'"onmouseout="this.src='../images/find.png'">
+						</span>
+				</div>
+			</div>
+			<div class="toolbar_button">
+			    <button type="button" class="btn btn-default" onclick="window.location.reload()">刷新列表</button>
+				<button type="button" class="btn btn-default" onclick="addRecord()">手动添加物体</button>
+			</div>
+			
+		</div>
+
+		<div class="content_table">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>物体ID</th>
+						<th>MAC地址</th>
+						<th>厂商名称</th>
+						<th>备注</th>
+						<th>创建时间</th>
+						<th>更新时间</th>
+						<th>最后位置</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="recordList">
+				</tbody>
+			</table>
+		</div>
+		<div class="content_floor">
+			<div id="pagination" class="pagination"></div>
+		</div>
+	</div>
+</body>
+</html>

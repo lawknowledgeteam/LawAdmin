@@ -1,0 +1,25 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="multiple-select.css" rel="stylesheet"/>
+	<script type="text/javascript" src="../jquery-1.7.min.js"></script>
+	<script type="text/javascript" src="multiple-select.js"></script>
+</head>
+<body>
+    <select multiple="multiple" style="width:300px;">
+        <optgroup label="Group 1">
+            <option value="100">100</option>
+		    <option value="101">101</option>
+        </optgroup>
+        <optgroup label="Group 2">
+            <option value="200">200</option>
+			<option value="201">201</option>
+		</optgroup>
+    </select>
+    
+    <script>
+        $("select").multipleSelect({
+            filter: true,
+            multiple: true
+        });
+    </script>
+</body>

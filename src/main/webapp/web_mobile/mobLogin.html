@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0,  user-scalable=no" />
+<link rel="stylesheet" href="../third-party/bootstrap3.3.7dist/css/bootstrap.min.css">
+<script src="../third-party/jquery/jquery-2.1.4.min.js"></script>
+ <script src="../third-party/jquery/jquery.cookie.js"></script>
+    <script src="../third-party/bootstrap3.3.7dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../third-party/layer/layer.js"></script>
+    <script type="text/javascript" src="../third-party/md5.js" ></script>
+
+    <meta name="Keywords" content="客流分析" />
+    <meta name="Description" content="客流分析, WIFI探针" />
+    <link rel="icon" href="../images/logo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="../images/logo.ico" type="image/x-icon" />
+<title>登录</title>
+<style type="text/css">
+
+
+.main_top {
+	width: 100%;
+	height: 160px;
+	margin-top: 40px;
+	min-height: 160px;
+	/*background-color:#D2E9FF; */
+	background:url("../images/bg-m.jpg");
+	background-repeat:no-repeat;
+   	background-size: contain; 
+}
+
+.main_body {
+	width: 80%;
+	height: 50%;
+	margin-left: 10%;
+	margin-right: 10%;
+	float: left;
+	text-align: center;
+}
+
+#main_form {
+	margin-top: 20px;
+}
+
+.main_floor input {
+	border-radius: 8px;
+	font-size: 14px;
+}
+
+
+.banquan{ clear:both; text-align:center; line-height: 1.4; color:black; padding-bottom:5px; font-size:14px;}
+
+.txt-input {text-indent:10px; background: none repeat scroll 0 0 #fff;border: 1px solid #d7d7d7;border-radius:5px; color: #252525;font-size: 14px;height: 44px;width: 200px;}
+
+</style>
+
+<script>
+	$(function() {
+		
+		//layer.open({
+		//	  offset: 'auto',
+		//	  area: ['300px'],
+		//	  title: '重要提示',
+		//	  content: '&emsp;&emsp;360、搜狗、猎豹等国产浏览器，都是基于微软IE浏览器和谷歌chrome浏览器改版开发而来，但都存在一些兼容性问题，比如测评系统使用中无法选择分数、测评完后无法提交等问题。<br>&emsp;&emsp;苹果手机的浏览器，与谷歌chrome浏览器同源，但不如谷歌chrome浏览器兼容性好，因此使用手机测评时，建议安装使用谷歌chrome浏览器。'
+		//	});
+		//alert("360、搜狗、猎豹等国产浏览器，都是基于微软IE浏览器和谷歌chrome浏览器改版开发而来，但都存在一些兼容性问题，比如测评系统使用中无法选择分数、测评完后无法提交等问题。苹果手机的浏览器，与谷歌chrome浏览器同源，但不如谷歌chrome浏览器兼容性好，因此使用手机测评时，建议安装使用谷歌chrome浏览器。");
+    	
+	});  
+   
+   function checkInfo(){
+       var username=$("#idLoginName").val();
+       username=Trim(username);
+       if(username==""){
+           alert("账号不能为空");
+           return false;
+       }
+
+       var password=$("#idPassword").val();
+       password=Trim(password);
+       if(password==""){
+           alert("密码不能为空");
+           return false;
+       }
+       
+       var pwdMD5=hex_md5(password);
+       $('#idPassword').val(pwdMD5);
+
+      return  true;
+   }
+   
+   function Trim(str)
+   { 
+       return str.replace(/(^\s*)|(\s*$)/g, ""); 
+   }
+    
+  </script>
+</head>
+<body class="main_body">
+	<div class="main_top">
+	</div>
+	<div class="main_body">
+	    <div class="form-group">
+			 <p style="font-size:20px; font-weight:600;">客流分析系统</p>
+		</div> 
+		<form class="form-group" role="form" id="main_form" action="/m/loginPost" method="post" onsubmit="return checkInfo()">
+            <input style="display: none;"  type="text" name="mob" value='1'>
+			<div class="form-group">
+					<input class="txt-input"  type="text" 
+						name="LoginName" id="idLoginName" placeholder="请输入账号">
+			</div>
+			<div class="form-group">
+					<input class="txt-input" type="password" 
+						id="idPassword" name="pswMD5" placeholder="请输入密码">
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="btn" style="width: 200px; border-radius:5px; background: #F05600; color: #ffffff; font-size: 18px; height: 40px;" >登&nbsp;&nbsp;录</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

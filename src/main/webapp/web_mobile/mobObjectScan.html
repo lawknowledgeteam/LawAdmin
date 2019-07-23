@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<meta name="viewport" 	content="width=device-width, initial-scale=1.0, user-scalable=no" />
+	<link rel="icon" href="../images/logo.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="../images/logo.ico" type="image/x-icon" />
+	<title>客流宝数据管理系统</title>
+	<link href="../third-party/WeUI/weui.min.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="../third-party/WeUI/weui.min.js"></script>
+	<script src="../third-party/WeUI/zepto.min.js"></script>
+	<style>
+	  html,body{height: 100%;}
+	  
+	  .table{    width: 100%;  border-collapse:collapse;    border-spacing:1;}
+	  .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	       padding:4px 0px !important;
+	       border: 0px solid #ddd !important
+	    }
+	 .table>tbody>tr>td, .table>tbody>tr>th {
+	       padding:4px 0px !important;
+	       border: 0px solid #ddd !important;
+	       word-break:keep-all; /* for ie */
+           white-space:nowrap; /* for chrome */
+	    }   
+	 
+	 .table>thead>tr{
+		    display: table;
+		    width: 100%;
+		}
+		
+	.table>tbody{
+	    display: block;
+	    width: 100%;
+	    height: 520px;
+	    overflow-y: scroll;
+	}
+
+    table th {
+		background: #0090D7;
+		font-weight: normal;
+		line-height: 30px;
+		font-size: 15px;
+		color: #FFF;
+	}
+    
+    .table>tbody>tr {
+            display: table  ;
+		    width: 100%;
+			height: 14px;
+			text-align: left;
+		}
+		
+	 table tr:nth-child(odd) {
+			background: #FFFFDF;
+		}
+		
+     table tr:nth-child(even) {
+			background: #F2F5F7;
+		}
+	 table tr:hover {
+		background: #AADDFF;
+	color: #003D79;
+	}
+	
+	</style>
+	<script type="text/javascript" class="navbar js_show">
+	$(function(){
+		
+		getObjectList(1);
+	});
+    
+    function getObjectList(page){
+    	var itemsPerPage=100;
+        $.ajax(
+                {
+                	url:'/object/mob_getObjectRecordsPaging',
+                    dataType: "json",
+                    type: 'POST',
+                    data:{"pageIndex":page,"pageSize":itemsPerPage,"ObjectMac":"${(ObjectMac)!}","sToken":"${(sToken)!}", "CreateDate":"${(CreateDate)!}"},
+                    success:function (json) {
+                    	var recList='';
+                        for(var i=0;i<json.recs.length;i++){      	
+                        	recList+='<tr>'+
+                                    '<td>&ensp;'+json.recs[i].CreateTime+'</td>'+
+                                    '<td> '+json.recs[i].DeviceID+'&ensp;</td>'+ 
+                                    '<td> '+json.recs[i].Distance+'&ensp;</td>'+ 
+                                    '</tr>';
+                        }
+                        $("#recordList").html("");
+                        $("#recordList").append(recList);
+                    },
+                    error: function () {
+                        alert("web_getListPaging error page="+page);
+                    }
+                }
+        );
+    }
+  </script>
+</head>
+<body>
+  <div class="container" id="container">
+      <div class="page__hd" style="z-index: 9999; position: fixed ! important; height: 80px; width:100%">
+	         <p><a href="javascript:history.go(-1);" class="weui-cell" style="font-size:15px; height: 20px; color:#1475FF;">< 返回时长统计 </a></p>
+             <p style="font-size:14px; margin-left:14px; ">MAC地址：${(MacAddress)!}</p>
+             <p style="font-size:14px; margin-left:14px; ">生产商：${(VendorName)!}</p>
+             <p style="font-size:14px; margin-left:14px; ">备注：${(Description)!}</p>  
+      </div>
+      <div class="page__bd" style=" position: absolute ! important; top:110px; bottom:0px; right:0; width:100%;">    
+	         <table class="table" >
+				<thead>
+					<tr>
+						<th style="width:50%">时间</th>
+						<th style="width:30%">地点</th>
+						<th style="width:20%">距离(米)</th>
+					</tr>
+				</thead>
+				<tbody id="recordList">
+				</tbody>
+			</table>
+	</div>
+</div>  
+
+
+</body>
+
+</html>

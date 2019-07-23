@@ -1,0 +1,137 @@
+body {
+	background-color: #0;
+	min-height: 100%;
+	padding-bottom: 0;
+	font-family: 'Open Sans';
+	font-size: 13px;
+	color: #393939;
+}
+
+.main_info {
+	width: 100%;
+	float: left;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	background-color: #F2F5F7;
+}
+
+
+     .toolbar_search{
+          width: 350px;
+          height: 25px;
+          float: left;
+          margin-left: 3%;
+          
+      }
+     .toolbar_button{
+         width: auto;
+         height: 25px;
+         margin-left: 0%;
+         float: left;
+      }
+      
+      
+.list_title {
+	width: 90%;
+	height: 60x;
+	float: left;
+	clear: both;
+	background-color: #0;
+	display: inline-block;
+	font-size: 17px;
+	font-weight: 550;
+	color: rgb(68, 68, 68);
+	font-family: "Microsoft yahei", ΢���ź�, Tahoma, Verdana, Arial,
+		sans-serif;
+	padding: 0px;
+	margin-top: 10px;
+	margin-left: 15px;
+	margin-bottom: 8px;
+}
+
+.list_toolbar {
+	width: 98%;
+	height: 40px;
+	float: left;
+	clear: both;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	background-color: #F2F5F7;
+}
+
+.toolbar_button button {
+	background: #0090D7;
+	color: #FFF;
+}
+
+.input_button img {
+	width: 20px;
+	height: 20px;
+}
+
+.content_table {
+	width: 98%;
+	margin-left: 1%;
+	margin-top: 0px;
+}
+.glyphicon {
+	margin-right: 10px;
+}
+
+
+
+.content_table tr th, td {
+	height: 20px;
+	font-size: 15px;
+	text-align: center;
+}
+
+.content_floor {
+	width: 50%;
+	height: 0px;
+	margin-top: 0px;
+	margin-left: 40%;
+	float: left;
+}
+
+table {
+	width: 500px;
+	border: 0;
+	text-align: center;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+table th {
+	background: #0090D7;
+	font-weight: normal;
+	line-height: 15px;
+	font-size: 15px;
+	color: #FFF;
+}
+
+.table>thead>tr>th {
+	vertical-align: middle !important;
+}
+
+table tr {
+	height: 15px;
+}
+
+table tr:nth-child(odd) {
+	background: #FFFFDF;
+}
+
+table tr:nth-child(even) {
+	background: #F2F5F7;
+}
+
+table tr:hover {
+	background: #AADDFF;
+	color: #003D79;
+}
+
+table td, table th {
+	border: 1px solid #EEE;
+	padding: 4px 2px !important;
+}

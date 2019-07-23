@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>welcome</title>
+
+    <link rel="stylesheet" type="text/css" href="/web_pc/css/index_layout.css">
+
+    <link rel="shortcut icon" href="https://www.baidu.com/favicon.ico" type="image/x-icon">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="keywords" content="智能法律检索、案例检索、法律法规检索、智能判案、智能量刑、文书自动生成、智能法律问答">
+    <link href="/web_pc/css/chunk-common.css" rel="preload" as="style">
+
+    <link href="/web_pc/css/chunk-vendors.css" rel="preload" type="text/css">
+    <link href="/web_pc/css/index.css" rel="preload" type="text/css">
+    <link href="/web_pc/js/chunk-common.js" rel="preload" >
+    <link href="/web_pc/js/chunk-vendors.js" rel="preload" >
+    <link href="/web_pc/js/index.js" rel="preload" >
+    <link href="/web_pc/css/chunk-vendors.css" rel="stylesheet" type="text/css">
+    <link href="/web_pc/css/chunk-common.css" rel="stylesheet" type="text/css">
+    <link href="/web_pc/css/index.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/web_pc/css/chunk-common.css" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="/web_pc/css/navigator/LeftNav.css">
+
+</head>
+<body>
+<noscript>
+    <style>.noscript {
+        display: inline-block;
+        width: 100%;
+        font-size: 16px;
+        text-align: center;
+    }</style>
+</noscript>
+
+<div class="home c-font-normal">
+
+    <!--logo方案2：-->
+    <div id="menu" class="login-bar">
+        <img class="logo" src="/web_pc/images/logo.png" height="62" width="62" alt="logo"/>
+        <ul id="nav">
+            <li><a href="#">首页</a></li>
+            <li><a href="ofo_ours.html">关于我们</a></li>
+            <li><a href="app.jsp">下载APP</a></li>
+            <li><a href="joinUs.jsp">加入我们</a></li>
+        </ul>
+    </div>
+
+    <!--    这里是导航栏（选）-->
+
+    <!--以下是搜索框-->
+    <div class="main-wrap home-search-wrap">
+        <div class="home-search-mark"></div>
+        <div class="law-index home-search">
+            <div class="law-index-title">
+                <div class="search-tab clearfix el-tabs el-tabs--card el-tabs--top">
+                    <div class="el-tabs__header is-top">
+                        <div class="el-tabs__nav-wrap is-top">
+                            <div class="el-tabs__nav-scroll">
+                                <div role="tablist" class="el-tabs__nav is-top" style="transform: translateX(0px);">
+
+                                    <div id="tab-case" aria-controls="pane-case" role="tab" aria-selected="true"
+                                         tabindex="0" class="el-tabs__item is-top is-active">
+                                        <div class="el-badge search-tab-item-badge">案例检索<sup
+                                                class="el-badge__content el-badge__content--primary is-fixed"
+                                                style="display: none;"></sup></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="el-tabs__content">
+                        <div role="tabpanel" id="pane-case" aria-labelledby="tab-case" class="el-tab-pane"></div>
+                        <div role="tabpanel" aria-hidden="true" id="pane-statute" aria-labelledby="tab-statute"
+                             class="el-tab-pane" style="display: none;"></div>
+                        <div role="tabpanel" aria-hidden="true" id="pane-map" aria-labelledby="tab-map"
+                             class="el-tab-pane" style="display: none;"></div>
+                        <div role="tabpanel" aria-hidden="true" id="pane-inference" aria-labelledby="tab-inference"
+                             class="el-tab-pane" style="display: none;"></div>
+                        <div role="tabpanel" aria-hidden="true" id="pane-faq" aria-labelledby="tab-faq"
+                             class="el-tab-pane" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="law-index-search-wrapper">
+                <div class="c-font-normal law-index-search">
+                    <div class="search-wrapper">
+                        <div class="search-input-wrapper c-flexbox">
+                            <div class="search-input">
+                                <div class="el-input"><!----><input type="text" autocomplete="off"
+                                                                    placeholder="请输入标题、案由、当事人、法官、律师等"
+                                                                    class="el-input__inner"><!----><!----><!----><!---->
+                                </div>
+                                <ul class="c-color search-sug" style="display: none;"></ul>
+                            </div>
+<!--                            <div class="el-select search-select">&lt;!&ndash;&ndash;&gt;-->
+<!--                                <div class="el-input el-input&#45;&#45;suffix">&lt;!&ndash;&ndash;&gt;<input type="text" readonly="readonly"-->
+<!--                                                                                     autocomplete="off"-->
+<!--                                                                                     placeholder="请选择"-->
+<!--                                                                                     class="el-input__inner" value="全部">-->
+<!--                                    &lt;!&ndash;&ndash;&gt;<span class="el-input__suffix"><span class="el-input__suffix-inner"><i-->
+<!--                                            class="el-select__caret el-input__icon el-icon-arrow-up"></i>&lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;-->
+<!--                                        &lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;</span>&lt;!&ndash;&ndash;&gt;</span>&lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;</div>-->
+<!--                                <div class="el-select-dropdown el-popper" style="display: none; min-width: 120px;">-->
+<!--                                    <div class="el-scrollbar" style="">-->
+<!--                                        <div class="el-select-dropdown__wrap el-scrollbar__wrap"-->
+<!--                                             style="margin-bottom: -17px; margin-right: -17px;">-->
+<!--                                            <ul class="el-scrollbar__view el-select-dropdown__list">&lt;!&ndash;&ndash;&gt;-->
+<!--                                                <li class="el-select-dropdown__item selected"><span>全部</span></li>-->
+<!--                                                <li class="el-select-dropdown__item"><pan>标题</pan></li>-->
+<!--                                                <li class="el-select-dropdown__item"><span>案件字号</span></li>-->
+<!--                                                <li class="el-select-dropdown__item"><span>案由</span></li>-->
+<!--                                                <li class="el-select-dropdown__item"><span>法院</span></li>-->
+<!--                                                <li class="el-select-dropdown__item"><span>法官</span></li>-->
+<!--                                                <li class="el-select-dropdown__item"><span>律所</span></li>-->
+<!--                                                <li class="el-select-dropdown__item"><span>律师</span></li>-->
+<!--                                                <li class="el-select-dropdown__item"><span>当事人</span></li>-->
+<!--                                                <li class="el-select-dropdown__item"><span>法院观点</span></li>-->
+<!--                                                <li class="el-select-dropdown__item"><span>裁判依据</span></li>-->
+<!--                                                <li class="el-select-dropdown__item"><span>裁判结果</span></li>-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                        <div class="el-scrollbar__bar is-horizontal">-->
+<!--                                            <div class="el-scrollbar__thumb" style="transform: translateX(0%);"></div>-->
+<!--                                        </div>-->
+<!--                                        <div class="el-scrollbar__bar is-vertical">-->
+<!--                                            <div class="el-scrollbar__thumb" style="transform: translateY(0%);"></div>-->
+<!--                                        </div>-->
+<!--                                    </div>&lt;!&ndash;&ndash;&gt;</div>-->
+<!--                            </div>-->
+                            <button type="button" class="el-button search-btn el-button--primary"><!---->
+                                <!----><span>查询</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!----></div>
+    <footer data-v-15fbc661="" class="footer">
+
+        <!--        这里为网页主体部分，分两栏-->
+        <div data-v-15fbc661="" class="footer-middle">
+
+            <div class="product-content">
+                <div class="unit unit-box1">
+                    <h4>法律知识服务与知识管理平台</h4>
+                    <div class="left"></div>
+
+                    <script src="js/navigator/jquery.min.js" type="text/javascript"></script>
+                    <script src="js/navigator/LeftNav.js" type="text/javascript"></script>
+                    <script>
+                        var menu = {
+                            name: '', //名字
+                            level:'0',
+                            haschildren: true, //是否有子节点
+                            url: '#', //url路径
+                            isopen: true, //是否展开
+                            children: [{ //子节点
+                                name: '中华人民共和国刑法(1997修订)',
+                                level: '1',
+                                haschildren: true,
+                                url: '',
+                                isopen: true,
+                                children: [{
+                                    name: '第一章·危害国家安全罪',
+                                    level: '2',
+                                    haschildren: false,
+                                    url: '',
+                                    isopen: false,
+                                    children: ''
+                                }]
+                            }, {
+                                name: '2',
+                                level: '1',
+                                haschildren: true,
+                                url: '#',
+                                isopen: false,
+                                children: [{
+                                    name: '2.1',
+                                    level: '2',
+                                    haschildren: false,
+                                    url: '#',
+                                    isopen: false,
+                                    children: ''
+                                }, {
+                                    name: '2.2',
+                                    level: '2',
+                                    haschildren: false,
+                                    url: '#',
+                                    isopen: false,
+                                    children:''
+                                }]
+                            }]
+                        }
+                        //leftNav(menu)
+                        $.leftNav(".left",menu);
+                    </script>
+
+            </div>
+                <!--unit-box1-->
+
+                <div class="unit unit-box2">
+                    <h4>研究学习平台</h4>
+
+                    <dl>
+                        <dd class="t">
+                            <ul>
+                                <li class="left">
+                                    <h6><a href="http://x.cnki.net/" target="_blank">研究型学习平台</a></h6>
+                                    <a href="http://yjs.x.cnki.net/" target="_blank">研究生</a>
+                                    <a href="http://bks.x.cnki.net/" target="_blank">本科生</a>
+                                    <a href="http://x.cnki.net/" target="_blank">高职学生</a>
+                                    <a href="http://x.cnki.net/" target="_blank">中职学生</a>
+                                    <a href="http://yx.cnki.net/" target="_blank">中学生</a>
+                                </li>
+                                <li class="right">
+                                    <h6>大数据研究平台</h6>
+                                    <a href="http://pta.cnki.net/" target="_blank">专利分析</a>
+                                    <a href="http://image.cnki.net/" target="_blank">学术图片</a>
+                                    <a href="http://data.cnki.net/" target="_blank">统计数据</a>
+                                    <a href="http://elib.cnki.net/grid2008/brief/result.aspx?DbPrefix=hotspotcomp&amp;showTitle=%u5B66%u79D1%u5B66%u672F%u70ED%u70B9" target="_blank">学术热点</a>
+                                    <a href="http://expert.cnki.net/" target="_blank">学者库</a>
+                                    <a href="http://bd.cnki.net/" target="_blank">统计分析</a>
+                                    <a href="http://ctbd.cnki.net/" target="_blank">表格</a>
+                                </li>
+                                <li>
+                                    <h6><a href="http://okms.cnki.net/home/#page1" target="_blank">协同研究平台</a></h6>
+                                </li>
+                                <li>
+                                    <h6><a href="http://okms.cnki.net/home/zthome/ztindex" target="_blank">协同研究平台教学版</a></h6>
+                                </li>
+                                <li>
+                                    <h6><a href="http://projects.cnki.net/" target="_blank">科研项目申报信息库</a></h6>
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <img src="/web_pc/images/bar.jpg" alt="中国学术期刊（网络版）|外文资源总库" usemap="#guidemap">
+                    <map name="guidemap">
+                        <area shape="rect" coords="0,0,340,125" href="http://cajn.cnki.net/" target="_blank" hidefocus="true" onfocus="this.blur()">
+                        <area shape="rect" coords="340,0,500,125" href="http://scholar.cnki.net/new" target="_blank" hidefocus="true" onfocus="this.blur()">
+                    </map>
+                    <h4>出版平台&amp;评价</h4>
+                    <dl>
+                        <dd class="b">
+                            <ul>
+                                <li class="left">
+                                    <h6>出版平台</h6>
+                                    <a href="http://cb.cnki.net/" target="_blank">选刊投稿</a>
+                                    <a href="http://find.cb.cnki.net/" target="_blank">期刊采编发</a>
+                                    <a href="http://piccache.cnki.net/index/images2009/other/2018/%E4%B8%AD%E5%9B%BD%E7%9F%A5%E7%BD%91%E7%BD%91%E7%BB%9C%E5%87%BA%E7%89%88%E6%96%87%E7%8C%AE%E5%87%BA%E7%89%88%E7%8A%B6%E6%80%81%E5%8F%98%E6%9B%B4%E4%B8%8E%E5%86%85%E5%AE%B9%E6%9B%B4%E6%AD%A3%E8%A7%84%E8%8C%83%EF%BC%88%E8%AF%95%E8%A1%8C%EF%BC%89.pdf" target="_blank">知网出版规范</a><br>
+                                    <a href="http://caj.cnki.net/eapf/cajn" target="_blank">网络首发</a>
+                                    <a href="http://caj.cnki.net/eapf" target="_blank">优先出版</a>
+                                    <a href="http://fast.cnki.net/" target="_blank">印后上网</a>
+                                    <a href="http://www.graduate.cnki.net/" target="_blank">研究生综合管理与学位论文出版</a>
+                                    <a href="http://conf.cnki.net/" target="_blank">中国学术会议信息</a>
+                                    <a href="http://www.cnki.net/other/gonggao/GCTG/%E5%85%A8%E5%9B%BD%E5%90%84%E4%BD%8D%E7%A0%94%E7%A9%B6%E7%94%9F%E6%95%AC%E5%90%AF2.html" target="_blank">学位论文领取稿酬通告</a>
+                                </li>
+                                <li class="right">
+                                    <h6><a href="http://epub.cnki.net/kns/subPage/Evalu.aspx" target="_blank">科研统计与期刊评价</a></h6>
+                                    <a href="http://www.jif.cnki.net/Core/" target="_blank">个刊分析</a>
+                                    <a href="http://cjcr.cnki.net/" target="_blank">期刊评价</a>
+                                    <a href="http://www.jif.cnki.net/Core/Cajes.aspx" target="_blank">期刊管理</a>
+                                    <a href="http://xsjy.cnki.net/" target="_blank">论文评价</a>
+                                    <a href="http://www.cbad.cnki.net/" target="_blank">图书评价</a>
+                                    <a href="http://cdmdpj.cnki.net/" target="_blank">博硕统计</a>
+                                    <a href="http://pj.cnki.net/" target="_blank">医院评价</a>
+                                    <a href="http://www.usad.cnki.net/" target="_blank">高校评价</a>
+                                    <a href="http://www.tsad.cnki.net/" target="_blank">智库评价</a>
+                                </li>
+                                <li>
+                                    <h6><a href="http://oversea.cnki.net/" target="_blank">国际出版</a></h6>
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+
+            </div>
+            <!--product-content-->
+        </div>
+        <div data-v-15fbc661="" class="footer-bottom">
+            <div data-v-15fbc661="" class="footer-copyright">
+                 ……i'm the footer-bottom
+                <a data-v-15fbc661="" target="_blank" href="https://www.baidu.com/duty/"></a></div>
+        </div>
+    </footer>
+    <div data-v-89e1a9a6="" class="stick-platform-wrapper">
+        <div data-v-89e1a9a6="" class="stick-inner">
+            <ul data-v-89e1a9a6="" class="plat-custom-service plat-stick-list">
+                <li data-v-89e1a9a6="" class="plat-stick-item go-provider notShow"><a data-v-89e1a9a6=""
+                                                                                      class="plat-service-link plat-merchant-service-entry"><i
+                        data-v-89e1a9a6="" class="icon icon-merchant"></i></a>
+                    <div data-v-89e1a9a6="" class="plat-service-sub">
+                        <div data-v-89e1a9a6="" class="plat-service-sub-title">服务商咨询</div>
+                    </div>
+                </li>
+                <li data-v-89e1a9a6="" class="plat-stick-item go-service-item"><a data-v-89e1a9a6=""
+                                                                                  class="plat-service-link plat-online-consult-entry"><i
+                        data-v-89e1a9a6="" class="icon icon-kefu"></i><i data-v-89e1a9a6=""
+                                                                         class="icon icon-kefu-active"></i></a>
+                    <div data-v-89e1a9a6="" class="plat-service-sub">
+                        <div data-v-89e1a9a6="" class="plat-service-sub-title notShow">在线咨询</div>
+                        <div data-v-89e1a9a6="" class="plat-service-sub-content notShow"><span data-v-89e1a9a6=""
+                                                                                               class="plat-service-sub-detail">平台客服</span><i
+                                data-v-89e1a9a6="" class="icon icon-plat"></i></div>
+                        <div data-v-89e1a9a6="" class="plat-service-sub-title">电话咨询</div>
+                        <div data-v-89e1a9a6="" class="plat-service-sub-content"><span data-v-89e1a9a6=""
+                                                                                       class="plat-service-sub-detail">客服一线：010-50803328</span><br
+                                data-v-89e1a9a6=""><span data-v-89e1a9a6="" class="plat-service-sub-detail">客服二线：010-59924254</span>
+                        </div>
+                        <div data-v-89e1a9a6="" class="plat-service-sub-title">工作时间</div>
+                        <div data-v-89e1a9a6="" class="plat-service-sub-content"><span data-v-89e1a9a6=""
+                                                                                       class="plat-service-sub-detail">周一至周五 10:00 ~ 18:00</span>
+                        </div>
+                    </div>
+                    <input data-v-89e1a9a6="" type="hidden" value=""><input data-v-89e1a9a6="" type="hidden"
+                                                                            value=""><input data-v-89e1a9a6=""
+                                                                                            type="hidden" value=""></li>
+                <li data-v-89e1a9a6="" class="plat-stick-item go-top-item"><a data-v-89e1a9a6=""
+                                                                              class="plat-service-link"><i
+                        data-v-89e1a9a6="" class="icon icon-top"></i><i data-v-89e1a9a6=""
+                                                                        class="icon icon-top-active"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>function IEVersion() {
+    var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+    var isIE = userAgent.indexOf('compatible') > -1 && userAgent.indexOf('MSIE') > -1; //判断是否IE<11浏览器
+    var isEdge = userAgent.indexOf('Edge') > -1 && !isIE; //判断是否IE的Edge浏览器
+    var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf('rv:11.0') > -1;
+    if (isIE) {
+        var reIE = new RegExp('MSIE (\\d+\\.\\d+);');
+        reIE.test(userAgent);
+        var fIEVersion = parseFloat(RegExp['$1']);
+        if (fIEVersion === 7) {
+            return 7;
+        } else if (fIEVersion === 8) {
+            return 8;
+        } else if (fIEVersion === 9) {
+            return 9;
+        } else if (fIEVersion === 10) {
+            return 10;
+        } else {
+            return 6;//IE版本<=7
+        }
+    } else if (isEdge) {
+        return 'edge';//edge
+    } else if (isIE11) {
+        return 11; //IE11
+    } else {
+        return -1;//不是ie浏览器
+    }
+}
+
+var ieVersion = IEVersion();
+if (ieVersion > -1 && ieVersion < 9) {
+    location.href = '/static/law/desktop/sorry.html';
+}</script>
+<script>/* eslint-disable */
+var _hmt = _hmt || [];
+(function () {
+    var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?ac8fb11c31cd3cf585523fd58e170e95';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+/* eslint-enable */</script>
+</body>
+</html>

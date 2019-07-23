@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../third-party/jquery/jquery.mobile-1.4.5.min.css" />
+
+<script src="../third-party/jquery/jquery.js"></script>
+<script src="../third-party/jquery/jquery.mobile-1.4.5.min.js"></script>
+<script src="../third-party/jquery/jquery.form.min.js"></script>
+
+<title>物体信息</title>
+<style type="text/css">
+</style>
+<script type="text/javascript">
+         function checkInfo(){
+        	
+        	/* if($("#RealName").val()==""){
+        		alert("姓名不能为空， 请输入！");
+        		return false;
+        	} */
+        	
+         }
+        $(document).ready(function() {
+	    	$("#main_form").ajaxForm({
+	    	dataType: "json"
+	    	, success: function(json) {
+	    		if(json.code=="0000")
+	    		{
+	    			alert("保存成功！");	
+	    			parent.refreshList();
+	    			var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+	    			parent.layer.close(index);
+	    		}	   
+	    		else
+	    			alert(json.msg);
+	    	}
+	    	, error: function(ret) {}
+	    	});
+	    });
+       
+    </script>
+</head>
+
+<body class="main_body">
+	<div data-role="page" id="" data-title="物体备注信息">
+
+		<div data-role="content">
+			<form id="main_form" role="form"
+				action="/object/web_saveObjectInfo?ID=${(rec.ObjectID)!}" method="post" onsubmit="return checkInfo()">
+
+				 
+                 <div data-role="ui-field-contain">
+					<div style="width: 13%; float: left; display: table">
+						<p>备&nbsp;&nbsp;注</p>
+					</div>
+					<div style="width: 86%; float: left">
+					    <textarea style="height:100px;word-wrap: break-word; overflow-x: hidden;" name="Description"  id="objDesc"  placeholder="请输入描述，250字以内" >${(rec.Description)!}</textarea>
+					</div>
+				</div>
+                 
+				<button type="submit"
+					style="margin-top: 10px; background: #5cb85c; color: white; text-shadow: none;">保&nbsp;存</button>
+
+			</form>
+		</div>
+	</div>
+
+</body>
+</html>

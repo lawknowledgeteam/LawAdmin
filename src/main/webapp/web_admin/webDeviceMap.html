@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+   
+    <link rel="stylesheet" href="../third-party/bootstrap3.3.7dist/css/bootstrap.min.css">
+    <script src="../third-party/jquery/jquery-2.1.4.min.js"></script>
+    <script src="../third-party/bootstrap3.3.7dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../third-party/pagination.css">
+    <script type="text/javascript" src="../third-party/jquery.pagination.js"></script>
+    <link rel="stylesheet" href="../css/list-common.css">
+    <script type="text/javascript" src="../third-party/layer/layer.js"></script>
+    <script src="../third-party/esmap/esmap.min.js" ></script >
+<style type="text/css">
+    #map-container{
+        height: 650px;
+    }
+</style>
+</head>
+<body>
+<div id="map-container">
+
+</div>
+<div>
+    <button id="btn2D" class="btn btn-default">2D</button>
+    <button id="btn3D" class="btn btn-default">3D</button>
+</div>
+
+<!--<div class="list_toolbar">
+    <div class="time_select">
+        <label style=" font-size: 14px; font-weight: 400;float:left;margin-top: 8px;margin-right: 6px;">查询日期</label>
+        <input type="date"
+               style="margin-left: 0px;float: left;height: 35px; font-size: 14px;"
+               id="startTime"
+        >
+        <span style="float: left;font-size: 20px;">-</span>
+        <input type="date"
+               style="margin-left: 0px;float: left;height: 35px; font-size: 14px;"
+               id="endTime"
+        >
+        <div class="toolbar_search">
+            <div class="input-group input_info">
+                <input type="text" class="form-control"
+                       style="height: 35px; font-size: 14px; width:200px; font-weight: 500px; margin-left: 0px;"
+                       id="keyWord" placeholder="MAC地址等关键词"> <span
+                    class="input-group-addon input_button"
+                    style="height: 35px; width: 35px;" onclick="search()"><img
+                    src="../images/find.png"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div  id="main" style="width:98%;height: 600px">
+</div>-->
+<script type="text/javascript">
+    var heatmapInstance = null;
+    var map = new esmap.ESMap({
+        container: document.getElementById('map-container'),  //地图显示容器
+        mapDataSrc: "/third-party/esmap/", //地图数据位置，与推荐目录相同可省略
+        mapThemeSrc: "/third-party/esmap/theme/", //地图主题位置，与推荐目录相同可省略
+        token:'wxyjrc',                //打开地图对应的token
+        focusAlphaMode: false,               //对不可见图层启用透明设置 默认为true
+        focusAnimateMode: false,            //开启聚焦层切换的动画显示
+        focusAlpha: 0.1,                    //对不聚焦图层启用透明设置，当focusAlphaMode = true时有效
+        viewModeAnimateMode: false,         //开启2维，3维切换的动画显示
+        moveToAnimateMode: false,           //地图定位跳转动画设置
+        defaultScaleLevel: 12,              //设置默认显示级别,1到24之间的整数
+        modelSelectedEffect: true,          //支持单击模型高亮，false为单击时模型不高亮
+        visibleFloors: [1,2,3],             //初始显示楼层
+        focusFloor: 1,                      //初始聚焦楼层
+        themeID: '2006',                    //自定义样式主题ID
+        compassSize: 64,                    //指北针大小
+        compassOffset: [40, 40],            //指北针初始位置
+        viewMode: esmap.ESViewMode.MODE_3D 	//初始二维还是三维状态
+    });
+    map.showCompass = true;     //显示指北针
+    //声明初始化楼层控制组件
+    var ctlOpt = new esmap.ESControlOptions({
+        position: esmap.ESControlPositon.RIGHT_TOP,
+        imgURL: "/third-party/esmap/wedgets/"
+    });
+    //打开地图数据
+    map.openMapById('2100001');
+    //地图加载完成事件
+    map.on('loadComplete', function () {
+        //创建楼层控件
+        floorControl = new esmap.ESScrollFloorsControl(map, ctlOpt);
+        //单层多层切换按钮
+        var toolControl = new esmap.ESToolControl(map,ctlOpt);
+
+        //折叠式按钮的楼层控件
+       // floorControl = new esmap.ESButtonFloorsControl(map, ctlOpt);
+    });
+
+    // 配置热力图密度级别
+    //levels = [0.1, 0.3, 0.7, 0.8, 1.6];
+
+    //配置热力图渐变色值
+    gradient = { 0.45: "rgb(201,135,255)", 0.55: "rgb(189,97,255)", 0.65: "rgb(155,49,255)", 0.95: "yellow", 1.0: "rgb(157,53,255)" }
+    //添加热力图方法,根据json文件
+    var addHeatMap = function (map, fID) {
+        console.log(fID);
+        // 创建热力图对象
+        if (!heatmapInstance)
+            heatmapInstance = esmap.ESHeatMap.create(map, {
+                radius: 10, //热点半径
+                opacity: .5, //热力图透明度
+                max: 100 //热力点value的最大值
+                // maxSize:4096
+                // gradient: gradient //渐变色值，可配
+                // 系统默认值：
+                // .45: "rgb(0,0,255)",
+                // .55: "rgb(0,255,255)",
+                // .65: "rgb(0,255,0)",
+                // .95: "yellow",
+                // 1: "rgb(255,0,0)"
+            });
+        heatmapInstance.clearPoints();
+
+        heatmapInstance.addPoint(13040450.89788091, 4393758.781516836,15);
+        heatmapInstance.addPoint(13040451.23454717, 4393754.6086220695,100);
+
+        //热力图应用到哪一楼层
+        heatmapInstance.disposeHeatMap(fID);
+        var floorLayer = map.getFloor(fID);
+        floorLayer.applyHeatMap(heatmapInstance);
+    }
+    //随机添加热力图方法
+    var addHeatMap1 = function (map, fID) {
+        // 创建热力图对象
+        if (!heatmapInstance)
+            heatmapInstance = esmap.ESHeatMap.create(map, {
+                radius: 20, //热点半径
+                opacity: .5, //热力图透明度
+                max: 100 //热力点value的最大值
+            });
+        heatmapInstance.clearPoints();
+        heatmapInstance.randomPoints(200);
+
+        // heatmapInstance.disposeHeatMap(fID)
+        //热力图应用到哪一楼层
+        var floorLayer = map.getFloor(fID);
+        floorLayer.applyHeatMap(heatmapInstance);
+    }
+    //2维模式
+    $('#btn2D').on('click', function () {
+        map.viewMode = esmap.ESViewMode.MODE_2D;//2维模式
+    });
+
+    //3维模式
+    $('#btn3D').on('click', function () {
+        map.viewMode = esmap.ESViewMode.MODE_3D;; //3维模式
+    });
+    map.on('mapClickNode', function(event) {
+        var layer = new esmap.ESLayer(esmap.ESLayerType.TEXT_MARKER);
+        //可以给图层添加自定义name
+        layer.name = 'mylayer'
+        console.log(event)
+    });
+    //移除应用热力图
+    $('#hpHide').on('click', function () {
+        var floorLayer = map.getFloor(map.focusFloorNum);
+        floorLayer.removeHeatMap(heatmapInstance);
+    });
+    //在当前聚焦楼层应用热力图
+    $('#hpshow').on('click', function () {
+        addHeatMap(map, map.focusFloorNum);
+    });
+    $('#hpshow1').on('click', function () {
+        addHeatMap1(map, map.focusFloorNum);
+    });
+</script>
+</body>
+</html>

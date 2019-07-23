@@ -1,0 +1,275 @@
+*{
+    margin:0;
+    padding:0;
+}
+#container{
+    width: auto;
+    height: auto;
+    min-width: 990px;
+}
+#menu{
+    z-index: 99;
+    background-color:  rgba(0,0,0,0.6);
+    width:100%;
+    min-width: 990px;
+    height:100px;
+    margin:0 auto;
+    position: fixed;
+    float: top;
+}
+.header{
+    margin: 0 auto;
+    margin-bottom: 5px;
+    width: 1350px;
+    height: auto;
+    background-size: cover;
+}
+#left{
+    background:url("../images/share_img.png") center no-repeat;
+    width: 333px;
+    height:200px;
+    float: left;
+    background-size: cover;
+}
+#center1{
+    background:url("../images/new_img-1.jpg") center no-repeat;
+    width:333px;
+    height: 200px;
+    float: left;
+    margin-left: 5px;
+    background-size: cover;
+}
+#center2{
+    background:url("../images/family_img.png") center no-repeat;
+    width: 333px;
+    height: 200px;
+    float: left;
+    margin-left:5px;
+    background-size: cover;
+}
+#right{
+    background:url("../images/active_img.jpg") center no-repeat;
+    width:333px;
+    height:200px;
+    float: left;
+    margin-left: 5px;
+    background-size: cover;
+}
+#footer{
+    background-color: rgb(25,25,25);
+    width:1350px;
+    height:230px;
+    float :left;
+    margin-top: 5px;
+}
+#footer2{
+    width: 1350px;
+    height: 50px;
+    background-color: rgb(25,25,25);
+    margin:0 auto;
+    float: left;
+    border-top-width: 1px ;
+    border-top-style: solid;
+    border-top-color: #2b2b2b;
+}
+#container2{
+    width: 1350px;
+    height: 280px;
+}
+
+.logo{
+    width: 62px;
+    height: 62px;
+    margin-left: 250px;
+    margin-top: 20px;
+}
+#nav{
+    float: right;
+    margin-right: 200px ;
+    margin-top: 40px;
+}
+#nav li{
+    float: left;
+    width:100px;
+    height: 20px;
+    line-height: 20px;
+    color: #ffffff;
+    list-style-type: none;
+}
+#nav li a{
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bolder;
+    font-family: Microsoft YaHei;
+}
+.showdetails{
+    width:100px;
+    height: 35px;
+    border:solid 1px #ffffff;
+    margin-top: 120px;
+    margin-left: 60px;
+    font-family: Microsoft YaHei;
+    text-align: center;
+    line-height: 35px;
+
+    border-radius: 20px;
+    color: #ffffff;
+    
+
+}
+
+.textstyle{
+    margin-top: 40px;
+    margin-left:30px;
+    color: #ffffff;
+    font-size: 25px;
+    float: left;
+    font-family: Microsoft YaHei;
+    
+}
+
+.showdetails:hover{
+    color: #000000;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+#left a, #center1 a, #center2 a, #right a{
+	text-decoration: none;
+	color: #000000;
+	background-color: #ffffff;
+}
+.headpic{
+    width: 100%;
+    height: auto;
+}
+
+.footerpic{
+    width: 328.5px;
+    height: 39.75px;
+    margin-left: 500px;
+    margin-top: 35px;
+    float: left;
+}
+
+.weibo{
+    margin-top :150px;
+    margin-left: -200px;
+    
+}
+.wechat{
+    margin-top :150px;
+    margin-left: 10px;
+    
+}
+.footertext{
+	text-align:center;
+}
+
+
+.ftext1 {
+    font-size: 12px;
+    color: #a3a3a3;
+    margin-left: 550px;
+    margin-top: 30px;
+    font-family: Microsoft YaHei;
+    float: left;
+}
+
+.ftext2 {
+    font-size: 12px;
+    color: #a3a3a3;
+    margin-left: 540px;
+    margin-top: 5px;
+    font-family: Microsoft YaHei;
+    float: left;
+}
+.ftext3{
+    font-size: 12px;
+    font-family: Microsoft YaHei;
+    color: #a3a3a3;
+    margin-left: 270px;
+    margin-top: 10px;
+    float: left;
+}
+
+
+
+
+
+ ul, ol {
+     padding: 0;
+ }
+.banner {
+	width: 100%;
+	height: auto;
+    position: relative;
+    overflow: auto;
+    text-align: center;
+}
+.banner li {
+    list-style: none;
+}
+.banner ul li {
+    float: left;
+}
+#b04 {
+    width: 640px;
+}
+#b04 .dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+}
+#b04 .dots li
+{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    text-indent: -999em;
+    border: 2px solid yellow;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: .4;
+    -webkit-transition: background .5s, opacity .5s;
+    -moz-transition: background .5s, opacity .5s;
+    transition: background .5s, opacity .5s;
+}
+#b04 .dots li.active
+{
+    background: yellow;
+    opacity: 1;
+}
+#b04 .arrow {
+    position: absolute;
+    top: 200px;
+}
+#b04 #al {
+    left: 15px;
+}
+#b04 #ar {
+    right: 15px;
+}
+
+
+.wechat-qrcode {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    top: 24px;
+    left: 50%;
+    margin-left: -75px;
+    z-index: 9;
+    display: none;
+}
+
+#textbody {
+    font-size: 12px;
+    font-family: Microsoft Yahei, Avenir, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+    color: #666;
+}
+body {
+    font-family: Microsoft Yahei, Avenir, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
+}

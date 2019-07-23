@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+*{ font-family:Microsoft Yahei;}
+
+ ul, li{ margin:0; padding:0 ; list-style:none;}
+
+
+.divBtnLogin{margin-left:-10px;text-align:center;  border-radius:10px; margin-top:15px;}
+
+.asinput{ float:left; background-color:white !important; margin-left:15px; height:29px;border:0; outline-color:#F4CB8D; line-height:29px;font-size:15px; width:180px;  margin-top:2px; }
+.bsinput{ float:left; background-color:white !important; margin-left:15px; height:29px;border:0; outline-color:#F4CB8D; line-height:29px; font-size:15px; width:80px;margin-top:2px;  }
+.logintext{ margin-left:50px; margin-top:90px;opacity: 1;z-index:100;}
+.logintext li{ height:35px;width:230px; margin-bottom:10px;}
+.asborder{border:1px solid #E88000; width:200px;background:#fff; border-radius:10px;}
+.bsborder{border:1px solid #E88000; width:200px;background:#fff; border-radius:10px;}
+.aicon{ float:left; background:  url(../images/login/icona.jpg);width:17px; height:17px; margin-top:9px;margin-left:8px; }
+.bicon{ float:left; background:  url(../images/login/iconb.jpg);width:17px; height:17px; margin-top:9px;margin-left:8px; }
+.cicon{ float:left; background:  url(../images/login/iconc.jpg);width:17px; height:17px; margin-top:9px;margin-left:8px; }
+.vcode{ float:left; margin-left:30px; }
+.vcode img{ width:74px; height:34px; }

@@ -1,0 +1,296 @@
+@charset "utf-8";
+
+/* 这个css是初始化的css，在任何手机项目里面都可以使用 */
+
+
+/* 禁用iPhone中Safari的字号自动调整 */
+
+html {
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	/* 解决IOS默认滑动很卡的情况 */
+	/* -webkit-overflow-scrolling : touch; */
+}
+
+* {
+	-moz-box-sizing: border-box;
+	/* Firefox */
+	-webkit-box-sizing: border-box;
+	/* Safari */
+	box-sizing: border-box;
+}
+
+
+/* 禁止缩放表单 */
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input {
+	resize: none;
+	border: none;
+}
+
+
+/* 取消链接高亮 */
+
+a {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+/* 设置HTML5元素为块 */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
+	display: block;
+}
+
+
+/* 图片自适应 */
+
+img {
+	max-width: 100%;
+	height: auto;
+	max-width: auto\9;
+	/* ie8 */
+	display: block;
+	-ms-interpolation-mode: bicubic;
+	/*为了照顾ie图片缩放失真*/
+}
+
+
+/* 初始化 */
+
+body,
+div,
+ul,
+li,
+ol,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+input,
+textarea,
+select,
+p,
+dl,
+dt,
+dd,
+a,
+img,
+button,
+form,
+table,
+th,
+tr,
+td,
+tbody,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font: 12px/1.5 'Microsoft YaHei', '宋体', Tahoma, Arial, sans-serif;
+	color: #555;
+	background-color: #F7F7F7;
+}
+
+em,
+i {
+	font-style: normal;
+}
+
+ul,
+li,
+ol {
+	list-style-type: none;
+}
+
+strong {
+	font-weight: normal;
+}
+
+.clearfix:after {
+	content: "";
+	display: block;
+	visibility: hidden;
+	height: 0;
+	clear: both;
+}
+
+.clearfix {
+	zoom: 1;
+}
+
+a {
+	text-decoration: none;
+	color: #969696;
+	font-family: 'Microsoft YaHei', Tahoma, Arial, sans-serif;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 100%;
+	font-family: 'Microsoft YaHei';
+}
+
+img {
+	border: none;
+}
+
+input {
+	font-family: 'Microsoft YaHei';
+}
+
+
+/*单行溢出*/
+
+.one-txt-cut {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+
+/*多行溢出 手机端使用*/
+
+.txt-cut {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+.w50 {
+	width: 50%;
+}
+
+.w25 {
+	width: 25%;
+}
+
+.w20 {
+	width: 20%;
+}
+
+.w33 {
+	width: 33.333333%;
+}
+
+.w {
+	width: 7.5rem;
+	margin: 0 auto;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+.db {
+	display: block !important;
+}
+
+.dn {
+	display: none;
+}
+
+
+/*顶部*/
+
+.title {
+	width: 7.5rem;
+	height: 0.88rem;
+}
+
+.title .back {
+    display: inline-block;
+    width: 1.5rem;
+    height: 0.88rem;
+    text-align: center;
+    color: #FFFFFF;
+    float: left;
+    background: url(../img/back.png);
+    background-size: auto 70%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.title .logo {
+	width: 4.5rem;
+	/* float: left; */
+	text-align: center;
+	margin: 0 auto;
+	font-size: 0.36rem;
+	line-height: 0.88rem;
+	color: #FFFFFF;
+}
+
+/*底部*/
+
+.foot {
+	width: 7.5rem;
+	height: 1rem;
+	background: #FFFFFF;
+	position: fixed;
+	bottom: 0;
+	-moz-box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.1);
+}
+
+.foot li {
+	width: 20%;
+	float: left;
+	text-align: center;
+	font-size: 0.24rem;
+}
+
+.foot li img {
+	width: 0.44rem;
+	height: 0.44rem;
+	margin: 0.1rem auto 0;
+}
+
+.foot li.b_center img {
+	width: 0.8rem;
+	height: 0.8rem;
+}
+
+.foot li.select {
+	color: #28cec3;
+}

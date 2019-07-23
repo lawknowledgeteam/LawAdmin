@@ -1,0 +1,5 @@
+# true 值支持热加载
+undertow.devMode=true
+undertow.port=8093
+#undertow.hotSwapClassPrefix=cn.dreampie.
+#undertow.host=211.87.227.204
