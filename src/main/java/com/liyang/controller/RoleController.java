@@ -13,6 +13,7 @@ import com.liyang.common.Util;
 import com.liyang.model.Admin;
 import com.liyang.model.Role;
 
+///role/web_showRoleList
 public class RoleController extends Controller {
 
 	
