@@ -11,7 +11,7 @@
     <script type="text/javascript" src="../third-party/jquery.pagination.js"></script>
     <link rel="stylesheet" href="../css/list-common.css">
     <script type="text/javascript" src="../third-party/layer/layer.js"></script>
-    <title>设备信息列表</title>
+    <title>法律案例列表</title>
     <style type="text/css">
 
     </style>
@@ -53,7 +53,7 @@
             var dataInfo='page='+page;
             $.ajax(
                 {
-                    url:'/device/web_getListPaging',
+                    url:'/lawcase/web_getListPaging',
                     dataType: "json",
                     type: 'POST',
                     data:{"pageIndex":page,"pageSize":itemsPerPage,"keyWord":keyWord},
@@ -101,37 +101,21 @@
         function  displayRecordList(json){
             var recList='';
             for(var i=0;i<json.recs.length;i++){
-
-
-                if(json.recs[i].State==0)
-                    json.recs[i].State="正常";
-                else
-                    json.recs[i].State="停用";
-
+                console.log(json.recs.length);
                 recList+=' <tr>'+
                     '<td>'+(pageIndex*itemsPerPage+i+1)+'</td>'+
-                    '<td>'+json.recs[i].DeviceID+"("+long2MacAddress(json.recs[i].DeviceID)+')</td>'+
-                    '<td>'+json.recs[i].DeviceKey+'</td>'+
-                    '<td>'+json.recs[i].Location+'</td>'+
-                    '<td>'+json.recs[i].CreateTime+'</td>'+
-                    '<td>'+json.recs[i].LastUpdateTime+'</td>'+
-                    '<td>'+json.recs[i].LastIPAddress+'</td>'+
-                    '<td>'+json.recs[i].State+'</td>'+
-                    '<td><button type="button" onclick="editRecord('+json.recs[i].DeviceNo+')" data-mini="true" style="background:#228B22; font-size: 14px; color:white;text-shadow: none;border-radius: 2px; margin:0;">修改</button>';
+                    '<td>'+json.recs[i].CaseID+'</td>'+
+                    '<td>'+json.recs[i].Abstract+'</td>'+
+                    '<td>'+json.recs[i].Keywords+'</td>'+
+                    '<td>'+json.recs[i].TrialCourt+'</td>'+
+                    '<td>'+json.recs[i].CaseKind+'</td>'+
+                    '<td>'+json.recs[i].Number+'</td> </tr>' ; /*+
+                    '<td><button type="button" onclick="editRecord('+json.recs[i].DeviceNo+')" data-mini="true" style="background:#228B22; font-size: 14px; color:white;text-shadow: none;border-radius: 2px; margin:0;">修改</button>';*/
 
-                if(json.recs[i].State=="正常")
-                {
-                    recList+='&nbsp;<button type="button" onclick="changeState('+json.recs[i].DeviceNo+',0'+')" data-mini="true" style="background:#d9534f;font-size: 14px; color:white;text-shadow: none;border-radius: 2px;">停用</button></td>'+
-                        '</tr>';
-                }
-                else
-                {
-                    recList+='&nbsp;<button type="button" onclick="changeState('+json.recs[i].DeviceNo+',1'+')" data-mini="true" style="background:#228B22;font-size: 14px; color:white;text-shadow: none;border-radius: 2px;">启用</button></td>'+
-                        '</tr>';
-                }
             }
-            $("#recordList").html("");
-            $("#recordList").append(recList);
+
+            $("#recordList").html(recList);
+         //   $("#recordList").append(recList);
         }
 
 
@@ -175,7 +159,7 @@
             {
                 $.ajax(
                     {
-                        url:'/device/web_changeState',
+                        url:'/lawcase/web_changeState',
                         dataType: "json",
                         type: 'POST',
                         data:{"ID":id,"State":state},
@@ -214,7 +198,7 @@
 <div class="main_info">
     <div class="list_title">
         <div class="title_caption">
-            <i class="glyphicon glyphicon-align-justify"></i>设备列表
+            <i class="glyphicon glyphicon-align-justify"></i>案例列表
         </div>
     </div>
     <div class="list_toolbar">
@@ -241,17 +225,17 @@
             <thead>
             <tr>
                 <th>序号</th>
-                <th>扫描设备ID</th>
-                <th>设备Key</th>
-                <th>位置</th>
-                <th>创建时间</th>
-                <th>最近登录时间</th>
-                <th>IP地址</th>
-                <th>状态</th>
-                <th>操作</th>
+                <th>案件号</th>
+                <th>案件</th>
+                <th>关键词</th>
+                <th>审理法院</th>
+                <th>种类</th>
+                <th>字号</th>
+
             </tr>
             </thead>
             <tbody id="recordList">
+
             </tbody>
         </table>
     </div>
