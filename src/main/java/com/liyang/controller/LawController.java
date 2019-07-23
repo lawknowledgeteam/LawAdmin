@@ -17,7 +17,7 @@ public class LawController extends Controller {
 
 	
 	
-	public void web_showRoleList() {
+	public void web_showList() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
 			redirect("/web_admin/login.html");
@@ -28,10 +28,37 @@ public class LawController extends Controller {
 		setAttr("authEdit", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleEdit"));
 		setAttr("authState", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleState"));
 		
-		render("/web_admin/webRoleList.html");
+		render("/web_admin/lawList.html");
 	}
-	
 
+	public void web_showMap() {
+		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
+		if (admin == null) {
+			redirect("/web_admin/login.html");
+			return;
+		}
+
+		setAttr("authAdd", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleAdd"));
+		setAttr("authEdit", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleEdit"));
+		setAttr("authState", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleState"));
+
+		render("/web_admin/lawMapList.html");
+	}
+	//web_showCase
+
+	public void web_showCase() {
+		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
+		if (admin == null) {
+			redirect("/web_admin/login.html");
+			return;
+		}
+
+		setAttr("authAdd", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleAdd"));
+		setAttr("authEdit", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleEdit"));
+		setAttr("authState", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleState"));
+
+		render("/web_admin/lawMapList.html");
+	}
 	/**
 	 * 角色数量
 	 */
