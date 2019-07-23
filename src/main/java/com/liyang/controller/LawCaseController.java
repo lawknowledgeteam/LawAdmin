@@ -38,10 +38,10 @@ public class LawCaseController extends Controller {
 
     //@Before(AdminInterceptor.class)
     public void web_getCount() {
-        String sql = "select COUNT(*) FROM tb_law";
+        String sql = "select COUNT(*) FROM tb_case";
         if (!getPara("keyWord").equals("")) {
             String keyWord = getPara("keyWord");
-            sql += " where ((RoleName LIKE '%" + keyWord + "%') or (RoleDescription LIKE '%" + keyWord + "%'))";
+            sql += " where (CaseName LIKE '%" + keyWord + "%') ";
         }
         long RecordCount = Db.queryLong(sql);
         setAttr("RecordCount", RecordCount);
@@ -61,11 +61,11 @@ public class LawCaseController extends Controller {
             pageSize = getParaToInt("pageSize");
         }
 
-        String sqlFromWhere = "FROM sys_role ";
+        String sqlFromWhere = "FROM tb_case ";
 
         if (!getPara("keyWord").equals("")) {
             String keyWord = getPara("keyWord");
-            sqlFromWhere += " where ((RoleName LIKE '%" + keyWord + "%') or (RoleDescription LIKE '%" + keyWord + "%'))";
+            sqlFromWhere += " where ((CaseName LIKE '%" + keyWord + "%') )";
         }
 
         List<Record> lists = Db.paginate(page, pageSize, "select * ", sqlFromWhere).getList();
