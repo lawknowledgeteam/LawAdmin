@@ -47,7 +47,7 @@
             getRecordList(pageIndex+1);
         }
 
-
+        /*获取信息，修改url*/
         function getRecordList(page){
             var keyWord=$("#keyWord").val();
             var dataInfo='page='+page;
@@ -107,7 +107,7 @@
                     json.recs[i].State="正常";
                 else
                     json.recs[i].State="停用";
-
+                //按照数据库修改变量
                 recList+=' <tr>'+
                     '<td>'+(pageIndex*itemsPerPage+i+1)+'</td>'+
                     '<td>'+json.recs[i].DeviceID+"("+long2MacAddress(json.recs[i].DeviceID)+')</td>'+
@@ -130,8 +130,8 @@
                         '</tr>';
                 }
             }
-            $("#recordList").html("");
-            $("#recordList").append(recList);
+            $("#recordList").html(recList);
+          //  $("#recordList").append(recList);
         }
 
 
@@ -192,7 +192,7 @@
         }
 
 
-
+  /*      获取数量，修改url*/
         function search(){
             var keyWord=$("#keyWord").val();
             $.ajax({
@@ -240,6 +240,7 @@
         <table class="table table-bordered">
             <thead>
             <tr>
+                <!--修改名字-->
                 <th>序号</th>
                 <th>扫描设备ID</th>
                 <th>设备Key</th>

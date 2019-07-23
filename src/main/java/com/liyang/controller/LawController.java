@@ -65,7 +65,7 @@ public class LawController extends Controller {
 
 	//@Before(AdminInterceptor.class)
 	public void web_getCount() {
-		String sql = "SELECT Count(RoleID) FROM sys_role";
+		String sql = "SELECT Count(RoleID) FROM sys_role";    //修改sql语句
 		if (!getPara("keyWord").equals("")) {
 			String keyWord = getPara("keyWord");
 			sql += " where ((RoleName LIKE '%" + keyWord + "%') or (RoleDescription LIKE '%" + keyWord + "%'))";
@@ -88,11 +88,11 @@ public class LawController extends Controller {
 			pageSize = getParaToInt("pageSize");
 		}
 
-		String sqlFromWhere = "FROM sys_role ";
+		String sqlFromWhere = "FROM sys_role ";     //修改sql语句
 
 		if (!getPara("keyWord").equals("")) {
 			String keyWord = getPara("keyWord");
-			sqlFromWhere += " where ((RoleName LIKE '%" + keyWord + "%') or (RoleDescription LIKE '%" + keyWord + "%'))";
+			sqlFromWhere += " where ((RoleName LIKE '%" + keyWord + "%') )";
 		}
 
 		List<Record> lists = Db.paginate(page, pageSize, "select * ", sqlFromWhere).getList();
