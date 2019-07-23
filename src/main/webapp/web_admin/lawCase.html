@@ -111,7 +111,6 @@
                     '<td>'+json.recs[i].CaseKind+'</td>'+
                     '<td>'+json.recs[i].Number+'</td> </tr>' ; /*+
                     '<td><button type="button" onclick="editRecord('+json.recs[i].DeviceNo+')" data-mini="true" style="background:#228B22; font-size: 14px; color:white;text-shadow: none;border-radius: 2px; margin:0;">修改</button>';*/
-
             }
 
             $("#recordList").html(recList);
@@ -207,7 +206,7 @@
                 <label style=" font-size: 14px; font-weight: 400;float:left; margin-top: 8px;margin-right: 6px;">查询条件</label>
                 <input type="text" class="form-control"
                        style="height: 35px; font-size: 14px; width:200px; font-weight: 500px; margin-left: 0px;"
-                       id="keyWord" placeholder="设备ID关键词"> <span class="input-group-addon input_button"
+                       id="keyWord" placeholder="案件ID关键词"> <span class="input-group-addon input_button"
                                                                  style="height: 35px; width: 35px;" onclick="search()">
                         <img src="../images/find.png" onmouseover="this.src='../images/find3.png'"onmouseout="this.src='../images/find.png'">
 						</span>
@@ -215,7 +214,7 @@
         </div>
         <div class="toolbar_button">
             <button type="button" class="btn btn-default" onclick="window.location.reload()">刷新列表</button>
-            <button type="button" class="btn btn-default" onclick="addRecord()">添加设备</button>
+            <button type="button" class="btn btn-default" onclick="addRecord()">添加案件</button>
         </div>
 
     </div>
