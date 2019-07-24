@@ -11,7 +11,7 @@
     <script type="text/javascript" src="../third-party/jquery.pagination.js"></script>
     <link rel="stylesheet" href="../css/list-common.css">
     <script type="text/javascript" src="../third-party/layer/layer.js"></script>
-    <title>法律列表</title>
+    <title>日志列表</title>
     <style type="text/css">
 
     </style>
@@ -22,11 +22,26 @@
         $(function (){
             search();
         });
-
+        /*      获取数量，修改url*/
+        function search(){
+            var keyWord=$("#keyWord").val();
+            $.ajax({
+                url:'/log/web_getCount',
+                dataType: "json",
+                type: 'POST',
+                data:{"keyWord":keyWord},
+                success:function (json) {
+                    getRecordCountCallback(json);
+                },
+                error: function () {
+                    alert("web_getdeviceCount");
+                }
+            });
+        }
 
         function getRecordCountCallback(json)
         {
-            if(json.RecordCount==0) alert("设备数量等于0");
+            if(json.RecordCount==0) alert("日志数量等于0");
             $("#pagination").pagination(json.RecordCount,    //分布总数量，必须参数
                 {
                     callback: PageCallback,  //PageCallback() 为翻页调用次函数。
@@ -51,9 +66,10 @@
         function getRecordList(page){
             var keyWord=$("#keyWord").val();
             var dataInfo='page='+page;
+
             $.ajax(
                 {
-                    url:'/lawmap/web_getListPaging',
+                    url:'/log/web_getListPaging',
                     dataType: "json",
                     type: 'POST',
                     data:{"pageIndex":page,"pageSize":itemsPerPage,"keyWord":keyWord},
@@ -66,56 +82,55 @@
                 }
             );
         }
-/*
-        function long2MacAddress(lMac)
-        {
-            var sTemp=lMac.toString(16);
-            var sMac=sTemp;
-            if(sTemp.length==1)
-                sMac="00:00:00:00:00:0"+sTemp[0];
-            else if(sTemp.length==2)
-                sMac="00:00:00:00:00:"+sTemp;
-            else if(sTemp.length==3)
-                sMac="00:00:00:00:0"+sTemp[0]+":"+sTemp[1]+sTemp[2];
-            else if(sTemp.length==4)
-                sMac="00:00:00:00:"+sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3];
-            else if(sTemp.length==5)
-                sMac="00:00:00:0"+sTemp[0]+":"+sTemp[1]+sTemp[2]+":"+sTemp[3]+sTemp[4];
-            else if(sTemp.length==6)
-                sMac="00:00:00:"+sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3]+":"+sTemp[4]+sTemp[5];
-            else if(sTemp.length==7)
-                sMac="00:00:0"+sTemp[0]+":"+sTemp[1]+sTemp[2]+":"+sTemp[3]+sTemp[4]+":"+sTemp[5]+sTemp[6];
-            else if(sTemp.length==8)
-                sMac="00:00:"+sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3]+":"+sTemp[4]+sTemp[5]+":"+sTemp[6]+sTemp[7];
-            else if(sTemp.length==9)
-                sMac="00:0"+sTemp[0]+":"+sTemp[1]+sTemp[2]+":"+sTemp[3]+sTemp[4]+":"+sTemp[5]+sTemp[6]+":"+sTemp[7]+sTemp[8];
-            else if(sTemp.length==10)
-                sMac="00:"+sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3]+":"+sTemp[4]+sTemp[5]+":"+sTemp[6]+sTemp[7]+":"+sTemp[8]+sTemp[9];
-            else if(sTemp.length==11)
-                sMac="0"+sTemp[0]+":"+sTemp[1]+sTemp[2]+":"+sTemp[3]+sTemp[4]+":"+sTemp[5]+sTemp[6]+":"+sTemp[7]+sTemp[8]+":"+sTemp[9]+sTemp[10];
-            else if(sTemp.length==12)
-                sMac=sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3]+":"+sTemp[4]+sTemp[5]+":"+sTemp[6]+sTemp[7]+":"+sTemp[8]+sTemp[9]+":"+sTemp[10]+sTemp[11];
-            return sMac.toUpperCase();
-        }
-*/
+        /*
+                function long2MacAddress(lMac)
+                {
+                    var sTemp=lMac.toString(16);
+                    var sMac=sTemp;
+                    if(sTemp.length==1)
+                        sMac="00:00:00:00:00:0"+sTemp[0];
+                    else if(sTemp.length==2)
+                        sMac="00:00:00:00:00:"+sTemp;
+                    else if(sTemp.length==3)
+                        sMac="00:00:00:00:0"+sTemp[0]+":"+sTemp[1]+sTemp[2];
+                    else if(sTemp.length==4)
+                        sMac="00:00:00:00:"+sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3];
+                    else if(sTemp.length==5)
+                        sMac="00:00:00:0"+sTemp[0]+":"+sTemp[1]+sTemp[2]+":"+sTemp[3]+sTemp[4];
+                    else if(sTemp.length==6)
+                        sMac="00:00:00:"+sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3]+":"+sTemp[4]+sTemp[5];
+                    else if(sTemp.length==7)
+                        sMac="00:00:0"+sTemp[0]+":"+sTemp[1]+sTemp[2]+":"+sTemp[3]+sTemp[4]+":"+sTemp[5]+sTemp[6];
+                    else if(sTemp.length==8)
+                        sMac="00:00:"+sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3]+":"+sTemp[4]+sTemp[5]+":"+sTemp[6]+sTemp[7];
+                    else if(sTemp.length==9)
+                        sMac="00:0"+sTemp[0]+":"+sTemp[1]+sTemp[2]+":"+sTemp[3]+sTemp[4]+":"+sTemp[5]+sTemp[6]+":"+sTemp[7]+sTemp[8];
+                    else if(sTemp.length==10)
+                        sMac="00:"+sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3]+":"+sTemp[4]+sTemp[5]+":"+sTemp[6]+sTemp[7]+":"+sTemp[8]+sTemp[9];
+                    else if(sTemp.length==11)
+                        sMac="0"+sTemp[0]+":"+sTemp[1]+sTemp[2]+":"+sTemp[3]+sTemp[4]+":"+sTemp[5]+sTemp[6]+":"+sTemp[7]+sTemp[8]+":"+sTemp[9]+sTemp[10];
+                    else if(sTemp.length==12)
+                        sMac=sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3]+":"+sTemp[4]+sTemp[5]+":"+sTemp[6]+sTemp[7]+":"+sTemp[8]+sTemp[9]+":"+sTemp[10]+sTemp[11];
+                    return sMac.toUpperCase();
+                }
+        */
         function  displayRecordList(json){
             var recList='';
+            console.log(json.recs.length);
             for(var i=0;i<json.recs.length;i++) {
-                console.log(json.recs.length);
-                if (json.recs[i].State == 0)
-                    json.recs[i].State = "正常";
-                else
-                    json.recs[i].State = "停用";
+                console.log(json.recs[i]);
                 //按照数据库修改变量
-                recList += ' <tr>' +
+                recList += '<tr>' +
                     '<td>' + (pageIndex * itemsPerPage + i + 1) + '</td>' +
-                    '<td>' + json.recs[i].LawItemID + '</td>' +
-                    '<td>' + json.recs[i].LawItemType + '</td>' +
-                    '<td>' + json.recs[i].ItemName + '</td>' +
-                    '<td>' + json.recs[i].ItemContent + '</td>';
-            }
+                    '<td>' + json.recs[i].LogID + '</td>' +
+                    '<td>' + json.recs[i].LogTypeName + '</td>' +
+                    '<td>' + json.recs[i].CreateTime + '</td>'+
+                    '<td>' + json.recs[i].LoginName + '</td>' +
+                    '<td>' + json.recs[i].Detail + '</td>';
+
+            } //
             $("#recordList").html(recList);
-          //  $("#recordList").append(recList);
+            //  $("#recordList").append(recList);
         }
 
 
@@ -176,29 +191,14 @@
         }
 
 
-  /*      获取数量，修改url*/
-        function search(){
-            var keyWord=$("#keyWord").val();
-            $.ajax({
-                url:'/lawmap/web_getCount',
-                dataType: "json",
-                type: 'POST',
-                data:{"keyWord":keyWord},
-                success:function (json) {
-                    getRecordCountCallback(json);
-                },
-                error: function () {
-                    alert("web_getdeviceCount");
-                }
-            });
-        }
+
     </script>
 </head>
 <body>
 <div class="main_info">
     <div class="list_title">
         <div class="title_caption">
-            <i class="glyphicon glyphicon-align-justify"></i>法律列表
+            <i class="glyphicon glyphicon-align-justify"></i>日志列表
         </div>
     </div>
     <div class="list_toolbar">
@@ -207,8 +207,8 @@
                 <label style=" font-size: 14px; font-weight: 400;float:left; margin-top: 8px;margin-right: 6px;">查询条件</label>
                 <input type="text" class="form-control"
                        style="height: 35px; font-size: 14px; width:200px; font-weight: 500px; margin-left: 0px;"
-                       id="keyWord" placeholder="法案关键词"> <span class="input-group-addon input_button"
-                                                                 style="height: 35px; width: 35px;" onclick="search()">
+                       id="keyWord" placeholder="日志关键词"> <span class="input-group-addon input_button"
+                                                               style="height: 35px; width: 35px;" onclick="search()">
                         <img src="../images/find.png" onmouseover="this.src='../images/find3.png'"onmouseout="this.src='../images/find.png'">
 						</span>
             </div>
@@ -225,10 +225,11 @@
             <tr>
                 <!--修改名字-->
                 <th>序号</th>
-                <th>法规类型</th>
-                <th>法规序号</th>
-                <th>法规名称</th>
-                <th>法规详情</th>
+                <th>日志ID</th>
+                <th>登录类型</th>
+                <th>登录时间</th>
+                <th>登录用户</th>
+                <th>登录详情</th>
 
             </tr>
             </thead>
@@ -240,6 +241,7 @@
         <div id="pagination" class="pagination"></div>
     </div>
 </div>
+
 
 
 </body>

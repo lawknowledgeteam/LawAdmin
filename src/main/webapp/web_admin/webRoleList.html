@@ -11,7 +11,7 @@
     <script type="text/javascript" src="../third-party/jquery.pagination.js"></script>
     <link rel="stylesheet" href="../css/list-common.css">
     <script type="text/javascript" src="../third-party/layer/layer.js"></script>
-    <title>法律列表</title>
+    <title>角色信息列表</title>
     <style type="text/css">
 
     </style>
@@ -26,7 +26,7 @@
 
         function getRecordCountCallback(json)
         {
-            if(json.RecordCount==0) alert("设备数量等于0");
+            if(json.RecordCount==0) alert("角色数量等于0");
             $("#pagination").pagination(json.RecordCount,    //分布总数量，必须参数
                 {
                     callback: PageCallback,  //PageCallback() 为翻页调用次函数。
@@ -47,13 +47,13 @@
             getRecordList(pageIndex+1);
         }
 
-        /*获取信息，修改url*/
+
         function getRecordList(page){
             var keyWord=$("#keyWord").val();
             var dataInfo='page='+page;
             $.ajax(
                 {
-                    url:'/lawmap/web_getListPaging',
+                    url:'/role/web_getListPaging',
                     dataType: "json",
                     type: 'POST',
                     data:{"pageIndex":page,"pageSize":itemsPerPage,"keyWord":keyWord},
@@ -67,6 +67,7 @@
             );
         }
 /*
+
         function long2MacAddress(lMac)
         {
             var sTemp=lMac.toString(16);
@@ -98,24 +99,20 @@
             return sMac.toUpperCase();
         }
 */
+
         function  displayRecordList(json){
             var recList='';
-            for(var i=0;i<json.recs.length;i++) {
-                console.log(json.recs.length);
-                if (json.recs[i].State == 0)
-                    json.recs[i].State = "正常";
-                else
-                    json.recs[i].State = "停用";
-                //按照数据库修改变量
-                recList += ' <tr>' +
-                    '<td>' + (pageIndex * itemsPerPage + i + 1) + '</td>' +
-                    '<td>' + json.recs[i].LawItemID + '</td>' +
-                    '<td>' + json.recs[i].LawItemType + '</td>' +
-                    '<td>' + json.recs[i].ItemName + '</td>' +
-                    '<td>' + json.recs[i].ItemContent + '</td>';
+            for(var i=0;i<json.recs.length;i++){
+                console.log(json.recs[i]);
+                recList+=' <tr>'+
+                    //'<td>'+(pageIndex*itemsPerPage+i+1)+'</td>'+
+                    // '<td>'+json.recs[i].DeviceID+"("+long2MacAddress(json.recs[i].DeviceID)+')</td>'+
+                    '<td>'+json.recs[i].RoleID+'</td>'+
+                    '<td>'+json.recs[i].RoleName+'</td>'+
+                    '<td>'+json.recs[i].RoleDescription+'</td>';
             }
             $("#recordList").html(recList);
-          //  $("#recordList").append(recList);
+            // $("#recordList").append(recList);
         }
 
 
@@ -154,12 +151,12 @@
                 content:'/device/web_changeDevice?ID='+id
             });
         }
-        function changeState(id,state){
+          function changeState(id,state){
             if(confirm("您确认该操作吗?"))
             {
                 $.ajax(
                     {
-                        url:'/device/web_changeState',
+                        url:'/role/web_changeState',
                         dataType: "json",
                         type: 'POST',
                         data:{"ID":id,"State":state},
@@ -176,11 +173,11 @@
         }
 
 
-  /*      获取数量，修改url*/
+
         function search(){
             var keyWord=$("#keyWord").val();
             $.ajax({
-                url:'/lawmap/web_getCount',
+                url:'/role/web_getCount',
                 dataType: "json",
                 type: 'POST',
                 data:{"keyWord":keyWord},
@@ -198,7 +195,7 @@
 <div class="main_info">
     <div class="list_title">
         <div class="title_caption">
-            <i class="glyphicon glyphicon-align-justify"></i>法律列表
+            <i class="glyphicon glyphicon-align-justify"></i>角色列表
         </div>
     </div>
     <div class="list_toolbar">
@@ -207,7 +204,7 @@
                 <label style=" font-size: 14px; font-weight: 400;float:left; margin-top: 8px;margin-right: 6px;">查询条件</label>
                 <input type="text" class="form-control"
                        style="height: 35px; font-size: 14px; width:200px; font-weight: 500px; margin-left: 0px;"
-                       id="keyWord" placeholder="法案关键词"> <span class="input-group-addon input_button"
+                       id="keyWord" placeholder="法律ID关键词"> <span class="input-group-addon input_button"
                                                                  style="height: 35px; width: 35px;" onclick="search()">
                         <img src="../images/find.png" onmouseover="this.src='../images/find3.png'"onmouseout="this.src='../images/find.png'">
 						</span>
@@ -215,6 +212,7 @@
         </div>
         <div class="toolbar_button">
             <button type="button" class="btn btn-default" onclick="window.location.reload()">刷新列表</button>
+            <button type="button" class="btn btn-default" onclick="addRecord()">添加角色</button>
         </div>
 
     </div>
@@ -223,13 +221,9 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <!--修改名字-->
                 <th>序号</th>
-                <th>法规类型</th>
-                <th>法规序号</th>
-                <th>法规名称</th>
-                <th>法规详情</th>
-
+                <th>角色名称</th>
+                <th>角色描述</th>
             </tr>
             </thead>
             <tbody id="recordList">
