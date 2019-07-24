@@ -69,7 +69,7 @@ public class LawMapController extends Controller {
             String keyWord = getPara("keyWord");
             sqlFromWhere += " where ((ItemName LIKE '%" + keyWord + "%') )";
         }
-
+//
         List<Record> lists = Db.paginate(page, pageSize, "select * ", sqlFromWhere).getList();
         setAttr("recs", lists);
         renderJson();
