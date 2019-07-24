@@ -13,7 +13,7 @@ import com.liyang.common.Util;
 import com.liyang.model.Admin;
 import com.liyang.model.Role;
 
-public class LawController extends Controller {
+public class LawListController extends Controller {
 
 	
 	
@@ -31,41 +31,14 @@ public class LawController extends Controller {
 		render("/web_admin/lawList.html");
 	}
 
-	public void web_showMap() {
-		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
-		if (admin == null) {
-			redirect("/web_admin/login.html");
-			return;
-		}
 
-		setAttr("authAdd", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleAdd"));
-		setAttr("authEdit", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleEdit"));
-		setAttr("authState", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleState"));
-
-		render("/web_admin/lawMapList.html");
-	}
-	//web_showCase
-
-	public void web_showCase() {
-		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
-		if (admin == null) {
-			redirect("/web_admin/login.html");
-			return;
-		}
-
-		setAttr("authAdd", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleAdd"));
-		setAttr("authEdit", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleEdit"));
-		setAttr("authState", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleState"));
-
-		render("/web_admin/lawMapList.html");
-	}
 	/**
 	 * 角色数量
 	 */
 
 	//@Before(AdminInterceptor.class)
 	public void web_getCount() {
-		String sql = "SELECT Count(RoleID) FROM sys_role";    //修改sql语句
+		String sql = "select COUNT(*) FROM tb_law";    //修改sql语句
 		if (!getPara("keyWord").equals("")) {
 			String keyWord = getPara("keyWord");
 			sql += " where ((RoleName LIKE '%" + keyWord + "%') or (RoleDescription LIKE '%" + keyWord + "%'))";
@@ -88,7 +61,7 @@ public class LawController extends Controller {
 			pageSize = getParaToInt("pageSize");
 		}
 
-		String sqlFromWhere = "FROM sys_role ";     //修改sql语句
+		String sqlFromWhere = "FROM tb_law ";     //修改sql语句
 
 		if (!getPara("keyWord").equals("")) {
 			String keyWord = getPara("keyWord");
