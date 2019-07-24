@@ -32,7 +32,7 @@ public class AnalyseController extends Controller {
 			renderHtml(Util.getResult("0001", "请先登录本系统!"));	
 			return;
 		}
-		render("/web_admin/webResidenceTimeList.html");
+		render("/web_admin/analyse.html");
 	}
 	
 	public void getHomepageData(){
