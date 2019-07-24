@@ -32,7 +32,7 @@ public class AnalyseController extends Controller {
 			renderHtml(Util.getResult("0001", "请先登录本系统!"));	
 			return;
 		}
-		render("/web_admin/webResidenceTimeList.html");
+		render("/web_admin/analyse.html");
 	}
 	
 	public void getHomepageData(){
@@ -55,16 +55,15 @@ public class AnalyseController extends Controller {
 			this.renderJson();
 
 	}
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	public void web_showOldNewCustomerDist()
-	{
-		render("/web_admin/webOldNewCustomer.html");
-	}
-	public void web_showHotmap()
-	{
-		render("/web_admin/webHotmap.html");
-	}
-	
+//	public void web_showOldNewCustomerDist()
+//	{
+//		render("/web_admin/webOldNewCustomer.html");
+//	}
+//	public void web_showHotmap()
+//	{
+//		render("/web_admin/webHotmap.html");
+//	}
+//
 	/**
 	 * @description: 停留时长统计数据条数
 	 * @author: wxy
@@ -72,7 +71,7 @@ public class AnalyseController extends Controller {
 	 * @param :
 	 * @return:
 	 */
-	public void web_getResidenceTimeCount(){
+/*	public void web_getResidenceTimeCount(){
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
 			redirect("/web_admin/login.html");
@@ -100,14 +99,30 @@ public class AnalyseController extends Controller {
 		renderJson();
 	}
 
-	/**
-	 * @description: 分页查询停留时长统计信息
-	 * @author: wxy
-	 * @date: 2019-05-11 17:12
-	 * @param :
-	 * @return:
-	 */
-	public void web_getResidenceTimeList(){
+ */
+    public void web_getListPaging()
+    {
+        int page = 1;
+        int pageSize = 10;
+        if (getParaToInt("pageIndex") != null) {
+            page = getParaToInt("pageIndex");
+            pageSize = getParaToInt("pageSize");
+        }
+
+        String sqlFromWhere = "FROM tb_case ";
+
+        if (!getPara("keyWord").equals("")) {
+            String keyWord = getPara("keyWord");
+            sqlFromWhere += " where ((CaseName LIKE '%" + keyWord + "%') )";
+        }
+
+        List<Record> lists = Db.paginate(page, pageSize,true,"select CaseKind ,count(*) as num", "from tb_case group by CaseKind").getList();
+        setAttr("recs", lists);
+        renderJson();
+    }
+
+
+/*	public void web_getResidenceTimeList(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
 			renderHtml(Util.getResult("0001", "请先登录本系统!"));	
@@ -150,14 +165,10 @@ public class AnalyseController extends Controller {
 		//将数据传递到前端
 		renderJson();
 	}
-	/**
-	 * @description:
-	 * @author: wxy
-	 * @date: 2019-05-11 17:11
-	 * @param : 物体客流统计
-	 * @return:
-	 */
-	public void web_getCustomer(){
+
+ */
+
+/*	public void web_getCustomer(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
 			renderHtml(Util.getResult("0001", "请先登录本系统!"));
@@ -172,94 +183,19 @@ public class AnalyseController extends Controller {
         set("oldCustomersCount",oldCustomers.size()).set("newCustomersCount",newCustomers.size());
         renderJson();
 	}
-	
-	public void getHotmapResult(){
-		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
-		if ( admin== null) {
-			renderHtml(Util.getResult("0001", "请先登录本系统!"));
-			return;
-		}
-		HashMap resultMap = new HashMap();
-		//获取相应格式的时间
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String now = sdf.format(date);
-		Calendar calendar = new GregorianCalendar();
-		calendar.setTime(date);
-		//前端传来的参数，统计分类
-		int flag = getInt("flag");
-		//相差天数
-		int days = 0;
-		Date startDate = null;
-		Date endDate = null;
-		if(flag == 0){
-			//获取任意两个时间间隔的报表
-			//获取前台传过来的时间
-			String startTime = get("startTime");
-			String endTime = get("endTime");
-			try {
-				startDate = sdf.parse(startTime);
-				endDate = sdf.parse(endTime);
-			}catch (Exception e){
-				System.out.println(e);
-			}
-			//时间差
-			days = (int)((endDate.getTime()-startDate.getTime())/(24*60*60*1000));
-		}else if(flag == 1){
-			days = 7;
-			//过去七天的报表
-		}else{
-			//过去30天报表
-			days = 30;
-		}
-		//查询到设备信息
-		//根据查询到的设备以及品牌信息来进行分类
-		for(int i =0;i<days;i++){
-			Calendar calendar1 = new GregorianCalendar();
-			calendar1.setTime(date);
-			calendar1.add(Calendar.DATE,(-days+i));
-			String firstPastDay = sdf.format(calendar1.getTime());
-			calendar1.setTime(date);
-			calendar1.add(Calendar.DATE,(-days+1+i));
-			String secondPastDay = sdf.format(calendar1.getTime());
-			System.out.println(firstPastDay+"*******"+secondPastDay);
-			List<Record> objectList = Db.find("select * from uv_object_vendor where LastUpdateTime > '"+firstPastDay+"' and LastUpdateTime < '"+secondPastDay+"'");
-			HashMap<String, HashMap<String,Integer>> roomMap = new HashMap<>();
-			for(Record record:objectList){
-				//得到该设备的品牌信息
-				String brand = record.getStr("VendorName");
-				if(brand !=null){
-					//得到采集该设备信息的房间名
-					String LocationRoom = record.getStr("LastLocation");
-					if(roomMap.containsKey(LocationRoom)){
-						//如果房间map中已有设备
-						//检验是否有该品牌
-						if(roomMap.get(LocationRoom).containsKey(brand)){
-							//如果包含，数量+1
-							int count = roomMap.get(LocationRoom).get(brand);
-							roomMap.get(LocationRoom).put(brand,++count);
-						}else{
-							//如果不包含，那么将这个品牌加入到map中，赋值设备数量为1
-							roomMap.get(LocationRoom).put(brand,1);
-						}
-						int objectAmount = roomMap.get(LocationRoom).get("objectAmount");
-						roomMap.get(LocationRoom).put("objectAmount",++objectAmount);
-					}else{
-						//如果不包含该房间，那么把该房间加入到roomMap中
-						HashMap<String,Integer> brandMap = new HashMap<>();
-						brandMap.put(brand,1);
-						roomMap.put(LocationRoom,brandMap);
-						roomMap.get(LocationRoom).put("objectAmount",1);
-					}
-				}
-			}
-			resultMap.put(firstPastDay,roomMap);
-		}
-        set("resultMap",resultMap);
-		renderJson();
-	}
-	
-	public void web_showBrandDist(){
+	*/
+    public void web_getCount() {
+        String sql = "select  count(distinct CaseKind) \n" +
+                "from tb_case ";
+        if (!getPara("keyWord").equals("")) {
+            String keyWord = getPara("keyWord");
+            sql += " where (CaseName LIKE '%" + keyWord + "%')";
+        }
+        long RecordCount = Db.queryLong(sql);
+        setAttr("RecordCount", RecordCount);
+        renderJson();
+    }
+	public void web_showCaseKind(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
 			renderHtml(Util.getResult("0001", "请先登录本系统!"));	
@@ -267,9 +203,10 @@ public class AnalyseController extends Controller {
 		}
 		List<Record> recs=Db.find("select * from uv_org_device_info where OrganizationID="+admin.getInt("OrganizationID"));
 		set("DeviceLists",recs);
-		render("/web_admin/webAnalyseBrand.html");
+		render("/web_admin/analyse.html");
 	}
-	
+
+
 	public void getBrandsCount(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
@@ -292,7 +229,7 @@ public class AnalyseController extends Controller {
         renderJson(); 
 	}
 	
-	public void web_showObjects() {
+/*	public void web_showObjects() {
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
 			renderHtml(Util.getResult("0001", "请先登录本系统!"));
@@ -307,7 +244,9 @@ public class AnalyseController extends Controller {
 		render("/web_admin/webAnalyseObjects.html");
 
 	}
-	public void web_showObjectCount() {
+
+ */
+/*	public void web_showObjectCount() {
 		 Admin admin = getSessionAttr(GlobalVar.WEBADMIN); 
 		 
 		 if (admin == null) {
@@ -363,6 +302,8 @@ public class AnalyseController extends Controller {
 		}
 		
 	}
+
+ */
 }
 
 
