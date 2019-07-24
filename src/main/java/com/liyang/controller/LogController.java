@@ -16,7 +16,7 @@ public class LogController extends Controller {
 
 	
 	
-	public void web_showList() {
+	public void web_showLog() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
 			redirect("/web_admin/login.html");
@@ -26,9 +26,8 @@ public class LogController extends Controller {
 		
 		setAttr("authExport", RoleAuthSettings.getValue(admin.getInt("RoleID")+"logExport"));
 		
-		render("/web_admin/webLogList.html");
+		render("/web_admin/loglist.html");
 	}
-	
 
 
 	
@@ -64,7 +63,7 @@ public class LogController extends Controller {
 		String StartDate = this.getPara("StartDate");
 		String EndDate = this.getPara("EndDate");
 		
-		String sql = "SELECT Count(LogID) FROM tb_admin_log where LogType<100 and CreateTime>= '"+StartDate+" 0:0:0' AND CreateTime<='"+EndDate+" 23:59:59'";
+		String sql = "SELECT Count(LogID) FROM tb_admin_log ";   //where LogType<100 and CreateTime>= '"+StartDate+" 0:0:0' AND CreateTime<='"+EndDate+" 23:59:59'
 		long RecordCount = Db.queryLong(sql);
 		setAttr("RecordCount", RecordCount);
 		renderJson();
@@ -90,8 +89,8 @@ public class LogController extends Controller {
 
 		String StartDate = this.getPara("StartDate");
 		String EndDate = this.getPara("EndDate");
-		String sqlFromWhere = "FROM tb_admin_log,list_log_type,tb_admin WHERE tb_admin_log.LogType<100 and tb_admin_log.AdminID=tb_admin.AdminID and tb_admin_log.LogType=list_log_type.LogType AND (tb_admin_log.CreateTime>='"+StartDate+" 0:0:0') AND (tb_admin_log.CreateTime<='"+EndDate+" 23:59:59')";
-		
+		String sqlFromWhere = "FROM tb_admin_log,list_log_type,tb_admin WHERE  tb_admin_log.AdminID=tb_admin.AdminID and tb_admin_log.LogType=list_log_type.LogType ";
+		//FROM tb_admin_log,list_log_type,tb_admin WHERE tb_admin_log.LogType<100 and tb_admin_log.AdminID=tb_admin.AdminID and tb_admin_log.LogType=list_log_type.LogType AND (tb_admin_log.CreateTime>='"+StartDate+" 0:0:0') AND (tb_admin_log.CreateTime<='"+EndDate+" 23:59:59')";
 		List<Record> lists = Db.paginate(page, pageSize, "select LogID,LoginName,LogTypeName, Detail, tb_admin_log.CreateTime ", sqlFromWhere+"Order by tb_admin_log.CreateTime DESC").getList();
 		setAttr("recs", lists);
 		renderJson(); 
