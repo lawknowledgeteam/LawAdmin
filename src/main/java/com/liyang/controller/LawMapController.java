@@ -20,6 +20,7 @@ public class LawMapController extends Controller {
 
 
 
+
     public void web_showMap() {
         Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
         if (admin == null) {
