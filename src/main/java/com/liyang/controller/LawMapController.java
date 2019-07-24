@@ -40,10 +40,10 @@ public class LawMapController extends Controller {
 
     //@Before(AdminInterceptor.class)
     public void web_getCount() {
-        String sql = "SELECT Count(RoleID) FROM sys_role";
+        String sql = "SELECT Count(*) FROM tb_law";
         if (!getPara("keyWord").equals("")) {
             String keyWord = getPara("keyWord");
-            sql += " where ((RoleName LIKE '%" + keyWord + "%') or (RoleDescription LIKE '%" + keyWord + "%'))";
+            sql += " where (LawName LIKE '%" + keyWord + "%')";
         }
         long RecordCount = Db.queryLong(sql);
         setAttr("RecordCount", RecordCount);
@@ -63,11 +63,11 @@ public class LawMapController extends Controller {
             pageSize = getParaToInt("pageSize");
         }
 
-        String sqlFromWhere = "FROM sys_role ";
+        String sqlFromWhere = "FROM tb_law_item ";
 
         if (!getPara("keyWord").equals("")) {
             String keyWord = getPara("keyWord");
-            sqlFromWhere += " where ((RoleName LIKE '%" + keyWord + "%') or (RoleDescription LIKE '%" + keyWord + "%'))";
+            sqlFromWhere += " where ((ItemName LIKE '%" + keyWord + "%') )";
         }
 
         List<Record> lists = Db.paginate(page, pageSize, "select * ", sqlFromWhere).getList();
@@ -227,8 +227,8 @@ public class LawMapController extends Controller {
     }
 
     public void getRoleAuths() {
-        int roleID = getParaToInt("roleID");
-        List<Record> lists = Db.find("select MenuAuthID from sys_role_menu where RoleID="+roleID);
+        int LawItemID = getParaToInt("LawItemID");
+        List<Record> lists = Db.find("select MenuAuthID from tb_law_item  where LawItemID="+LawItemID);
         setAttr("recs", lists);
         renderJson();
     }
