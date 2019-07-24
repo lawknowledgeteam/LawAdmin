@@ -40,10 +40,10 @@ public class LawMapController extends Controller {
 
     //@Before(AdminInterceptor.class)
     public void web_getCount() {
-        String sql = "SELECT Count(*) FROM tb_law";
+        String sql = "SELECT Count(*) FROM tb_law_item";
         if (!getPara("keyWord").equals("")) {
             String keyWord = getPara("keyWord");
-            sql += " where (LawName LIKE '%" + keyWord + "%')";
+            sql += " where (ItemName LIKE '%" + keyWord + "%')";
         }
         long RecordCount = Db.queryLong(sql);
         setAttr("RecordCount", RecordCount);
@@ -56,8 +56,8 @@ public class LawMapController extends Controller {
     //@Before(AdminInterceptor.class)
     public void web_getListPaging()
     {
-        int page = 1;
-        int pageSize = 10;
+        int page = 2;
+        int pageSize = 100;
         if (getParaToInt("pageIndex") != null) {
             page = getParaToInt("pageIndex");
             pageSize = getParaToInt("pageSize");
