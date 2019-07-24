@@ -11,7 +11,7 @@
     <script type="text/javascript" src="../third-party/jquery.pagination.js"></script>
     <link rel="stylesheet" href="../css/list-common.css">
     <script type="text/javascript" src="../third-party/layer/layer.js"></script>
-    <title>设备信息列表</title>
+    <title>法律列表</title>
     <style type="text/css">
 
     </style>
@@ -53,7 +53,7 @@
             var dataInfo='page='+page;
             $.ajax(
                 {
-                    url:'/device/web_getListPaging',
+                    url:'/lawmap/web_getListPaging',
                     dataType: "json",
                     type: 'POST',
                     data:{"pageIndex":page,"pageSize":itemsPerPage,"keyWord":keyWord},
@@ -66,7 +66,7 @@
                 }
             );
         }
-
+/*
         function long2MacAddress(lMac)
         {
             var sTemp=lMac.toString(16);
@@ -97,38 +97,22 @@
                 sMac=sTemp[0]+sTemp[1]+":"+sTemp[2]+sTemp[3]+":"+sTemp[4]+sTemp[5]+":"+sTemp[6]+sTemp[7]+":"+sTemp[8]+sTemp[9]+":"+sTemp[10]+sTemp[11];
             return sMac.toUpperCase();
         }
-
+*/
         function  displayRecordList(json){
             var recList='';
-            for(var i=0;i<json.recs.length;i++){
-
-
-                if(json.recs[i].State==0)
-                    json.recs[i].State="正常";
+            for(var i=0;i<json.recs.length;i++) {
+                console.log(json.recs.length);
+                if (json.recs[i].State == 0)
+                    json.recs[i].State = "正常";
                 else
-                    json.recs[i].State="停用";
+                    json.recs[i].State = "停用";
                 //按照数据库修改变量
-                recList+=' <tr>'+
-                    '<td>'+(pageIndex*itemsPerPage+i+1)+'</td>'+
-                    '<td>'+json.recs[i].DeviceID+"("+long2MacAddress(json.recs[i].DeviceID)+')</td>'+
-                    '<td>'+json.recs[i].DeviceKey+'</td>'+
-                    '<td>'+json.recs[i].Location+'</td>'+
-                    '<td>'+json.recs[i].CreateTime+'</td>'+
-                    '<td>'+json.recs[i].LastUpdateTime+'</td>'+
-                    '<td>'+json.recs[i].LastIPAddress+'</td>'+
-                    '<td>'+json.recs[i].State+'</td>'+
-                    '<td><button type="button" onclick="editRecord('+json.recs[i].DeviceNo+')" data-mini="true" style="background:#228B22; font-size: 14px; color:white;text-shadow: none;border-radius: 2px; margin:0;">修改</button>';
-
-                if(json.recs[i].State=="正常")
-                {
-                    recList+='&nbsp;<button type="button" onclick="changeState('+json.recs[i].DeviceNo+',0'+')" data-mini="true" style="background:#d9534f;font-size: 14px; color:white;text-shadow: none;border-radius: 2px;">停用</button></td>'+
-                        '</tr>';
-                }
-                else
-                {
-                    recList+='&nbsp;<button type="button" onclick="changeState('+json.recs[i].DeviceNo+',1'+')" data-mini="true" style="background:#228B22;font-size: 14px; color:white;text-shadow: none;border-radius: 2px;">启用</button></td>'+
-                        '</tr>';
-                }
+                recList += ' <tr>' +
+                    '<td>' + (pageIndex * itemsPerPage + i + 1) + '</td>' +
+                    '<td>' + json.recs[i].LawItemID + '</td>' +
+                    '<td>' + json.recs[i].LawItemType + '</td>' +
+                    '<td>' + json.recs[i].ItemName + '</td>' +
+                    '<td>' + json.recs[i].ItemContent + '</td>';
             }
             $("#recordList").html(recList);
           //  $("#recordList").append(recList);
@@ -196,7 +180,7 @@
         function search(){
             var keyWord=$("#keyWord").val();
             $.ajax({
-                url:'/device/web_getCount',
+                url:'/lawmap/web_getCount',
                 dataType: "json",
                 type: 'POST',
                 data:{"keyWord":keyWord},
@@ -214,7 +198,7 @@
 <div class="main_info">
     <div class="list_title">
         <div class="title_caption">
-            <i class="glyphicon glyphicon-align-justify"></i>设备列表
+            <i class="glyphicon glyphicon-align-justify"></i>法律列表
         </div>
     </div>
     <div class="list_toolbar">
@@ -223,7 +207,7 @@
                 <label style=" font-size: 14px; font-weight: 400;float:left; margin-top: 8px;margin-right: 6px;">查询条件</label>
                 <input type="text" class="form-control"
                        style="height: 35px; font-size: 14px; width:200px; font-weight: 500px; margin-left: 0px;"
-                       id="keyWord" placeholder="设备ID关键词"> <span class="input-group-addon input_button"
+                       id="keyWord" placeholder="法案关键词"> <span class="input-group-addon input_button"
                                                                  style="height: 35px; width: 35px;" onclick="search()">
                         <img src="../images/find.png" onmouseover="this.src='../images/find3.png'"onmouseout="this.src='../images/find.png'">
 						</span>
@@ -231,7 +215,6 @@
         </div>
         <div class="toolbar_button">
             <button type="button" class="btn btn-default" onclick="window.location.reload()">刷新列表</button>
-            <button type="button" class="btn btn-default" onclick="addRecord()">添加设备</button>
         </div>
 
     </div>
@@ -242,14 +225,11 @@
             <tr>
                 <!--修改名字-->
                 <th>序号</th>
-                <th>扫描设备ID</th>
-                <th>设备Key</th>
-                <th>位置</th>
-                <th>创建时间</th>
-                <th>最近登录时间</th>
-                <th>IP地址</th>
-                <th>状态</th>
-                <th>操作</th>
+                <th>法规类型</th>
+                <th>法规序号</th>
+                <th>法规名称</th>
+                <th>法规详情</th>
+
             </tr>
             </thead>
             <tbody id="recordList">
