@@ -7,7 +7,6 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.CaseInsensitiveContainerFactory;
 import com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect;
 import com.jfinal.plugin.druid.DruidPlugin;
-import com.jfinal.plugin.ehcache.EhCachePlugin;
 
 import com.jfinal.render.ViewType;
 import com.jfinal.server.undertow.UndertowServer;
@@ -48,7 +47,7 @@ public class ProjectConfig extends JFinalConfig {
     public void configRoute(Routes me) {
         me.add("/lawmap", LawMapController.class);
         me.add("/lawcase", LawCaseController.class);
-       me.add("/law", LawController.class);
+       me.add("/lawlist", LawListController.class);
        me.add("/", IndexController.class);
        me.add("/web_admin",WebAdminController.class); 
        me.add("/admin",AdminController.class); 
