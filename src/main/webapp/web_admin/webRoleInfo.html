@@ -1,269 +1,231 @@
 <!DOCTYPE html>
+<html ng-app="App">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
 
-<html lang="zh-CN" id="dt">
+    <style>
+        .css1{
+            background-color: red;
+        }
 
-  <head>
+        .css2{
+            background-color: brown;
+        }
 
-        <meta charset="utf-8">
+    </style>
+</head>
+<body ng-controller="Demo">
 
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<form style="border: solid black; width: 300px;" ng-show="updateShow">
+    商品编号:<input type="text" ng-model="updateId"/><br />
+    商品名称:<input type="text" ng-model="updateName"/><br />
+    商品数量:<input type="number" ng-model="updateNum"/><br />
+    商品单价:<input type="number" ng-model="updatePrice"/><br />
+    <button type="button" value="提交" ng-click="updateSub()">提交</button>
 
-        <title>表格操作</title>
+</form>
 
-     
+<script src="../libs/angular.min.js"></script>
 
-        <!-- Bootstrap -->
+<script>
+    var App = angular.module("App",[]);
+    App.controller("Demo",function($scope){
 
-        <link href="bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet" />
+        //数据
+        $scope.datas = [
+            {
+                id:1001,
+                name:"ihone8",
+                nums:1,
+                prices:3888,
+                state: false
+            }
+            ,
+            {
+                id:1002,
+                name:"ihone10",
+                nums:1,
+                prices:6888,
+                state: false
+            }
+            ,
+            {
+                id:1003,
+                name:"ihone7",
+                nums:1,
+                prices:5888,
+                state: false
+            }
+        ];
 
-           <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        //数量减减
+        $scope.jian = function(index){
 
-        <!-- <script src="bootstrap-3.3.5-dist/js/jquery.min.js"></script>-->
-
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-
-        <!-- <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>-->
-
-     
-
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-
-        <!--[if lt IE 9]>
-
-          <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-
-          <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-
-        <![endif]-->
-
-     
-
-    <script>
-
-        var dt = document.getElementById("dt");
-
-        var data;
-
-        var hanghao=1;
-
-        function init(){
-
-            data=document.getElementById("data");
-
-            //deletearow();
-
-            // tianjia(2,"zhangsan","路人甲");
+            $scope.datas[index].nums--;
 
         }
 
-        //添加一行
+        //数量加加
+        $scope.add = function(index){
 
-        function tianjia(bianhao,xingming,chuohao){
+            $scope.datas[index].nums++;
 
-            var rows=data.rows;
+        }
 
-            for(var i=0;i<rows.length;i++){
-
-                if(bianhao==rows[i].cells[0].innerText){
-
-                    window.alert("已经存在该编号的用户，请重新输入");
-
-                    return;
-
-                }
-
+        //移除的
+        $scope.remove = function(index){
+            if(confirm("确定要移除吗?")){
+                $scope.datas.splice(index,1);
             }
 
-            var atr=data.insertRow(rows.length);
-
-            var tda=atr.insertCell();
-
-            var tdb=atr.insertCell();
-
-            var tdc=atr.insertCell();
-
-            var tdd=atr.insertCell();
-
-            atr.id="tr"+hanghao;
-
-            tda.innerText=bianhao;
-
-            tdb.innerText=xingming;
-
-            tdc.innerText=chuohao;
-
-            tdd.innerHTML="<button class='btn btn-primary'  οnclick=\"xiugai('"+atr.id+"')\">修改</button><button class='btn btn-primary'  οnclick=\"deletearow('"+atr.id+"')\">删除</button>";
-
-            hanghao++;
 
         }
 
-        function xiugai(atrid){
+        //全选和反选
+        $scope.selectAllFun = function(){
+            if($scope.selectAll){
+                //如果是true的话，把下面的都选中
 
-            var xuhao=document.getElementById("xuhao");
 
-            var xingming=document.getElementById("xingming");
+                for (var x=0;x<$scope.datas.length;x++) {
 
-            var chuohao=document.getElementById("chuohao");
-
-            var rows=data.rows;
-
-            for(var i=0;i<rows.length;i++){
-
-                var atr=rows[i];
-
-                if(atr.id==atrid){
-
-                    // cols = atr.getElementByTagName('td');
-
-//alert(cols.length);
-
-                    var a = atr.cells[0].innerText;
-
-                    var b = atr.cells[1].innerText;
-
-                    var c = atr.cells[2].innerText;
-
-                    document.getElementById("xuhao").value=a;
-
-                    document.getElementById("xingming").value=b;
-
-                    document.getElementById("chuohao").value=c;
-
+                    $scope.datas[x].state = true;
                 }
 
+            }else{   //全部不选中
+                for (var x=0;x<$scope.datas.length;x++) {
+
+                    $scope.datas[x].state = false;
+                }
             }
+        }
+
+
+        //批量删除 名字进行删除
+        $scope.delSelect = function(){
+
+            var arrs =[];
+            for (var x=0;x<$scope.datas.length;x++) {
+                if($scope.datas[x].state){
+                    arrs.push($scope.datas[x].name);
+                }
+            }
+
+
+
+
+
+
+
+        //增加数据的方法
+        $scope.add333 = function(){
+
+            /*ng-model="ID"/><br />
+            商品名称:<input type="text" ng-model="IDname"/><br />
+            商品数量:<input type="text" ng-model="IDnum"/><br />
+            商品单价:<input type="text" ng-model="IDprice"*/
+
+            var flag1 = false;
+
+            if($scope.ID=="" || $scope.ID==null){
+                flag1 = false;
+                alert("ID不能为空")
+
+                return;
+            }else if(isNaN($scope.ID)){  //如果传入的参数是非数字返回true,如果是数字返回false
+                flag1 = false;
+                alert("ID必须是数字")
+                return;
+            }else{
+                flag1 = true;
+            }
+
+            if($scope.IDname=="" || $scope.IDname==null){
+                flag1 = false;
+                alert("IDname不能为空")
+                return;
+            }else{
+                flag1 = true;
+            }
+
+            if($scope.IDnum=="" || $scope.IDnum==null){
+                flag1 = false;
+                alert("IDnum不能为空")
+                return;
+            }else if(isNaN($scope.IDnum)){  //如果传入的参数是非数字返回true,如果是数字返回false
+                flag1 = false;
+                alert("IDnum必须是数字")
+                return;
+            }else{
+                flag1 = true;
+            }
+
+            if($scope.IDprice=="" || $scope.IDprice==null){
+                flag1 = false;
+                alert("IDnum不能为空")
+                return;
+            }else if(isNaN($scope.IDprice)){  //如果传入的参数是非数字返回true,如果是数字返回false
+                flag1 = false;
+                alert("IDnum必须是数字")
+                return;
+
+            }else{
+                flag1 = true;
+            }
+
+
+            if(flag1){
+                //添加数据到原始的集合里面
+                $scope.datas.push({
+
+                    id:$scope.ID,
+                    name:$scope.IDname,
+                    nums:$scope.IDnum,
+                    prices:$scope.IDprice,
+
+
+                });
+            }
+
 
         }
 
-        function deletearow(atrid){
 
-            if(confirm("确定要删除吗？")){
 
-                var rows=data.rows;
+        //提交按钮
+        $scope.updateSub = function(){
 
-                for(var i=0;i<rows.length;i++){
+            $scope.datas[index333].id = $scope.updateId;
+            $scope.datas[index333].name = $scope.updateName;
+            $scope.datas[index333].nums= $scope.updateNum;
+            $scope.datas[index333].prices = $scope.updatePrice;
 
-                    var atr=rows[i];
 
-                    if(atr.id==atrid){
 
-                        data.deleteRow(i);
+            /*for (var x=0;x<$scope.datas.length;x++) {
 
-                    }
+                $scope.datas.[index333]
 
+                if($scope.datas[x].id==$scope.updateId){
+                    $scope.datas[x].id = $scope.updateId;
+                    $scope.datas[x].name = $scope.updateName;
+                    $scope.datas[x].nums= $scope.updateNum;
+                    $scope.datas[x].prices = $scope.updatePrice;
                 }
 
-            }
+
+
+            }*/
 
         }
 
-        function dotianjia(){
 
-            var xuhao=document.getElementById("xuhao");
 
-            var xingming=document.getElementById("xingming");
+    });
 
-            var chuohao=document.getElementById("chuohao");
-
-            tianjia(xuhao.value,xingming.value,chuohao.value);
-
-        }
-
-        function dobaocun(){
-
-            var winname=window.open('','_blank');
-
-            winname.document.open('text/html','replace');
-
-            var code=document.getElementById("dt").innerHTML;
-
-            winname.document.write(code);
-
-            winname.document.execCommand('saveas','table.html');
-
-            winname.close();
-
-        }
-
-    </script>
-
-      </head>
-
-  <body  οnlοad="init()">
-
-  <div class="container">
-
-        <div class="row">
-
-          <div class="col-md-12">
-
-            <h2 class="text-center">人员管理</h2>      
-
-          </div>
-
-          <div class="col-md-12">
-
-               <form class="form-inline">
-
-                 <div class="form-group">
-
-                   <label>序号</label>
-
-                   <input type="text" id="xuhao" class="form-control" />
-
-                 </div>
-
-                 <div class="form-group">
-
-                   <label>姓名</label>
-
-                   <input type="text" id="xingming" class="form-control" />
-
-                 </div>
-
-                 <div class="form-group">
-
-                   <label>绰号</label>
-
-                   <input type="text" id="chuohao" class="form-control" />
-
-                 </div>
-
-                 <div class="form-group">
-
-                   <button class="btn btn-primary" type="button" οnclick="dotianjia()">添加</button>
-
-                   <button class="btn btn-primary" type="button" οnclick="dobaocun()">保存</button>
-
-                 </div>
-
-               </form>
-
-          </div>
-
-          <div class="col-md-12">
-
-               <table class="table" id="data">
-
-                 <tr><td>序号</td><td>姓名</td><td>绰号</td><td>操作</td></tr>
-
-                
-
-               </table>
-
-          </div>
-
-        </div>
-
-      </div>
-
-  </body>
-
+</script>
+</body>
 </html>
