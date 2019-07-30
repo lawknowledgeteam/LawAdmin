@@ -7,6 +7,7 @@ import com.liyang.common.GlobalVar;
 import com.liyang.common.RoleAuthSettings;
 import com.liyang.common.Util;
 import com.liyang.model.Admin;
+import com.liyang.model.LawMap;
 import com.liyang.model.Role;
 
 import java.util.List;
@@ -79,10 +80,10 @@ public class LawMapController extends Controller {
     //@Before(AdminInterceptor.class)*/
     public void web_add(){
 
-        Role temp = new Role();
+        LawMap temp = new LawMap();
         setAttr("IsNew", 1);
         setAttr("rec", temp);
-        render("/web_admin/webRoleInfo.html");
+        render("/web_admin/addlawmap.html");
     }
 
     public void web_change(){
@@ -94,10 +95,10 @@ public class LawMapController extends Controller {
         }
         int id = getParaToInt("ID");
 
-        Role temp = Role.dao.findById(id);
+        LawMap temp = LawMap.dao.findById(id);
         setAttr("IsNew", 0);
         setAttr("rec", temp);
-        render("/web_admin/webRoleInfo.html");
+        render("/lawmap/addlawmap.html");
     }
 
 
