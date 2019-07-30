@@ -11,6 +11,7 @@ import com.liyang.common.GlobalVar;
 import com.liyang.common.RoleAuthSettings;
 import com.liyang.common.Util;
 import com.liyang.model.Admin;
+import com.liyang.model.Case;
 import com.liyang.model.Role;
 
 public class LawListController extends Controller {
@@ -76,10 +77,10 @@ public class LawListController extends Controller {
 	//@Before(AdminInterceptor.class)*/
 	public void web_add(){
 
-		Role temp = new Role();
+		Case temp = new Case();
 		setAttr("IsNew", 1);
 		setAttr("rec", temp);
-		render("/web_admin/webRoleInfo.html");
+		render("/web_admin/addlawmap.html");
 	}
 	
 	public void web_change(){
@@ -94,7 +95,7 @@ public class LawListController extends Controller {
 		Role temp = Role.dao.findById(id);
 		setAttr("IsNew", 0);
 		setAttr("rec", temp);
-		render("/web_admin/webRoleInfo.html");
+		render("/web_admin/addlawmap.html");
 	}
 	
 
