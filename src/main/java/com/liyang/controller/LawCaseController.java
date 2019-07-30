@@ -95,7 +95,7 @@ public class LawCaseController extends Controller {
         Case temp = Case.dao.findById(id);
         setAttr("IsNew", 0);
         setAttr("rec", temp);
-        render("/lawcase/addlawcase.html");
+        render("/lawcase/addlawlist.html");
     }
 
 
