@@ -11,7 +11,7 @@
     <script type="text/javascript" src="../third-party/jquery.pagination.js"></script>
     <link rel="stylesheet" href="../css/list-common.css">
     <script type="text/javascript" src="../third-party/layer/layer.js"></script>
-    <title>法律列表</title>
+    <title>法规列表</title>
     <style type="text/css">
 
     </style>
@@ -26,7 +26,7 @@
 
         function getRecordCountCallback(json)
         {
-            if(json.RecordCount==0) alert("设备数量等于0");
+            if(json.RecordCount==0) alert("法规数量等于0");
             $("#pagination").pagination(json.RecordCount,    //分布总数量，必须参数
                 {
                     callback: PageCallback,  //PageCallback() 为翻页调用次函数。
@@ -134,11 +134,11 @@
                 skin: 'layui-layer-rim',
                 shadeClose:true ,
                 area: ['400px', '300px'],
-                title: ['添加管理员信息','background:#0090D7;color:#FFFFFF;'],
+                title: ['添加法规信息','background:#0090D7;color:#FFFFFF;'],
                 shade: 0,
                 moveType: 0,
                 shift: 0,
-                content:'/device/web_add'
+                content:'/lawmap/web_add'
             });
         }
         function editRecord(id){
@@ -215,6 +215,7 @@
         </div>
         <div class="toolbar_button">
             <button type="button" class="btn btn-default" onclick="window.location.reload()">刷新列表</button>
+            <button type="button" class="btn btn-default" onclick="addRecord()">添加法规</button>
         </div>
 
     </div>
