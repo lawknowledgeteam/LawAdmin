@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html ng-app="App">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+        .css2{
+            background-color: red;
+        }
+
+        .css2{
+            background-color: brown;
+        }
+
+    </style>
+</head>
+<body ng-controller="Demo">
+
+
+
+<form style="border: white; text-align:center;width: 300px;" ng-show="updateShow">
+    法律编号:<input type="number" ng-model="updateId"/><br /><br />
+    法律名称:<input type="text" ng-model="updateName"/><br /><br />
+    颁布时间:<input type="date" ng-model="updateTime"/><br /><br />
+    生效时间:<input type="date" ng-model="updateTime"/><br /><br />
+    发行会议:<input type="text" ng-model="updateName"/><br /><br />
+    有效级别:<input type="text" ng-model="updateName"/><br /><br />
+    法律类型:<input type="text" ng-model="updateName"/><br /><br />
+<!--    商品单价:<input type="number" ng-model="updatePrice"/><br />-->
+    <button type="button" value="提交" ng-click="updateSub()">提交</button>
+
+</form>
+
+<script src="../libs/angular.min.js"></script>
+
+<script>
+    var App = angular.module("App",[]);
+    App.controller("Demo",function($scope){
+
+        //数据
+        $scope.datas = [
+            {
+                id:1001,
+                name:"ihone8",
+                nums:1,
+                prices:3888,
+                state: false
+            }
+            ,
+            {
+                id:1002,
+                name:"ihone10",
+                nums:1,
+                prices:6888,
+                state: false
+            }
+            ,
+            {
+                id:1003,
+                name:"ihone7",
+                nums:1,
+                prices:5888,
+                state: false
+            }
+        ];
+
+        //数量减减
+        $scope.jian = function(index){
+
+            $scope.datas[index].nums--;
+
+        }
+
+        //数量加加
+        $scope.add = function(index){
+
+            $scope.datas[index].nums++;
+
+        }
+
+        //移除的
+        $scope.remove = function(index){
+            if(confirm("确定要移除吗?")){
+                $scope.datas.splice(index,1);
+            }
+
+
+        }
+
+        //全选和反选
+        $scope.selectAllFun = function(){
+            if($scope.selectAll){
+                //如果是true的话，把下面的都选中
+
+
+                for (var x=0;x<$scope.datas.length;x++) {
+
+                    $scope.datas[x].state = true;
+                }
+
+            }else{   //全部不选中
+                for (var x=0;x<$scope.datas.length;x++) {
+
+                    $scope.datas[x].state = false;
+                }
+            }
+        }
+
+
+        //批量删除 名字进行删除
+        $scope.delSelect = function() {
+
+            var arrs = [];
+            for (var x = 0; x < $scope.datas.length; x++) {
+                if ($scope.datas[x].state) {
+                    arrs.push($scope.datas[x].name);
+                }
+            }
+
+
+            //增加数据的方法
+            $scope.add333 = function () {
+
+                /*ng-model="ID"/><br />
+            商品名称:<input type="text" ng-model="IDname"/><br />
+            商品数量:<input type="text" ng-model="IDnum"/><br />
+            商品单价:<input type="text" ng-model="IDprice"*/
+
+                var flag1 = false;
+
+                if ($scope.ID == "" || $scope.ID == null) {
+                    flag1 = false;
+                    alert("ID不能为空")
+
+                    return;
+                } else if (isNaN($scope.ID)) {  //如果传入的参数是非数字返回true,如果是数字返回false
+                    flag1 = false;
+                    alert("ID必须是数字")
+                    return;
+                } else {
+                    flag1 = true;
+                }
+
+                if ($scope.IDname == "" || $scope.IDname == null) {
+                    flag1 = false;
+                    alert("IDname不能为空")
+                    return;
+                } else {
+                    flag1 = true;
+                }
+
+                if ($scope.IDnum == "" || $scope.IDnum == null) {
+                    flag1 = false;
+                    alert("IDnum不能为空")
+                    return;
+                } else if (isNaN($scope.IDnum)) {  //如果传入的参数是非数字返回true,如果是数字返回false
+                    flag1 = false;
+                    alert("IDnum必须是数字")
+                    return;
+                } else {
+                    flag1 = true;
+                }
+
+                if ($scope.IDprice == "" || $scope.IDprice == null) {
+                    flag1 = false;
+                    alert("IDnum不能为空")
+                    return;
+                } else if (isNaN($scope.IDprice)) {  //如果传入的参数是非数字返回true,如果是数字返回false
+                    flag1 = false;
+                    alert("IDnum必须是数字")
+                    return;
+
+                } else {
+                    flag1 = true;
+                }
+
+
+                if (flag1) {
+                    //添加数据到原始的集合里面
+                    $scope.datas.push({
+
+                        id: $scope.ID,
+                        name: $scope.IDname,
+                        nums: $scope.IDnum,
+                        prices: $scope.IDprice,
+
+
+                    });
+                }
+
+
+            }
+
+
+            //提交按钮
+            $scope.updateSub = function () {
+
+                $scope.datas[index333].id = $scope.updateId;
+                $scope.datas[index333].name = $scope.updateName;
+                $scope.datas[index333].nums = $scope.updateNum;
+                $scope.datas[index333].prices = $scope.updatePrice;
+
+
+                /*for (var x=0;x<$scope.datas.length;x++) {
+
+                $scope.datas.[index333]
+
+                if($scope.datas[x].id==$scope.updateId){
+                    $scope.datas[x].id = $scope.updateId;
+                    $scope.datas[x].name = $scope.updateName;
+                    $scope.datas[x].nums= $scope.updateNum;
+                    $scope.datas[x].prices = $scope.updatePrice;
+                }
+
+
+
+            }*/
+
+            }
+
+
+        });
+
+</script>
+</body>
+</html>
