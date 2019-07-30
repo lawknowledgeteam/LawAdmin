@@ -20,13 +20,11 @@
 
 
 <form style="border: white; text-align:center;width: 300px;" ng-show="updateShow">
-    法律编号:<input type="number" ng-model="updateId"/><br /><br />
-    法律名称:<input type="text" ng-model="updateName"/><br /><br />
-    颁布时间:<input type="date" ng-model="updateTime"/><br /><br />
-    生效时间:<input type="date" ng-model="updateTime"/><br /><br />
-    发行会议:<input type="text" ng-model="updateName"/><br /><br />
-    有效级别:<input type="text" ng-model="updateName"/><br /><br />
-    法律类型:<input type="text" ng-model="updateName"/><br /><br />
+    案件编号:<input type="number" ng-model="updateId"/><br /><br />
+    案件内容:<input type="text" ng-model="updateName"/><br /><br />
+    案件关键词:<input type="text" ng-model="updateKeywords"/><br /><br />
+    审理法院:<input type="text" ng-model="updateCourt"/><br /><br />
+    案件种类:<input type="text" ng-model="updateKind"/><br /><br />
 <!--    商品单价:<input type="number" ng-model="updatePrice"/><br />-->
     <button type="button" value="提交" ng-click="updateSub()">提交</button>
 
