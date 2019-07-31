@@ -7,6 +7,7 @@ import com.liyang.common.GlobalVar;
 import com.liyang.common.RoleAuthSettings;
 import com.liyang.common.Util;
 import com.liyang.model.Admin;
+import com.liyang.model.Case;
 import com.liyang.model.Role;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public class LawCaseController extends Controller {
     }
 
     /**
-     * 分页查询角色信息
+     * 分页查询法律信息
      */
     //@Before(AdminInterceptor.class)
     public void web_getListPaging()
@@ -76,10 +77,10 @@ public class LawCaseController extends Controller {
     //@Before(AdminInterceptor.class)*/
     public void web_add(){
 
-        Role temp = new Role();
+        Case temp = new Case();
         setAttr("IsNew", 1);
         setAttr("rec", temp);
-        render("/web_admin/webRoleInfo.html");
+        render("/web_admin/addlawcase.html");
     }
 
     public void web_change(){
@@ -91,10 +92,10 @@ public class LawCaseController extends Controller {
         }
         int id = getParaToInt("ID");
 
-        Role temp = Role.dao.findById(id);
+        Case temp = Case.dao.findById(id);
         setAttr("IsNew", 0);
         setAttr("rec", temp);
-        render("/web_admin/webRoleInfo.html");
+        render("/lawcase/addlawlist.html");
     }
 
 
