@@ -22,7 +22,7 @@ import com.liyang.model.Role;
 
 
 public class ProjectConfig extends JFinalConfig {
- 
+
     public static void main(String[] args) {
         UndertowServer.start(ProjectConfig.class, 8082, true);
         
@@ -104,7 +104,7 @@ public class ProjectConfig extends JFinalConfig {
     public void configHandler(Handlers me) {
     	RoleAuthSettings.init();		
     }
-    
-    
+
+
    
 }
