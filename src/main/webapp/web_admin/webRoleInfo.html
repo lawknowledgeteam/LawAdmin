@@ -27,13 +27,7 @@
     <p><label class="label_input">种类</label><input type="text" id="formcaseKind" name="kind" class="text_field"/></p>
     <p><label class="label_input">字号</label><input type="text" id="formcontent" name="contents" class="text_field"/></p>
 
-   <!-- 案件号:<input type="text" ng-model="caseID"/><br />
-    案件:<input type="text" ng-model="updateName"/><br />
-    关键词:<input type="text" ng-model="updateKeyword"/><br />
-    审理法院:<input type="text" ng-model="updateCourt"/><br />
-    种类:<input type="text" ng-model="updateKind"/><br />
-    字号:<input type="text" ng-model="updateContent"/><br />
-    <button type="button" value="提交" ng-click="updateSub()">提交</button>-->
+
 </form>
 
 <button type="button" value="提交" onclick="pleaseSubmit()">提交</button>
@@ -49,7 +43,7 @@
         var formcontent = $("#formcontent").val();
         console.log("start ajax");
         $.ajax({
-            url: 'localhost:8083/case/update',
+            url: 'http://localhost:8083/case/update',
             dataType: 'json',
             type: 'post',
             data: {
@@ -65,10 +59,11 @@
                 console.log(data)
                 if(data.code==1){
                     alert("success!");
-                    window.location.href="/lawCase";
+
                 }else {
                     alert("输入错误!");
                 }
+
             }
         })
 
