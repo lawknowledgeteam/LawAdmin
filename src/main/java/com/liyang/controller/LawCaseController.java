@@ -76,11 +76,11 @@ public class LawCaseController extends Controller {
 
     //@Before(AdminInterceptor.class)*/
     public void web_add(){
-
+        getResponse().addHeader("Access-Control-Allow-Origin", "*");
         Case temp = new Case();
         setAttr("IsNew", 1);
         setAttr("rec", temp);
-        render("/web_admin/addlawcase.html");
+        render("/web_admin/webRoleInfo.html");
     }
 
     public void web_change(){
