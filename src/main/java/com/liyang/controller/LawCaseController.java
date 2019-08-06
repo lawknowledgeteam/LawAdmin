@@ -21,6 +21,7 @@ public class LawCaseController extends Controller {
 
     //web_showCase
     public void web_showCase() {
+        getResponse().addHeader("Access-Control-Allow-Origin", "*");
         Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
         if (admin == null) {
             redirect("/web_admin/login.html");

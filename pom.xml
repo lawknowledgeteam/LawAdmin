@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.liyang</groupId>
+  <groupId>com.liyang.common</groupId>
   <artifactId>lawbase</artifactId>
   <packaging>jar</packaging>
   <version>0.1</version>
-  <name>lawbase Maven Webapp</name>
+  <name>main</name>
   <url>http://maven.apache.org</url>
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -107,7 +107,8 @@
 					<compilerArguments><verbose /></compilerArguments>
 				</configuration>
 			</plugin>
-			
+
+
 			<!--
 				jar 包中的配置文件优先级高于 config 目录下的 "同名文件"
 				因此，打包时需要排除掉 jar 包中来自 src/main/resources 目录的
@@ -126,7 +127,7 @@
 				</configuration>
 			</plugin>
 			
-			<!-- 
+			<!--
 				使用 mvn clean package 打包 
 				更多配置可参考官司方文档：http://maven.apache.org/plugins/maven-assembly-plugin/single-mojo.html
 	 		-->
@@ -159,8 +160,30 @@
 					</execution>
 				</executions>
 			</plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <transformers>
+                            <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <!--指定main方法-->
+                                <mainClass>com.liyang.common.ProjectConfig</mainClass>
+                            </transformer>
+                        </transformers>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+
             
 	  </plugins>
   </build>
-  
+
 </project>
