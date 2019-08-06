@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html ng-app="App">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+        .css1{
+            background-color: red;
+        }
+
+        .css2{
+            background-color: brown;
+        }
+
+    </style>
+</head>
+<body ng-controller="Demo">
+
+
+
+<form style="border: solid white; width: 300px;" ng-show="updateShow">
+    <p><label class="label_input">案件号</label><input type="text" id="formcaesID" name="id" class="text_field"/></p>
+    <p><label class="label_input">案件</label><input type="text" id="formcaseName" name="name" class="text_field"/></p>
+    <p><label class="label_input">关键词</label><input type="text" id="formkeyWords" name="keyword" class="text_field"/></p>
+    <p><label class="label_input">审理法院</label><input type="text" id="formtrialCourt" name="court" class="text_field"/></p>
+    <p><label class="label_input">种类</label><input type="text" id="formcaseKind" name="kind" class="text_field"/></p>
+    <p><label class="label_input">字号</label><input type="text" id="formcontent" name="contents" class="text_field"/></p>
+
+
+</form>
+
+<button type="button" value="提交" onclick="pleaseSubmit()">提交</button>
+<script src="../third-party/jquery/jquery-2.1.4.min.js"></script>
+<script src="../third-party/bootstrap3.3.7dist/js/bootstrap.min.js"></script>
+<script>
+    function pleaseSubmit() {
+        var formcaseID = $("#formcaseID").val();
+        var formcaseName = $("#formcaseName").val();
+        var formkeyWords = $("#formkeyWords").val();
+        var formtrialCourt = $("#formtrialCourt").val();
+        var formcaseKind = $("#formcaseKind").val();
+        var formcontent = $("#formcontent").val();
+        console.log("start ajax");
+        $.ajax({
+            url: 'http://localhost:8083/case/update',
+            dataType: 'json',
+            type: 'post',
+            data: {
+                caseID: formcaseID,
+                caseName: formcaseName,
+                keyWords: formkeyWords,   //这里 : 前面一定要和json里面的字段一致.
+                trialCourt: formtrialCourt,
+                caseKind:formcaseKind,
+                content:formcontent
+
+            },
+            success: function (data) {
+                console.log(data)
+                if(data.code==1){
+                    alert("success!");
+
+                }else {
+                    alert("输入错误!");
+                }
+
+            }
+        })
+
+    };
+
+</script>
+
+
+</body>
+</html>
