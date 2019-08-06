@@ -1,5 +1,6 @@
 # true 值支持热加载
 undertow.devMode=true
 undertow.port=8093
+undertow.resourcePath = src/main/webapp,src/main/java
 #undertow.hotSwapClassPrefix=cn.dreampie.
 #undertow.host=211.87.227.204

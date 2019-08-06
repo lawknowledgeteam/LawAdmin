@@ -31,7 +31,7 @@ public class WebAdminController extends Controller {
 
 	// @Before(NoUrlPara.class)
 	public void index() {
-		render("web_admin/index.html");
+		render("/web_admin/index.html");
 	}
 
 	/**
@@ -53,10 +53,10 @@ public class WebAdminController extends Controller {
 	{
 		if (getSessionAttr(GlobalVar.WEBADMIN) != null) {
 			setAttr("errorMsg", "");
-			redirect("web_admin");
+			redirect("/web_admin");
 			return;
 		}
-		render("web_admin/login.html");
+		render("/web_admin/login.html");
 	}
 	
 	
@@ -64,7 +64,7 @@ public class WebAdminController extends Controller {
 	public void loginCheck() {
 		if (getSessionAttr(GlobalVar.WEBADMIN) != null) {
 			// 已登录就跳转
-			redirect("web_admin");
+			redirect("/web_admin");
 			return;
 		}
 
@@ -72,12 +72,12 @@ public class WebAdminController extends Controller {
 		if((getPara("loginName")!=null)&&(sLoginName.length()>20))
 		{
 			setAttr("errorMsg", "账号位数过长，请输入正确的账号！");
-			render("web_admin/login.html");
+			render("/web_admin/login.html");
 			return;
 		}
 		// 防暴力检测
 		if (AdminLoginSafe.isExist("" + sLoginName)) {
-			redirect("web_admin/error?Msg=" + Util.getEncodeText("密码输入错误次数过多，请十分钟后再试！"));
+			redirect("/web_admin/error?Msg=" + Util.getEncodeText("密码输入错误次数过多，请十分钟后再试！"));
 			return;
 		} else 
 		{
@@ -88,7 +88,7 @@ public class WebAdminController extends Controller {
 				LogController.addLog(2, 1000, "登录验证码错误!");
 				
 				setAttr("errorMsg", "验证码输入错误！");
-				render("web_admin/login.html");
+				render("/web_admin/login.html");
 				return;
 			}
 			
@@ -97,7 +97,7 @@ public class WebAdminController extends Controller {
 			{
 				LogController.addLog(2, 1000, "账号或密码错误!");
 				setAttr("errorMsg", "账号或密码错误！");
-				render("web_admin/login.html");
+				render("/web_admin/login.html");
 				return;
 			}
 			else{
@@ -110,7 +110,7 @@ public class WebAdminController extends Controller {
 	public void checkPsw(Admin manager,String sLoginName){
 		if (manager == null) {
 			setAttr("errorMsg", "账号或密码错误！");
-			render("web_admin/login.html");
+			render("/web_admin/login.html");
 			return;
 		}
 		
@@ -134,7 +134,7 @@ public class WebAdminController extends Controller {
 				LogController.addLog(2, manager.getInt("AdminID"), "超级管理员登录!");//后台管理员登录
 			//logger.info(sLoginName + "---登录后台");
 			//renderHtml(Util.getResult("0000", "/web_admin/index.html"));
-			redirect("web_admin");
+			redirect("/web_admin");
 			return;
 		} 
 		else {
@@ -152,7 +152,7 @@ public class WebAdminController extends Controller {
 			setAttr("errorMsg", "账号或密码错误！");
 			//keepModel(userPSW.class);
 			// render("login.html");
-			render("web_admin/login.html");
+			render("/web_admin/login.html");
 		}
 		
 	}
@@ -166,7 +166,7 @@ public class WebAdminController extends Controller {
 	public void quit() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("web_admin/login.html");
+			redirect("/web_admin/login.html");
 			return;
 		}
 		
@@ -187,14 +187,14 @@ public class WebAdminController extends Controller {
 		newLog.save();
 		
 		removeSessionAttr(GlobalVar.WEBADMIN);
-		redirect("web_admin/login");
+		redirect("/web_admin/login");
 	}
 
 	
 	public void getMenuList() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("web_admin/login.html");
+			redirect("/web_admin/login.html");
 			return;
 		}
 		

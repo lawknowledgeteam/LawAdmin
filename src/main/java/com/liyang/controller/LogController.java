@@ -19,14 +19,14 @@ public class LogController extends Controller {
 	public void web_showLog() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("web_admin/login.html");
+			redirect("/web_admin/login.html");
 			return;
 		}
 		LogController.addLog(3, admin.getInt("AdminID"), "查看日志记录");
 		
 		setAttr("authExport", RoleAuthSettings.getValue(admin.getInt("RoleID")+"logExport"));
 		
-		render("web_admin/loglist.html");
+		render("/web_admin/loglist.html");
 	}
 
 
@@ -58,7 +58,7 @@ public class LogController extends Controller {
 	public void web_getCount() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("web_admin/login.html");
+			redirect("/web_admin/login.html");
 			return;
 		}
 		
@@ -78,7 +78,7 @@ public class LogController extends Controller {
 	public void web_getListPaging() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("web_admin/login.html");
+			redirect("/web_admin/login.html");
 			return;
 		}
 		

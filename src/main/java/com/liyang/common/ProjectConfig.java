@@ -3,6 +3,7 @@ package com.liyang.common;
 
 
 import com.jfinal.config.*;
+import com.jfinal.core.JFinal;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.CaseInsensitiveContainerFactory;
 import com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect;
@@ -23,8 +24,7 @@ import com.liyang.model.Role;
 public class ProjectConfig extends JFinalConfig {
 
     public static void main(String[] args) {
-        UndertowServer.start(ProjectConfig.class, 8082, true);
-        
+        UndertowServer.start(ProjectConfig.class, 8093, false);
     }
     @Override
     public void configConstant(Constants me) {
@@ -43,6 +43,13 @@ public class ProjectConfig extends JFinalConfig {
        me.setMaxPostSize(100*1024*1024);
        me.setViewType(ViewType.FREE_MARKER);
     }
+
+    @Override
+    public void configEngine(Engine me) {
+/*        me.setBaseTemplatePath("webapp");
+        me.setToClassPathSourceFactory();*/
+    }
+
     @Override
     public void configRoute(Routes me) {
         me.add("/lawmap", LawMapController.class);
@@ -56,10 +63,7 @@ public class ProjectConfig extends JFinalConfig {
 		me.add("/role",RoleController.class);
 		me.add("/m",com.liyang.controller.MobileController.class);		
     }
-    @Override
-    public void configEngine(Engine me) {
-    	
-    }
+
     @Override
     public void configPlugin(Plugins me) {
     	DruidPlugin druidPlugin = new DruidPlugin(GlobalVar.DBServerIP, GlobalVar.DBServerUser, GlobalVar.DBServerPassword);

@@ -24,7 +24,7 @@ public class MobileController extends Controller {
 	private static final String RANDOM_CODE_KEY = "1";// 生成验证码会用到
 	
     public void index() {
-       render("web_mobile/mobLogin.html");
+       render("/web_mobile/mobLogin.html");
     }
     
     /**
@@ -42,7 +42,7 @@ public class MobileController extends Controller {
 		// 防暴力检测
 		
 		if (getPara("LoginName") == null) {
-			redirect("web_mobile/mobLogin.html");
+			redirect("/web_mobile/mobLogin.html");
 			return;
 		}//*/
 		
@@ -50,12 +50,12 @@ public class MobileController extends Controller {
 		if(strLoginName.length()>6)
 		{
 			setAttr("Msg", "账号位数过长，请输入正确的账号！");
-			render("404/error.html");
+			render("/404/error.html");
 			return;
 		}
 		if (UserLoginSafe.isExist(strLoginName)) {
 			setAttr("Msg", "密码输入错误次数过多，请十分钟后再试！");
-			render("404/error.html");
+			render("/404/error.html");
 			return;
 		} 
 		else 
@@ -96,7 +96,7 @@ public class MobileController extends Controller {
 				else if(curUser.getInt("State")==0)
 				{//
 					setAttr("sToken", sToken);
-				    render("web_mobile/index_tab.html");
+				    render("/web_mobile/index_tab.html");
 					//redirect(Util.getResult("0000", "/web_front/mobQuestionnaireWelcome.html"));
 				}
 				else
@@ -143,7 +143,7 @@ public class MobileController extends Controller {
 		     LogController.addLog(10, 1000, "UserID'"+user.getStr("UserID")+"'退出!");
 		TokenManager.getMe().removeToken(sToken);
 		//removeSessionAttr(GlobalVar.WEBUSER);
-		render("web_front/mobLogin.html");
+		render("/web_front/mobLogin.html");
 	}
 	
 }
