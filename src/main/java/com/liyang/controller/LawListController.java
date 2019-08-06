@@ -21,7 +21,7 @@ public class LawListController extends Controller {
 	public void web_showList() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("/web_admin/login.html");
+			redirect("web_admin/login.html");
 			return;
 		}
 		
@@ -29,7 +29,7 @@ public class LawListController extends Controller {
 		setAttr("authEdit", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleEdit"));
 		setAttr("authState", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleState"));
 		
-		render("/web_admin/lawList.html");
+		render("web_admin/lawList.html");
 	}
 
 
@@ -76,11 +76,11 @@ public class LawListController extends Controller {
 	
 	//@Before(AdminInterceptor.class)*/
 	public void web_add(){
-
+		getResponse().addHeader("Access-Control-Allow-Origin", "*");
 		Case temp = new Case();
 		setAttr("IsNew", 1);
 		setAttr("rec", temp);
-		render("/web_admin/addlawmap.html");
+		render("web_admin/addlawlist.html");
 	}
 	
 	public void web_change(){
@@ -95,7 +95,7 @@ public class LawListController extends Controller {
 		Role temp = Role.dao.findById(id);
 		setAttr("IsNew", 0);
 		setAttr("rec", temp);
-		render("/web_admin/addlawmap.html");
+		render("web_admin/addlawmap.html");
 	}
 	
 

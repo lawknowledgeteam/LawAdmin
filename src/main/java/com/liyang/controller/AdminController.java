@@ -294,14 +294,14 @@ public class AdminController extends Controller {
 	public void web_showAdminChangeInfo() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("/web_admin/login.html");
+			redirect("web_admin/login.html");
 			return;
 		}
 
 		
 		setAttr("rec", admin);
 		
-		render("/web_admin/webAdminChangeInfo.html");
+		render("web_admin/webAdminChangeInfo.html");
 	}
 	
 	//保存管理员设置结果，只能修改昵称密码
@@ -312,7 +312,7 @@ public class AdminController extends Controller {
 		
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("/web_admin/login.html");
+			redirect("web_admin/login.html");
 			return;
 		}
 		id=getParaToInt("AdminID");

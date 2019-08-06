@@ -21,7 +21,7 @@ public class RoleController extends Controller {
 	public void web_showRoleList() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("/web_admin/login.html");
+			redirect("web_admin/login.html");
 			return;
 		}
 		
@@ -29,7 +29,7 @@ public class RoleController extends Controller {
 		setAttr("authEdit", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleEdit"));
 		setAttr("authState", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleState"));
 		
-		render("/web_admin/webRoleList.html");
+		render("web_admin/webRoleList.html");
 	}
 	
 
@@ -80,7 +80,7 @@ public class RoleController extends Controller {
 		Role temp = new Role();
 		setAttr("IsNew", 1);
 		setAttr("rec", temp);
-		render("/web_admin/webRoleInfo.html");
+		render("web_admin/webRoleInfo.html");
 	}
 	
 	public void web_change(){
@@ -95,7 +95,7 @@ public class RoleController extends Controller {
 		Role temp = Role.dao.findById(id);
 		setAttr("IsNew", 0);
 		setAttr("rec", temp);
-		render("/web_admin/webRoleInfo.html");
+		render("web_admin/webRoleInfo.html");
 	}
 	
 
@@ -222,7 +222,7 @@ public class RoleController extends Controller {
 		setAttr("menuAuths", lists3);
 		
 		
-		render("/web_admin/webRoleRight.html");
+		render("web_admin/webRoleRight.html");
 	}
 	
 	public void getRoleAuths() {

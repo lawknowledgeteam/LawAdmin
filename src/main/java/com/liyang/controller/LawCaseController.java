@@ -24,7 +24,7 @@ public class LawCaseController extends Controller {
         getResponse().addHeader("Access-Control-Allow-Origin", "*");
         Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
         if (admin == null) {
-            redirect("/web_admin/login.html");
+            redirect("web_admin/login.html");
             return;
         }
 
@@ -32,7 +32,7 @@ public class LawCaseController extends Controller {
         setAttr("authEdit", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleEdit"));
         setAttr("authState", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleState"));
 
-        render("/web_admin/lawCase.html");
+        render("web_admin/lawCase.html");
     }
     /**
      * 角色数量
@@ -81,7 +81,7 @@ public class LawCaseController extends Controller {
         Case temp = new Case();
         setAttr("IsNew", 1);
         setAttr("rec", temp);
-        render("/web_admin/webRoleInfo.html");
+        render("web_admin/webRoleInfo.html");
     }
 
     public void web_change(){
@@ -96,7 +96,7 @@ public class LawCaseController extends Controller {
         Case temp = Case.dao.findById(id);
         setAttr("IsNew", 0);
         setAttr("rec", temp);
-        render("/lawcase/addlawlist.html");
+        render("lawcase/addlawlist.html");
     }
 
 
@@ -223,7 +223,7 @@ public class LawCaseController extends Controller {
         setAttr("menuAuths", lists3);
 
 
-        render("/web_admin/webRoleRight.html");
+        render("web_admin/webRoleRight.html");
     }
 
     public void getRoleAuths() {

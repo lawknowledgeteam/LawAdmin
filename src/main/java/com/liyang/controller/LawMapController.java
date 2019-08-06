@@ -25,7 +25,7 @@ public class LawMapController extends Controller {
     public void web_showMap() {
         Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
         if (admin == null) {
-            redirect("/web_admin/login.html");
+            redirect("web_admin/login.html");
             return;
         }
 
@@ -33,7 +33,7 @@ public class LawMapController extends Controller {
         setAttr("authEdit", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleEdit"));
         setAttr("authState", RoleAuthSettings.getValue(admin.getInt("RoleID")+"sysRoleState"));
 
-        render("/web_admin/lawMapList.html");
+        render("web_admin/lawMapList.html");
     }
 
     /**
@@ -79,11 +79,11 @@ public class LawMapController extends Controller {
 
     //@Before(AdminInterceptor.class)*/
     public void web_add(){
-
+        getResponse().addHeader("Access-Control-Allow-Origin", "*");
         LawMap temp = new LawMap();
         setAttr("IsNew", 1);
         setAttr("rec", temp);
-        render("/web_admin/addlawmap.html");
+        render("web_admin/addlawmap.html");
     }
 
     public void web_change(){
@@ -98,7 +98,7 @@ public class LawMapController extends Controller {
         LawMap temp = LawMap.dao.findById(id);
         setAttr("IsNew", 0);
         setAttr("rec", temp);
-        render("/lawmap/addlawmap.html");
+        render("lawmap/addlawmap.html");
     }
 
 

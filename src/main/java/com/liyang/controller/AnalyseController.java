@@ -33,7 +33,7 @@ public class AnalyseController extends Controller {
 			renderHtml(Util.getResult("0001", "请先登录本系统!"));	
 			return;
 		}
-		render("/web_admin/analyse.html");
+		render("web_admin/analyse.html");
 	}
 	
 	public void getHomepageData(){
@@ -126,7 +126,7 @@ public class AnalyseController extends Controller {
 		Case temp = new Case();
 		setAttr("IsNew", 1);
 		setAttr("rec", temp);
-		render("/web_admin/addanalyse.html");
+		render("web_admin/addanalyse.html");
 	}
 
 /*	public void web_getResidenceTimeList(){
@@ -210,7 +210,7 @@ public class AnalyseController extends Controller {
 		}
 		List<Record> recs=Db.find("select * from uv_org_device_info where OrganizationID="+admin.getInt("OrganizationID"));
 		set("DeviceLists",recs);
-		render("/web_admin/analyse.html");
+		render("web_admin/analyse.html");
 	}
 
 
