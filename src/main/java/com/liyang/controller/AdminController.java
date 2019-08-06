@@ -15,7 +15,7 @@ public class AdminController extends Controller {
 	
 	
 	public void web_showList() {
-		render("/web_admin/webAdminList.html");
+		render("web_admin/webAdminList.html");
 	}
 	
 	/**
@@ -25,7 +25,7 @@ public class AdminController extends Controller {
 	public void web_add() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("/web_admin/login.html");
+			redirect("web_admin/login.html");
 			return;
 		}
 		
@@ -43,7 +43,7 @@ public class AdminController extends Controller {
 			setAttr("RoleID", 0);
 			
 			
-			render("/web_admin/webAdminInfo.html");
+			render("web_admin/webAdminInfo.html");
 		}
 		    
 	}
@@ -65,7 +65,7 @@ public class AdminController extends Controller {
 		
 		setAttr("RoleID", rec.getInt("RoleID"));	
 		
-		render("/web_admin/webAdminInfo.html");
+		render("web_admin/webAdminInfo.html");
 	}
 	
 	
@@ -80,7 +80,7 @@ public class AdminController extends Controller {
 	public void web_getCount() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("/web_admin/login.html");
+			redirect("web_admin/login.html");
 			return;
 		}
 		
@@ -104,7 +104,7 @@ public class AdminController extends Controller {
 	public void web_getListPaging() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("/web_admin/login.html");
+			redirect("web_admin/login.html");
 			return;
 		}
 		
@@ -156,7 +156,7 @@ public class AdminController extends Controller {
 	public void web_saveAdminInfo() {
 		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
 		if (admin == null) {
-			redirect("/web_admin/login.html");
+			redirect("web_admin/login.html");
 			return;
 		}
 		
