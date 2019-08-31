@@ -35,14 +35,23 @@ public class AnalyseController extends Controller {
 		}
 		render("/web_admin/analyse.html");
 	}
-	
+
+	public void web_showHistory(){
+		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
+		if ( admin== null) {
+			renderHtml(Util.getResult("0001", "请先登录本系统!"));
+			return;
+		}
+		render("/web_admin/analyseUser.html");
+	}
+
+
 	public void getHomepageData(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
 			renderHtml(Util.getResult("0001", "请先登录本系统!"));	
 			return;
-		} 
-		
+		}
 		
 		SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
 			//String dateToday =Util. getDate(); 
@@ -202,6 +211,7 @@ public class AnalyseController extends Controller {
         setAttr("RecordCount", RecordCount);
         renderJson();
     }
+
 	public void web_showCaseKind(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
@@ -213,6 +223,36 @@ public class AnalyseController extends Controller {
 		render("/web_admin/analyse.html");
 	}
 
+	public void web_getUserTraceCount() {
+		String sql = "select  count(*) \n" +
+				"from tb_trace ";
+		if (!getPara("keyWord").equals("")) {
+			String keyWord = getPara("keyWord");
+			sql += " where (CaseName LIKE '%" + keyWord + "%')";
+		}
+		long RecordCount = Db.queryLong(sql);
+		setAttr("RecordCount", RecordCount);
+		renderJson();
+	}
+	public void getUserTraceList() {
+		int page = 1;
+		int pageSize = 10;
+		if (getParaToInt("pageIndex") != null) {
+			page = getParaToInt("pageIndex");
+			pageSize = getParaToInt("pageSize");
+		}
+
+		String sqlFromWhere = "FROM tb_trace ";
+
+		if (!getPara("keyWord").equals("")) {
+			String keyWord = getPara("keyWord");
+			sqlFromWhere += " where ((CaseName LIKE '%" + keyWord + "%') )";
+		}
+
+		List<Record> lists = Db.paginate(page, pageSize, "select * ", sqlFromWhere).getList();
+		setAttr("recs", lists);
+		renderJson();
+	}
 
 	public void getBrandsCount(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
