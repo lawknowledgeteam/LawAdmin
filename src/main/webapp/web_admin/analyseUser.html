@@ -110,10 +110,11 @@
                     // '<td>'+json.recs[i].DeviceID+"("+long2MacAddress(json.recs[i].DeviceID)+')</td>'+
                     '<td>'+json.recs[i].UserID+'</td>'+
                     '<td>'+json.recs[i].CaseID+'</td>'+
+                    '<td>'+json.recs[i].CaseName+'</td>'+
                     '<td>'+json.recs[i].CaseKind+'</td>'+
                     '<td>'+json.recs[i].LastViewTime+'</td>'+
                     '<td>'+json.recs[i].EndTime+'</td>'+
-                    '<td>'+json.recs[i].BrowseLength+'</td>'+'</tr>';
+                    '<td>'+json.recs[i].BrowseLength+'秒'+'</td>'+'</tr>';
 
             }
             $("#recordList").html(recList);
@@ -229,6 +230,7 @@
                 <th>序号</th>
                 <th>用户ID</th>
                 <th>案件ID</th>
+                <th>案件名称</th>
                 <th>案件类型</th>
                 <th>浏览时间</th>
                 <th>结束时间</th>

@@ -225,10 +225,10 @@ public class AnalyseController extends Controller {
 
 	public void web_getUserTraceCount() {
 		String sql = "select  count(*) \n" +
-				"from tb_trace ";
+				"FROM tb_trace LEFT OUTER JOIN  tb_case on tb_case.CaseID = tb_trace.CaseID ";
 		if (!getPara("keyWord").equals("")) {
 			String keyWord = getPara("keyWord");
-			sql += " where (CaseName LIKE '%" + keyWord + "%')";
+			sql += " ,tb_trace.CaseKind LIKE '%" + keyWord + "%'";
 		}
 		long RecordCount = Db.queryLong(sql);
 		setAttr("RecordCount", RecordCount);
@@ -242,14 +242,14 @@ public class AnalyseController extends Controller {
 			pageSize = getParaToInt("pageSize");
 		}
 
-		String sqlFromWhere = "FROM tb_trace ";
+		String sqlFromWhere = "FROM tb_trace LEFT OUTER JOIN  tb_case on tb_case.CaseID = tb_trace.CaseID ORDER BY tb_trace.RecordID";
 
 		if (!getPara("keyWord").equals("")) {
 			String keyWord = getPara("keyWord");
-			sqlFromWhere += " where ((CaseName LIKE '%" + keyWord + "%') )";
+			sqlFromWhere += ",tb_trace.CaseKind LIKE '%" + keyWord + "%'";
 		}
 
-		List<Record> lists = Db.paginate(page, pageSize, "select * ", sqlFromWhere).getList();
+		List<Record> lists = Db.paginate(page, pageSize, "SELECT tb_trace.*,tb_case.`CaseName`,tb_trace.`EndTime`-tb_trace.`LastViewTime` AS BrowseLength", sqlFromWhere).getList();
 		setAttr("recs", lists);
 		renderJson();
 	}
