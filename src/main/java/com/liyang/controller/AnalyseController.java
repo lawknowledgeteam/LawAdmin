@@ -26,7 +26,14 @@ import com.liyang.model.Case;
 import com.liyang.security.AdminInterceptor;
 
 public class AnalyseController extends Controller {
-	
+	public void web_showSearchHistory(){
+		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
+		if ( admin== null) {
+			renderHtml(Util.getResult("0001", "请先登录本系统!"));
+			return;
+		}
+		render("/web_admin/analyseSearch.html");
+	}
 	public void web_showResidenceTimeList(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
@@ -36,6 +43,14 @@ public class AnalyseController extends Controller {
 		render("/web_admin/analyse.html");
 	}
 
+	public void web_showSearch(){
+		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
+		if ( admin== null) {
+			renderHtml(Util.getResult("0001", "请先登录本系统!"));
+			return;
+		}
+		render("/web_admin/analyseSearch.html");
+	}
 	public void web_showHistory(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
@@ -44,7 +59,6 @@ public class AnalyseController extends Controller {
 		}
 		render("/web_admin/analyseUser.html");
 	}
-
 	public void web_showUserBycharts(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
@@ -158,7 +172,32 @@ public class AnalyseController extends Controller {
 		setAttr("recs", lists);
 		renderJson();
 	}
+	public void web_getUserSearchCount() {
+		String sql = "select  count(*) \n" +
+				"FROM tb_searchtrace LEFT OUTER JOIN  tb_user on tb_searchtrace.UserID = tb_user.UserID ";
+		if (!getPara("keyWord").equals("")) {
+			String keyWord = getPara("keyWord");
+			sql += " ,tb_searchtrace.RecordID '%" + keyWord + "%'";
+		}
+		long RecordCount = Db.queryLong(sql);
+		setAttr("RecordCount", RecordCount);
+		renderJson();
+	}
+	public void getUserSearchList() {
+		int page = 1;
+		int pageSize = 10;
+		if (getParaToInt("pageIndex") != null) {
+			page = getParaToInt("pageIndex");
+			pageSize = getParaToInt("pageSize");
+		}
 
+		String sqlFromWhere = "FROM tb_searchtrace";
+
+
+		List<Record> lists = Db.paginate(page, pageSize, "SELECT tb_searchtrace.`KeyWord`,tb_searchtrace.`UserID`,tb_searchtrace.`LastViewTime`", sqlFromWhere).getList();
+		setAttr("recs", lists);
+		renderJson();
+	}
 	public void getBrandsCount(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
 		if ( admin== null) {
