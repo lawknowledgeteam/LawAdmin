@@ -45,6 +45,15 @@ public class AnalyseController extends Controller {
 		render("/web_admin/analyseUser.html");
 	}
 
+	public void web_showUserBycharts(){
+		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
+		if ( admin== null) {
+			renderHtml(Util.getResult("0001", "请先登录本系统!"));
+			return;
+		}
+		render("/web_admin/analyseUserBycharts.html");
+	}
+
 
 	public void getHomepageData(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
@@ -65,51 +74,8 @@ public class AnalyseController extends Controller {
 			this.renderJson();
 
 	}
-//	public void web_showOldNewCustomerDist()
-//	{
-//		render("/web_admin/webOldNewCustomer.html");
-//	}
-//	public void web_showHotmap()
-//	{
-//		render("/web_admin/webHotmap.html");
-//	}
-//
-	/**
-	 * @description: 停留时长统计数据条数
-	 * @author: wxy
-	 * @date: 2019-05-11 17:12
-	 * @param :
-	 * @return:
-	 */
-/*	public void web_getResidenceTimeCount(){
-		Admin admin = getSessionAttr(GlobalVar.WEBADMIN);
-		if (admin == null) {
-			redirect("/web_admin/login.html");
-			return;
-		}
-		//查询的开始时间和结束时间
-		String startTime = getPara("startTime");
-		String endTime = getPara("endTime");
-		String sql = "select count(ResidenceTimeID) from tb_residence_time where CreateTime >'"+startTime+"' and "+"CreateTime < '"+endTime+"'";
-		if (!getPara("keyWord").equals("")) {
-			String keyWord = getPara("keyWord");
-			List<Long> objectMacs = Db.query("select objectMac from tb_object where MacAddress like '%" + keyWord + "%'");
-			String macs = "(";
-			for (int i=0;i<objectMacs.size();i++){
-				if(i==objectMacs.size()-1){
-					macs = macs+objectMacs.get(i)+")";
-				}else {
-					macs = macs + objectMacs.get(i) + ",";
-				}
-			}
-			sql +=" and objectMac in "+macs;
-		}
-		Integer recordCount = Db.queryInt(sql);
-		setAttr("recordCount",recordCount);
-		renderJson();
-	}
 
- */
+
     public void web_getListPaging()
     {
         int page = 1;
@@ -138,68 +104,7 @@ public class AnalyseController extends Controller {
 		render("/web_admin/addanalyse.html");
 	}
 
-/*	public void web_getResidenceTimeList(){
-		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
-		if ( admin== null) {
-			renderHtml(Util.getResult("0001", "请先登录本系统!"));	
-			return;
-		}
-		int page = 1;
-		int pageSize = 10;
-		if (getParaToInt("pageIndex") != null) {
-			page = getParaToInt("pageIndex");
-			pageSize = getParaToInt("pageSize");
-		}
-		//查询的开始时间和结束时间
-		String startTime = getPara("startTime");
-		String endTime = getPara("endTime");
-		String sql = "from uv_object_stay_time where CreateTime > '"+startTime+"' and "+"CreateTime < '"+endTime+"'";
-		if (!getPara("keyWord").equals("")) {
-			String keyWord = getPara("keyWord");
-			List<Long> objectMacs = Db.query("select objectMac from tb_object where MacAddress like '%" + keyWord + "%'");
-			String macs = "(";
-			for (int i=0;i<objectMacs.size();i++){
-				if(i==objectMacs.size()-1){
-					macs = macs+objectMacs.get(i)+")";
-				}else {
-					macs = macs + objectMacs.get(i) + ",";
-				}
-			}
-			sql +=" and ObjectMac in "+macs;
-		}
-		//计算过后存储的数据放在list<Record>中
-		List<Record> residenceTimeRecords = Db.paginate(page,pageSize,"select *",sql+"order by CreateTime DESC,TotalResidenceTime DESC").getList();
-		for(Record rec:residenceTimeRecords){
-			String objectMac = rec.getStr("ObjectMac");
-			Record recf = Db.findFirst("select MacAddress,Description from tb_object where ObjectMac = " + objectMac);
-			String mac = recf.getStr("MacAddress");
-			String description = recf.getStr("Description");
-			rec.set("MacAddress",mac);
-			rec.set("ObjectName",description);
-		}
-		setAttr("residenceTimeRecords",residenceTimeRecords);
-		//将数据传递到前端
-		renderJson();
-	}
 
- */
-
-/*	public void web_getCustomer(){
-		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
-		if ( admin== null) {
-			renderHtml(Util.getResult("0001", "请先登录本系统!"));
-			return;
-		}
-		String startTime = get("startTime");
-		String endTime = get("endTime");
-		//旧客户信息
-		List<Record> oldCustomers = Db.find("select * from tb_object where CreateTime < '" + startTime+"'");
-		//新客户信息
-		List<Record> newCustomers = Db.find("select * from tb_object where CreateTime > '" + startTime+"' and CreateTime < '"+endTime+"'");
-        set("oldCustomersCount",oldCustomers.size()).set("newCustomersCount",newCustomers.size());
-        renderJson();
-	}
-	*/
     public void web_getCount() {
         String sql = "select  count(distinct CaseKind) \n" +
                 "from tb_case ";
@@ -274,6 +179,22 @@ public class AnalyseController extends Controller {
 		List<Record> recs=Db.find( strSql +" Group by VendorName Order by Count(ObjectID) Desc limit 0,10" );
 		set("data",recs);
         renderJson(); 
+	}
+
+	public void web_getUserCharts(){
+		String startDate = get("startDate");
+		String endDate = get("endDate");
+
+		int page = 1;
+		int pageSize = 10;
+		String sqlFromWhere = " FROM (SELECT CaseKind AS name,COUNT(*) AS max  FROM tb_trace  GROUP BY CaseKind  DESC  LIMIT 6) AS temp  ORDER BY max DESC";
+		if(!startDate.equals("") && !endDate.equals("")){
+			sqlFromWhere = "FROM  (SELECT CaseKind AS name,COUNT(*) AS max  FROM tb_trace	WHERE  LastViewTime between  '"
+					+startDate+"' AND  '" +endDate+ "' GROUP BY CaseKind  DESC  LIMIT 6) AS temp  ORDER BY max DESC";
+		}
+		System.out.println(sqlFromWhere);
+		List<Record> lists = Db.paginate(page, pageSize, "SELECT *   ", sqlFromWhere).getList();
+		renderJson(lists);
 	}
 	
 /*	public void web_showObjects() {

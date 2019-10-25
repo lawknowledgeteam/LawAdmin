@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Radar</title>
+</head>
+<style>
+    .vulnerability-type-chart {
+        width: 100%;
+        height: 90%;
+    }
+    .vulnerability-type-bg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 40%;
+        height: 40%;
+        background-color: #0A1F32;
+    }
+
+    .vulnerability-type-data {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+    }
+    .vulnerability-type-area {
+        z-index: 9999;
+    }
+    .btn-block {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: -100;
+        z-index: 4;
+    }
+</style>
+<body>
+<div class="vulnerability-type-chart">
+    <svg class="vulnerability-type-bg"></svg>
+    <svg class="vulnerability-type-data">
+        <g class="vulnerability-type-label"></g>
+        <g class="vulnerability-type-area"></g>
+        <g class="vulnerability-type-axis"></g>
+    </svg>
+</div>
+<div class="btn-block"><input id="button" type="button" onclick="getData()" value="更新"></div>
+
+</body>
+<script type='text/javascript' src='../third-party/echartsjs/d3.v4.min.js'></script>
+<script type="text/javascript" src="../third-party/echartsjs/radar.js"></script>
+<script type="text/javascript" src="../third-party/echartsjs/Tween.js"></script>
+</html>

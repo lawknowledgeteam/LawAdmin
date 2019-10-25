@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <link rel="stylesheet" href="../third-party/bootstrap-multiselect/css/bootstrap-3.3.2.min.css" />
+
+    <script src="../third-party/jquery/jquery-2.1.4.min.js"></script>
+    <script src="../third-party/bootstrap3.3.7dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="../css/list-common.css">
+    <script type="text/javascript" src="../third-party/layer/layer.js"></script>
+	<script type="text/javascript" src="../third-party/echarts.common.min.js"></script>
+	<script type="text/javascript" src="../third-party/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+	<link rel="stylesheet" href="../third-party/bootstrap-multiselect/css/bootstrap-multiselect.css">
+
+
+<style type="text/css">
+
+</style>
+</head>
+<body >
+	<div class="main_info">
+		<div class="list_title">
+			<div class="title_caption">
+				<i class="glyphicon glyphicon-align-justify"></i>用户历史分析
+			</div>
+		</div>
+		<div class="list_toolbar" style="height: 45px;">
+			<div class="toolbar_search" style="width: 700px; ">
+				<label style=" font-size: 14px; font-weight: 400;float:left;margin-top: 8px;margin-right: 6px;">查询日期</label>
+				<input type="date"
+					   style="margin-left: 0px;float: left;height: 35px; font-size: 14px;"
+					   id="startDate"
+				>
+				<span style="float: left;font-size: 20px;">-</span>
+				<input type="date" style="margin-left: 0px;float: left;height: 35px; font-size: 14px; margin-right: 8px!important;"
+					   id="endDate"	>
+			</div>
+
+			<div class="toolbar_button">
+			    <button type="button" class="btn btn-default" onclick="search()">查询</button>
+			</div>
+		</div>
+
+	</div>
+
+	<div  id="idBrandPie" style="width:98%;height: 500px; float:left;">
+
+	</div>
+
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+	<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+
+	<script>
+        $(function (){
+            search();
+        });
+		function search() {
+            var startDate=$("#startDate").val();
+            var	endDate=$("#endDate").val();
+            console.log(startDate+" "+ endDate);
+            $.ajax({
+                url:'/analyse/web_getUserCharts',
+                dataType: "json",
+                type: 'POST',
+                data:{
+                    "startDate":startDate,
+					"endDate":endDate,
+				},
+                success:function (json) {
+                    $('#idBrandPie').html("");
+                    if (json.length == 0){
+                        alert("暂无数据");
+					}
+                   draw(json);
+                },
+                error: function () {
+                    alert("web_getdeviceCount");
+                }
+            });
+        }
+	</script>
+
+	<script type="text/javascript">
+      function draw(myindicator) {
+          var mydata =[];
+          for (var i=0;i<myindicator.length;i++){
+              mydata[i] = myindicator[i].max;
+              myindicator[i].max = mydata[0];
+		  }
+
+          var dom = document.getElementById("idBrandPie");
+          var myChart = echarts.init(dom);
+          var app = {};
+          option = null;
+          option = {
+              title: {
+                  text: ''
+              },
+              tooltip: {},
+              legend: {
+                  data: '浏览量'
+              },
+              radar: {
+                  // shape: 'circle',
+                  name: {
+                      textStyle: {
+                          color: '#fff',
+                          backgroundColor: '#999',
+                          borderRadius: 3,
+                          padding: [3, 5]
+                      }
+                  },
+                  indicator: myindicator
+/*                   [
+                      { name: '销售（sales）', max: 65},
+                      { name: '管理（Administration）', max: 16},
+                      { name: '信息技术（Information Techology）', max: 30},
+                      { name: '客服（Customer Support）', max: 38},
+                      { name: '研发（Development）', max: 52},
+                      { name: '市场（Marketing）', max: 25}
+                  ]*/
+              },
+              series: [{
+                  name: '浏览量',
+                  type: 'radar',
+                  // areaStyle: {normal: {}},
+                  data : [
+                      {
+                          value : mydata,
+                         name : '浏览量'
+                      }
+                  ]
+              }]
+          };;
+          if (option && typeof option === "object") {
+              myChart.setOption(option, true);
+          }
+      }
+	</script>
+</body>
+</html>
