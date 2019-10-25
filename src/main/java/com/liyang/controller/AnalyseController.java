@@ -174,7 +174,7 @@ public class AnalyseController extends Controller {
 	}
 	public void web_getUserSearchCount() {
 		String sql = "select  count(*) \n" +
-				"FROM tb_searchtrace LEFT OUTER JOIN  tb_user on tb_searchtrace.UserID = tb_user.UserID ";
+				"FROM tb_searchtrace";
 		if (!getPara("keyWord").equals("")) {
 			String keyWord = getPara("keyWord");
 			sql += " ,tb_searchtrace.RecordID '%" + keyWord + "%'";
