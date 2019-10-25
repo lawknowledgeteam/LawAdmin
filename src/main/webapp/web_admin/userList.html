@@ -11,7 +11,7 @@
     <script type="text/javascript" src="../third-party/jquery.pagination.js"></script>
     <link rel="stylesheet" href="../css/list-common.css">
     <script type="text/javascript" src="../third-party/layer/layer.js"></script>
-    <title>用户历史记录</title>
+    <title>用户列表</title>
     <style type="text/css">
 
     </style>
@@ -26,8 +26,8 @@
 
         function getRecordCountCallback(json)
         {
-            if(json.RecordCount==0) alert("用户历史记录等于0");
-            $("#pagination").pagination(json.RecordCount,    //分布总数量，必须参数
+            if(json==0) alert("用户历史记录等于0");
+            $("#pagination").pagination(json,    //分布总数量，必须参数
                 {
                     callback: PageCallback,  //PageCallback() 为翻页调用次函数。
                     prev_text: "« 上一页",
@@ -53,7 +53,7 @@
             var dataInfo='page='+page;
             $.ajax(
                 {
-                    url:'/analyse/getUserTraceList',
+                    url:'/UserListController/web_getUserList',
                     dataType: "json",
                     type: 'POST',
                     data:{"pageIndex":page,"pageSize":itemsPerPage,"keyWord":keyWord},
@@ -102,19 +102,18 @@
 
         function  displayRecordList(json){
             var recList='';
-            for(var i=0;i<json.recs.length;i++){
-                    console.log(json.recs[i]);
+            for(var i=0;i<json.length;i++){
+                    console.log(json[i]);
 
                 recList+=' <tr>'+
                     '<td>'+(pageIndex*itemsPerPage+i+1)+'</td>'+
                     // '<td>'+json.recs[i].DeviceID+"("+long2MacAddress(json.recs[i].DeviceID)+')</td>'+
-                    '<td>'+json.recs[i].UserID+'</td>'+
-                    '<td>'+json.recs[i].CaseID+'</td>'+
-                    '<td>'+json.recs[i].CaseName+'</td>'+
-                    '<td>'+json.recs[i].CaseKind+'</td>'+
-                    '<td>'+json.recs[i].LastViewTime+'</td>'+
-                    /*'<td>'+json.recs[i].EndTime+'</td>'+
-                    '<td>'+json.recs[i].BrowseLength+'秒'+'</td>'+*/'</tr>';
+                    '<td>'+json[i].UserID+'</td>'+
+                    '<td>'+json[i].LoginName+'</td>'+
+                    '<td>'+json[i].RegisterTime+'</td>'+
+                    '<td>'+json[i].LastLoginTime+'</td>'+
+                    '<td><a href="/UserListController/web_UserListBycharts?userId='+json[i].UserID+'"  target="_blank">'+'更多'+'</a></td>'
+                +'</tr>';
 
             }
             $("#recordList").html(recList);
@@ -183,7 +182,7 @@
         function search(){
             var keyWord=$("#keyWord").val();
             $.ajax({
-                url:'/analyse/web_getUserTraceCount',
+                url:'/UserListController/getCount',
                 dataType: "json",
                 type: 'POST',
                 data:{"keyWord":keyWord},
@@ -201,7 +200,7 @@
 <div class="main_info">
     <div class="list_title">
         <div class="title_caption">
-            <i class="glyphicon glyphicon-align-justify"></i>用户历史记录
+            <i class="glyphicon glyphicon-align-justify"></i>用户列表
         </div>
     </div>
     <div class="list_toolbar">
@@ -229,10 +228,10 @@
             <tr>
                 <th>序号</th>
                 <th>用户ID</th>
-                <th>案件ID</th>
-                <th>案件名称</th>
-                <th>案件类型</th>
-                <th>浏览时间</th>
+                <th>登录名</th>
+                <th>注册时间</th>
+                <th>最后一次登录时间</th>
+                <th>用户画像</th>
 <!--                <th>结束时间</th>
                 <th>浏览时长</th>-->
             </tr>

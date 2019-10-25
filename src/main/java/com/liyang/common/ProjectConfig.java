@@ -52,6 +52,7 @@ public class ProjectConfig extends JFinalConfig {
 
     @Override
     public void configRoute(Routes me) {
+        me.add("/UserListController", UserListController.class);
         me.add("/lawmap", LawMapController.class);
         me.add("/lawcase", LawCaseController.class);
        me.add("/lawlist", LawListController.class);
