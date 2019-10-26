@@ -67,7 +67,14 @@ public class AnalyseController extends Controller {
 		}
 		render("/web_admin/analyseUserBycharts.html");
 	}
-
+	public void web_showHistoryBycharts(){
+		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
+		if ( admin== null) {
+			renderHtml(Util.getResult("0001", "请先登录本系统!"));
+			return;
+		}
+		render("/web_admin/analyseHistoryByChrarts.html");
+	}
 
 	public void getHomepageData(){
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
@@ -235,6 +242,22 @@ public class AnalyseController extends Controller {
 		List<Record> lists = Db.paginate(page, pageSize, "SELECT *   ", sqlFromWhere).getList();
 		renderJson(lists);
 	}
+	public void web_getHistoryCharts(){
+		String startDate = get("startDate");
+		String endDate = get("endDate");
+
+		int page = 1;
+		int pageSize = 10;
+		String sqlFromWhere = " FROM (SELECT KeyWord AS name,COUNT(*) AS max  FROM tb_searchtrace  GROUP BY KeyWord  DESC  LIMIT 6) AS temp  ORDER BY max DESC";
+		if(!startDate.equals("") && !endDate.equals("")){
+			sqlFromWhere = "FROM  (SELECT KeyWord AS name,COUNT(*) AS max  FROM tb_searchtrace	WHERE  LastViewTime between  '"
+					+startDate+"' AND  '" +endDate+ "' GROUP BY KeyWord  DESC  LIMIT 6) AS temp  ORDER BY max DESC";
+		}
+		System.out.println(sqlFromWhere);
+		List<Record> lists = Db.paginate(page, pageSize, "SELECT *   ", sqlFromWhere).getList();
+		renderJson(lists);
+	}
+
 	
 /*	public void web_showObjects() {
 		Admin admin=getSessionAttr(GlobalVar.WEBADMIN);
