@@ -53,15 +53,31 @@ public class UserListController extends Controller {
         String userId = get("userId");
         int page = 1;
         int pageSize = 10;
-        String sqlFromWhere = " FROM (SELECT CaseKind AS name,COUNT(*) AS max  FROM tb_trace WHERE userid="+userId+"  GROUP BY CaseKind  DESC  LIMIT 6) AS temp  ORDER BY max DESC" ;
+        String sqlFromWhere = " FROM (SELECT CaseKind AS name,COUNT(*) AS max  FROM tb_trace WHERE userid="+userId+"  GROUP BY CaseKind  DESC  LIMIT 2) AS temp  ORDER BY max DESC" ;
 
         if(!startDate.equals("") && !endDate.equals("")){
             sqlFromWhere = "FROM  (SELECT CaseKind AS name,COUNT(*) AS max  FROM tb_trace	WHERE userid="+userId+" LastViewTime between  '"
-                    +startDate+"' AND  '" +endDate+ "' GROUP BY CaseKind  DESC  LIMIT 6) AS temp  ORDER BY max DESC";
+                    +startDate+"' AND  '" +endDate+ "' GROUP BY CaseKind  DESC  LIMIT 2) AS temp  ORDER BY max DESC";
         }
-        System.out.println(sqlFromWhere);
-        List<Record> lists = Db.paginate(page, pageSize, "SELECT *   ", sqlFromWhere).getList();
-        renderJson(lists);
+        List<Record> listsBrow = Db.paginate(page, pageSize, "SELECT *   ", sqlFromWhere).getList();
+        setAttr("listsBrow", listsBrow);
+
+        String sqlUser = "SELECT *\n" +
+                "FROM\n" +
+                "  `lawknowledge`.`tb_user` \n" +
+                "WHERE UserID = " +userId;
+        List<Record> listUser = Db.find(sqlUser);
+        setAttr("user", listUser);
+
+        String sqlSearchFromWhere = " FROM (SELECT KeyWord AS name,COUNT(*) AS max  FROM tb_searchtrace  GROUP BY KeyWord  DESC  LIMIT 2) AS temp  ORDER BY max DESC";
+        if(!startDate.equals("") && !endDate.equals("")){
+            sqlFromWhere = "FROM  (SELECT KeyWord AS name,COUNT(*) AS max  FROM tb_searchtrace	WHERE  LastViewTime between  '"
+                    +startDate+"' AND  '" +endDate+ "' GROUP BY KeyWord  DESC  LIMIT 6) AS temp  ORDER BY max DESC";
+        }
+        List<Record> listSearch = Db.paginate(page, pageSize, "SELECT *   ", sqlSearchFromWhere).getList();
+        setAttr("search", listSearch);
+
+        renderJson();
     }
 
     public void web_getUserSearchCharts(){

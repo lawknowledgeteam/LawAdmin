@@ -103,12 +103,28 @@
 
 	<script type="text/javascript">
         function draw(myindicator) {
-            var mydata =[];
-            for (var i=0;i<myindicator.length;i++){
-                mydata[i] = myindicator[i].max;
-                myindicator[i].max = mydata[0];
+            var mydata = [];
+            var myDataL = [];
+            for (var i=0;i<2;i++){
+                mydata[i] = myindicator.listsBrow[i].max;
+                myindicator.listsBrow[i].max =  mydata[0];
+                myindicator.listsBrow[i].name += "(浏览)"
+                myDataL[i] = myindicator.listsBrow[i];
             }
-            console.log(mydata)
+
+            for (var i=0;i<2;i++){
+                mydata[i+2] = myindicator.search[i].max;
+                myindicator.search[i].max =  mydata[2];
+                myindicator.search[i].name += "(搜索关键字)"
+                myDataL[i+2] =  myindicator.search[i];
+            }
+
+            mydata[4] = myindicator.user[0].age;
+            myDataL[4] =  { name: '年龄（age）', max: 80};
+            myDataL[5] = { name: '职业（Carrer）', max: 2};
+            mydata[5] = myindicator.user[0].Career;
+
+			console.log(myDataL)
             var dom = document.getElementById("idBrandPie");
             var myChart = echarts.init(dom);
             var app = {};
@@ -119,7 +135,7 @@
                 },
                 tooltip: {},
                 legend: {
-                    data: ['浏览类别','搜索记录']
+                    data: '用户画像'
                 },
                 radar: {
                     // shape: 'circle',
@@ -131,7 +147,7 @@
                             padding: [3, 5]
                         }
                     },
-                    indicator: myindicator
+                    indicator:myDataL
                     /*                   [
                                           { name: '销售（sales）', max: 65},
                                           { name: '管理（Administration）', max: 16},
@@ -149,10 +165,6 @@
                         {
                             value : mydata,
                             name : '浏览类别'
-                        },
-                        {
-                            value : [1,2,3,4,5,6],
-                            name : '搜索记录'
                         }
                     ]
                 }]

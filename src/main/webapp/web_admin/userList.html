@@ -112,7 +112,7 @@
                     '<td>'+json[i].LoginName+'</td>'+
                     '<td>'+json[i].RegisterTime+'</td>'+
                     '<td>'+json[i].LastLoginTime+'</td>'+
-                    '<td><a href="/UserListController/web_UserListBycharts?userId='+json[i].UserID+'"  target="_blank">'+'更多'+'</a></td>'
+                    '<td><button type="button" onclick="addRecord('+json[i].UserID+')">'+'更多'+'</button></td>'
                 +'</tr>';
 
             }
@@ -120,6 +120,19 @@
             // $("#recordList").append(recList);
         }
 
+        function addRecord(userId){
+            layer.open({
+                type: 2,
+                skin: 'layui-layer-rim',
+                shadeClose:true ,
+                area: ['700px', '600px'],
+                title: ['用户画像','background:#0090D7;color:#FFFFFF;'],
+                shade: 0,
+                moveType: 0,
+                shift: 0,
+                content:'/UserListController/web_UserListBycharts?userId='+userId
+            });
+        }
 
         function refreshPage(){
             window.location.reload();
@@ -130,19 +143,6 @@
             getRecordList(pageIndex+1);
         }
 
-        function addRecord(){
-            layer.open({
-                type: 2,
-                skin: 'layui-layer-rim',
-                shadeClose:true ,
-                area: ['400px', '300px'],
-                title: ['添加管理员信息','background:#0090D7;color:#FFFFFF;'],
-                shade: 0,
-                moveType: 0,
-                shift: 0,
-                content:'/analyse/web_add'
-            });
-        }
         function editRecord(id){
             layer.open({
                 type: 2,
