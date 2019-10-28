@@ -49,7 +49,25 @@
 	<div  id="idBrandPie" style="width:98%;height: 500px; float:left;">
 
 	</div>
+	<script>
+        $(document).ready(function () {
+            var time = new Date();
+            var d =  time.getDate() - 7;
+            var day = ("0" + d).slice(-2);
+            console.log(time.getDate())
+            var month = ("0" + (time.getMonth() + 1)).slice(-2);
+            var today = time.getFullYear() + "-" + (month) + "-" + (day);
+            $('#startDate').val(today);
+        })
 
+        $(document).ready(function () {
+            var time = new Date();
+            var day = ("0" + time.getDate()).slice(-2);
+            var month = ("0" + (time.getMonth() + 1)).slice(-2);
+            var today = time.getFullYear() + "-" + (month) + "-" + (day);
+            $('#endDate').val(today);
+        })
+	</script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>

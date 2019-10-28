@@ -56,9 +56,10 @@ public class UserListController extends Controller {
         String sqlFromWhere = " FROM (SELECT CaseKind AS name,COUNT(*) AS max  FROM tb_trace WHERE userid="+userId+"  GROUP BY CaseKind  DESC  LIMIT 2) AS temp  ORDER BY max DESC" ;
 
         if(!startDate.equals("") && !endDate.equals("")){
-            sqlFromWhere = "FROM  (SELECT CaseKind AS name,COUNT(*) AS max  FROM tb_trace	WHERE userid="+userId+" LastViewTime between  '"
-                    +startDate+"' AND  '" +endDate+ "' GROUP BY CaseKind  DESC  LIMIT 2) AS temp  ORDER BY max DESC";
+            sqlFromWhere = "FROM  (SELECT CaseKind AS name,COUNT(*) AS max  FROM tb_trace	WHERE userid="+userId+" AND LastViewTime between  '"
+                    +startDate+"' AND  '" +endDate+ "'  GROUP BY CaseKind  DESC  LIMIT 2) AS temp  ORDER BY max DESC";
         }
+        System.out.println(sqlFromWhere);
         List<Record> listsBrow = Db.paginate(page, pageSize, "SELECT *   ", sqlFromWhere).getList();
         setAttr("listsBrow", listsBrow);
 
