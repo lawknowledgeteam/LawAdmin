@@ -107,6 +107,7 @@
                     if (json.length == 0){
                         alert("暂无数据");
 					}
+                    isNo=0;
                    draw(json);
                 },
                 error: function () {
@@ -119,6 +120,7 @@
 
 
 	<script type="text/javascript">
+        var isNo= 0;
         function draw(myindicator) {
             var mydata = [];
             var myDataL = [];
@@ -137,7 +139,7 @@
             }
 
             mydata[4] = myindicator.user[0].age;
-            myDataL[4] =  { name: '年龄（age）', max: 80};
+            myDataL[4] =  { name: '年龄（age） 0-80', max: 80};
             myDataL[5] = { name: '职业（Carrer）', max: 2};
             mydata[5] = myindicator.user[0].Career;
 
@@ -174,7 +176,26 @@
                                           { name: '市场（Marketing）', max: 25}
                                       ]*/
                 },
+
                 series: [{
+                        label:{
+                            normal:{
+                                show:true,
+                                fontSize: 15,
+                                formatter:function(params) {
+
+                                    if(isNo ==5){
+                                    if (params.value == 1){
+                                            params.value = "民事法官"
+                                    }else {
+                                        params.value = "其它法官"
+                                    }
+                                    }
+                                    isNo += 1;
+                                    return params.value;
+                                }
+                            }
+                        },
                     name: '浏览量',
                     type: 'radar',
                     // areaStyle: {normal: {}},
