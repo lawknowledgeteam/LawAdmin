@@ -34,9 +34,29 @@
                    style="margin-left: 0px;float: left;height: 35px; font-size: 14px;"
                    id="startDate"
             >
+            <script>
+                $(document).ready(function () {
+                    var time = new Date();
+                    var day = (("0" + time.getDate()).slice(-2))-7;
+                    var month = ("0" + (time.getMonth() + 1)).slice(-2);
+                    var today = time.getFullYear() + "-" + (month) + "-" + (day);
+                    $('#startDate').val(today);
+                })
+            </script>
             <span style="float: left;font-size: 20px;">-</span>
-            <input type="date" style="margin-left: 0px;float: left;height: 35px; font-size: 14px; margin-right: 8px!important;"
+            <input type="date"
+                   value="now"
+                   style="margin-left: 0px;float: left;height: 35px; font-size: 14px; margin-right: 8px!important;"
                    id="endDate"	>
+            <script>
+                $(document).ready(function () {
+                    var time = new Date();
+                    var day = ("0" + time.getDate()).slice(-2);
+                    var month = ("0" + (time.getMonth() + 1)).slice(-2);
+                    var today = time.getFullYear() + "-" + (month) + "-" + (day);
+                    $('#endDate').val(today);
+                })
+            </script>
         </div>
 
         <div class="toolbar_button">
