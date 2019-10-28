@@ -184,7 +184,7 @@ public class AnalyseController extends Controller {
 				"FROM tb_searchtrace";
 		if (!getPara("keyWord").equals("")) {
 			String keyWord = getPara("keyWord");
-			sql += " ,tb_searchtrace.RecordID '%" + keyWord + "%'";
+			sql += " ,tb_searchtrace.KeyWord LIKE '%" + keyWord + "%'";
 		}
 		long RecordCount = Db.queryLong(sql);
 		setAttr("RecordCount", RecordCount);
